@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   deploy-preview:
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     env:
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
@@ -44,7 +44,7 @@ jobs:
         run: vercel build --token="$VERCEL_TOKEN"
 
       - name: Deploy (preview)
-        run: vercel deploy --prebuilt --token="$VERCEL_TOKEN"
+        run: vercel deploy --prebuilt --yes --token="$VERCEL_TOKEN"
 
   deploy-production:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -76,4 +76,4 @@ jobs:
         run: vercel build --prod --token="$VERCEL_TOKEN"
 
       - name: Deploy (production)
-        run: vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN"
+        run: vercel deploy --prebuilt --prod --yes --token="$VERCEL_TOKEN"
