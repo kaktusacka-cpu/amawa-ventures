@@ -215,9 +215,22 @@ export default async function HomePage({
                 <h3 className="font-display text-2xl">{content.contact.connectTitle}</h3>
                 <div className="mt-4 flex gap-4">
                   {[
-                    { icon: "/socials/social-1.svg", label: content.contact.connectItems[0] ?? "Email" },
-                    { icon: "/socials/social-2.svg", label: content.contact.connectItems[1] ?? "Instagram" },
-                    { icon: "/socials/social-3.svg", label: content.contact.connectItems[2] ?? "LinkedIn" },
+                    {
+                      icon: "/socials/social-3.svg",
+                      label: content.contact.connectItems[0] ?? "Email",
+                      href: "mailto:martina.luckanicova@gmail.com",
+                    },
+                    {
+                      icon: "/socials/social-2.svg",
+                      label: content.contact.connectItems[2] ?? "LinkedIn",
+                      href: "https://www.linkedin.com/in/martinaluckanic/",
+                    },
+                    {
+                      icon: "/socials/social-1.svg",
+                      label: content.contact.connectItems[1] ?? "Instagram",
+                      href: "https://www.instagram.com/solymar_marysol?igsh=cmIxMTJvczBjN3d0",
+                    }
+                    
                   ].map((social) => (
                     <Button
                       key={social.icon}
@@ -225,7 +238,7 @@ export default async function HomePage({
                       variant="outline"
                       size="icon"
                       className="h-13 w-13 rounded-full bg-[#FAF8F5] p-4"                    >
-                      <a href="#" aria-label={social.label}>
+                      <a href={social.href} aria-label={social.label}>
                         <Image
                           src={social.icon}
                           alt={social.label}
