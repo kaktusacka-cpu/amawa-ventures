@@ -50,9 +50,9 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     env:
-      VERCEL_TOKEN: vcp_2IyA65kE6mDbzqq0IaFhpmnHEVPILJSthA1JssI6tKq0BxW8VF12pJlM
-      VERCEL_ORG_ID: team_l5CF3bP9blZVzqJu8Gx6u2dr
-      VERCEL_PROJECT_ID: prj_Gmyn6fRdPsInmPQuWDxPVd3jlFQ2
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }} 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
