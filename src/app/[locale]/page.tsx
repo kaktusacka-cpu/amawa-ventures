@@ -238,7 +238,12 @@ export default async function HomePage({
                       variant="outline"
                       size="icon"
                       className="h-13 w-13 rounded-full bg-[#FAF8F5] p-4"                    >
-                      <a href={social.href} aria-label={social.label}>
+                      <a
+                        href={social.href}
+                        aria-label={social.label}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <Image
                           src={social.icon}
                           alt={social.label}
