@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Amawa Website
 
-## Getting Started
+Next.js + TypeScript + shadcn UI website with:
+- Multilanguage routing: English (`/en`) default, Spanish (`/es`), Slovak (`/sk`)
+- Locale switcher in navbar (keeps current page)
+- Sanity CMS integration with locale-aware content and fallback copy
 
-First, run the development server:
+## Run locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Sanity configuration
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Copy `.env.example` to `.env.local` and fill values:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+cp .env.example .env.local
+```
 
-## Learn More
+Required variables:
+- `NEXT_PUBLIC_SANITY_PROJECT_ID`
+- `NEXT_PUBLIC_SANITY_DATASET`
+- `NEXT_PUBLIC_SANITY_API_VERSION`
+- `SANITY_API_READ_TOKEN` (optional, needed only for protected datasets)
 
-To learn more about Next.js, take a look at the following resources:
+If Sanity vars are missing, the app uses built-in fallback copy for all 3 languages.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Expected Sanity model
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The app fetches one `homePage` document with `slug.current == "home"` and localized fields in shape:
+- `field.en`, `field.es`, `field.sk`
 
-## Deploy on Vercel
+The query is in `src/lib/sanity/queries.ts`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Routes
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `/en`, `/es`, `/sk`
+- `/en/about`, `/es/about`, `/sk/about`
+- `/en/experiences`, `/es/experiences`, `/sk/experiences`
+- `/en/what-we-do`, `/es/what-we-do`, `/sk/what-we-do`
+- `/en/collaborate`, `/es/collaborate`, `/sk/collaborate`
+
+Middleware redirects non-localized paths to English.
