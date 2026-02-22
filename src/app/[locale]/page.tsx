@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ContactForm } from "@/components/contact-form";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,8 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { Divider } from "@/components/ui/divider";
 import { AnimatedMetrics } from "@/components/animated-metrics";
 import { TestimonialsSlider } from "@/components/testimonials-slider";
 import { isLocale, type Locale } from "@/lib/i18n";
@@ -88,15 +88,15 @@ export default async function HomePage({
             className="mx-auto h-8 w-auto"
           />
           <h2 className="font-display mt-5 text-[32px] sm:text-5xl">{content.about.title}</h2>
-          <p className="mt-5 text-xl leading-8 text-muted-foreground">{content.about.description}</p>
+          <p className="mt-5 text-lg leading-8 text-muted-foreground">{content.about.description}</p>
         </div>
       </section>
 
-      <section className="mx-auto max-w-4xl px-4 py-[80px] sm:px-6 md:py-[60px] lg:py-[160px] flex flex-col justify-center items-center">
+      <section className="mx-auto max-w-5xl px-4 py-[80px] sm:px-6 md:py-[60px] lg:py-[160px] flex flex-col justify-center items-center">
         <h2 className="font-display text-center text-[32px] sm:text-5xl">{content.paths.title}</h2>
         <div className="mt-9 grid w-full gap-6 md:grid-cols-3">
           {content.paths.cards.map((card, index) => (
-            <Card key={card.title} className="overflow-hidden border-[#e4e6e8] bg-[#FAF8F5] shadow-none pt-0 pb-0 w-full max-w-[400px] mx-auto">
+            <Card key={card.title} className="overflow-hidden border-[#e4e6e8] bg-[#FAF8F5] shadow-none pt-0 pb-0 w-full mw-[460px]">
               <div
                 className="h-[180px]"
                 style={{
@@ -108,13 +108,13 @@ export default async function HomePage({
                         : "linear-gradient(140deg,#b4d0ea,#b5d8bc)",
                 }}
               />
-              <CardHeader className="space-y-2 px-6 pb-2 pt-5">
+              <CardHeader className="space-y-2 px-6 pb-0 pt-5">
                 <CardTitle className="text-[20px] font-semibold">{card.title}</CardTitle>
                 <CardDescription className="text-base leading-6">{card.description}</CardDescription>
               </CardHeader>
-              <CardContent className="px-6 pb-3 pt-0">
+              <CardContent className="px-6 pb-6 pt-0">
                 <Button variant="link" className="h-auto p-0 text-base text-[#cd6f3f]">
-                  {card.cta} ↗
+                  {card.cta}
                 </Button>
               </CardContent>
             </Card>
@@ -130,14 +130,14 @@ export default async function HomePage({
           <h2 className="font-display mt-4 text-center text-[32px] sm:text-5xl">{content.coreWork.title}</h2>
           <div className="mt-9 grid gap-6 sm:grid-cols-2">
             {content.coreWork.cards.map((area) => (
-              <Card key={area.title} className="flex flex-col gap-0 border-[#e3e6ea] bg-[#FAF8F5] py-0 shadow-none h-fit">
-                <CardHeader className="space-y-2 px-6 pb-0 pt-6">
+              <Card key={area.title} className="flex flex-col gap-4 border-[#e3e6ea] bg-[#FAF8F5] py-0 shadow-none h-fit">
+                <CardHeader className="space-y-2 px-6 pb-0 pt-6 gap-2">
                   <CardTitle className="mb-0 text-[20px] font-semibold">{area.title}</CardTitle>
                   <CardDescription className="text-base leading-5 font-extralight">{area.description}</CardDescription>
                 </CardHeader>
                 <CardContent className="px-6 pb-6 pt-0">
                   <Button variant="link" className="h-auto p-0 text-base text-[#cd6f3f]">
-                    {area.cta} ↗
+                    {area.cta}
                   </Button>
                 </CardContent>
               </Card>
@@ -151,7 +151,7 @@ export default async function HomePage({
           {content.approach.eyebrow}
         </p>
         <h2 className="font-display mt-4 text-[32px] sm:text-5xl">{content.approach.title}</h2>
-        <p className="mx-auto mt-5 max-w-2xl text-xl leading-8 text-muted-foreground">
+        <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-muted-foreground">
           {content.approach.description}
         </p>
       </section>
@@ -162,7 +162,7 @@ export default async function HomePage({
             {content.impact.eyebrow}
           </p>
           <h2 className="font-display mt-4 text-[32px] sm:text-5xl">{content.impact.title}</h2>
-          <p className="mx-auto mt-5 max-w-2xl text-xl leading-8 text-muted-foreground">
+          <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-muted-foreground">
             {content.impact.description}
           </p>
           <AnimatedMetrics
@@ -188,17 +188,17 @@ export default async function HomePage({
           <h2 className="font-display mt-4 text-center text-[32px] sm:text-5xl">{content.contact.title}</h2>
 
           <div className="mt-10 flex flex-col items-center justify-center gap-10 md:flex-row md:items-start">
-            <div className="w-full max-w-[420px] space-y-3">
-              <Input className="h-10 rounded-lg bg-[#FAF8F5]" placeholder={content.contact.formName} />
-              <Input className="h-10 rounded-lg bg-[#FAF8F5]" placeholder={content.contact.formEmail} type="email" />
-              <Textarea className="min-h-34 rounded-lg bg-[#FAF8F5]" placeholder={content.contact.formMessage} />
-              <Button className="h-9 rounded-full px-5 text-xs">{content.contact.formSubmit}</Button>
-            </div>
+            <ContactForm
+              namePlaceholder={content.contact.formName}
+              emailPlaceholder={content.contact.formEmail}
+              messagePlaceholder={content.contact.formMessage}
+              submitLabel={content.contact.formSubmit}
+            />
 
             <div className="w-full max-w-[400px] space-y-8">
               <div>
                 <h3
-                  className="font-display text-2xl"
+                  className="font-display text-xl"
                   style={{ fontFamily: '"Haas Grot Disp Trial"', fontWeight: 500 }}
                 >
                   {content.contact.callTitle}
@@ -206,13 +206,18 @@ export default async function HomePage({
                 <p className="mt-2 text-base leading-6 text-muted-foreground">
                   {content.contact.callDescription}
                 </p>
-                <Button variant="outline" className="mt-4 h-9 rounded-full px-5 text-xs">
+                <Button variant="outline" className="mt-4 h-10 rounded-full px-6 text-base">
                   {content.contact.callCta}
                 </Button>
+
+                
               </div>
 
+              <Divider className="bg-[#d8d8ea]" />
+
               <div>
-                <h3 className="font-display text-2xl">{content.contact.connectTitle}</h3>
+                <h3 className="font-display text-xl"
+                style={{ fontFamily: '"Haas Grot Disp Trial"', fontWeight: 500 }}>{content.contact.connectTitle}</h3>
                 <div className="mt-4 flex gap-4">
                   {[
                     {
@@ -237,7 +242,7 @@ export default async function HomePage({
                       asChild
                       variant="outline"
                       size="icon"
-                      className="h-13 w-13 rounded-full bg-[#FAF8F5] p-4"                    >
+                      className="h-13 w-13 rounded-full bg-white p-4"                    >
                       <a
                         href={social.href}
                         aria-label={social.label}

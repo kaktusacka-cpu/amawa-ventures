@@ -13,10 +13,14 @@ type AnimatedMetricsProps = {
 };
 
 function parseMetricValue(raw: string) {
-  const numericPart = raw.replace(/[^\d]/g, "");
-  const target = Number.parseInt(numericPart || "0", 10);
-  const suffix = raw.replace(/[\d]/g, "");
-  return { target, suffix };
+  const match = raw.match(/^([^0-9]*)([0-9]+)(.*)$/);
+  if (!match) {
+    return { prefix: "", target: 0, suffix: raw };
+  }
+
+  const [, prefix, numericPart, suffix] = match;
+  const target = Number.parseInt(numericPart, 10);
+  return { prefix, target, suffix };
 }
 
 function AnimatedMetricItem({
@@ -28,7 +32,7 @@ function AnimatedMetricItem({
   label: string;
   start: boolean;
 }) {
-  const [{ target, suffix }] = useState(() => parseMetricValue(value));
+  const [{ prefix, target, suffix }] = useState(() => parseMetricValue(value));
   const [displayValue, setDisplayValue] = useState(0);
 
   useEffect(() => {
@@ -57,7 +61,8 @@ function AnimatedMetricItem({
 
   return (
     <div>
-      <p className="font-display text-[56px] leading-none">
+      <p className="font-display text-4xl sm:text-[56px] leading-none">
+        {prefix}
         {displayValue}
         {suffix}
       </p>

@@ -95,12 +95,16 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
 
         <button
           type="button"
-          className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-black/10 text-slate-700 lg:hidden"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-md text-primary lg:hidden"
           onClick={() => setMobileOpen((prev) => !prev)}
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
           aria-expanded={mobileOpen}
         >
-          <span className="text-base leading-none">{mobileOpen ? "✕" : "☰"}</span>
+          {mobileOpen ? (
+            <span className="text-2xl leading-none">✕</span>
+          ) : (
+            <span className="text-3xl leading-none">☰</span>
+          )}
         </button>
 
         <nav className="hidden items-center gap-4 lg:flex lg:gap-5">
@@ -108,9 +112,9 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
             <Link
               key={link.href}
               href={link.href}
-              className={`text-[14px] transition-colors ${
+              className={`inline-flex px-1 text-[14px] transition-colors ${
                 isActive(link.href)
-                  ? "font-semibold text-slate-900"
+                  ? "font-semibold text-primary underline underline-offset-8 decoration-2 decoration-primary"
                   : "text-slate-700 hover:text-slate-900"
               }`}
             >
@@ -160,7 +164,7 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
                 href={link.href}
                 className={`w-full max-w-sm rounded-md px-2 py-2 text-center text-sm transition-colors hover:bg-black/5 hover:text-slate-900 ${
                   isActive(link.href)
-                    ? "bg-black/5 font-semibold text-slate-900"
+                    ? "bg-primary/10 font-semibold text-primary"
                     : "text-slate-700"
                 }`}
                 onClick={() => setMobileOpen(false)}

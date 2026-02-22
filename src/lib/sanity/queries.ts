@@ -81,3 +81,47 @@ export const homePageQuery = groq`
   }
 }
 `;
+
+export const experiencesPageQuery = groq`
+*[_type == "experiencesPage" && slug.current == "experiences"][0]{
+  "hero": {
+    "title": coalesce(hero.title[$locale], hero.title.en),
+    "tagline": coalesce(hero.tagline[$locale], hero.tagline.en),
+    "description": coalesce(hero.description[$locale], hero.description.en),
+    "ctaLabel": coalesce(hero.ctaLabel[$locale], hero.ctaLabel.en)
+  },
+  "statusLabels": {
+    "upcoming": coalesce(statusLabels.upcoming[$locale], statusLabels.upcoming.en),
+    "current": coalesce(statusLabels.current[$locale], statusLabels.current.en)
+  },
+  "categories": categories[]{
+    "label": coalesce(label[$locale], label.en),
+    "title": coalesce(title[$locale], title.en),
+    "description": coalesce(description[$locale], description.en),
+    "experiences": experiences[]{
+      "title": coalesce(title[$locale], title.en),
+      "description": coalesce(description[$locale], description.en),
+      "image": image.asset->url,
+      "imageAlt": coalesce(imageAlt[$locale], imageAlt.en),
+      isUpcoming
+    }
+  }
+}
+`;
+
+export const whatWeDoPageQuery = groq`
+*[_type == "whatWeDoPage" && slug.current == "what-we-do"][0]{
+  "hero": {
+    "title": coalesce(hero.title[$locale], hero.title.en),
+    "leadText": coalesce(hero.leadText[$locale], hero.leadText.en),
+    "secondaryText": coalesce(hero.secondaryText[$locale], hero.secondaryText.en),
+    "ctaLabel": coalesce(hero.ctaLabel[$locale], hero.ctaLabel.en)
+  },
+  "areas": areas[]{
+    "title": coalesce(title[$locale], title.en),
+    "descriptions": descriptions[]{
+      "text": coalesce(@[$locale], @.en)
+    }
+  }
+}
+`;
