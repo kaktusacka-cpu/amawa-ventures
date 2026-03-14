@@ -72,7 +72,7 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
     <header
       className={`sticky top-0 z-40 border-b border-white/40 bg-surface/35 backdrop-blur-xl backdrop-saturate-150 relative ${isScrolled ? "shadow-[0_8px_24px_rgba(15,23,42,0.06)]" : ""}`}
     >
-      <div className="mx-auto flex w-full max-w-[1800px] items-center justify-between px-4 py-4 sm:px-6 lg:h-16 lg:py-0 lg:px-8">
+      <div className="relative mx-auto flex w-full max-w-[1800px] items-center justify-between px-4 py-4 sm:px-6 lg:h-16 lg:py-0 lg:px-8">
         <Link href={`/${locale}`} className="inline-flex items-center text-xs font-semibold tracking-wide text-slate-900">
           <Image
             src="/logo-amawa-mark.svg"
@@ -106,12 +106,12 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
           )}
         </button>
 
-        <nav className="hidden items-center gap-4 lg:flex lg:gap-5">
+        <nav className="hidden lg:absolute lg:left-1/2 lg:flex lg:-translate-x-1/2 lg:items-center lg:gap-5">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className={`inline-flex px-1 text-[14px] font-medium transition-colors ${
+              className={`inline-flex px-2 py-2 text-base font-normal transition-colors ${
                 isActive(link.href)
                   ? "text-primary underline underline-offset-8 decoration-2 decoration-primary"
                   : "text-slate-700 hover:text-slate-900"
@@ -120,11 +120,12 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
               {link.label}
             </Link>
           ))}
+        </nav>
 
-          <div className="relative">
+        <div className="relative hidden lg:block">
             <button
               type="button"
-              className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-[14px] font-medium text-slate-700 hover:bg-black/5"
+              className="inline-flex items-center gap-1 rounded-md px-2 py-2 text-base font-normal text-slate-700 hover:bg-black/5"
               onClick={() => setLanguageOpen((prev) => !prev)}
               aria-expanded={languageOpen}
               aria-haspopup="menu"
@@ -137,11 +138,13 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
               <div className="absolute right-0 top-full mt-2 min-w-36 rounded-md border border-black/10 bg-surface p-1 shadow-md">
                 {locales
                   .filter((item) => item !== locale)
-                  .map((item) => (
+                  .map((item, index, arr) => (
                     <Link
                       key={item}
                       href={getLocalizedPath(pathname, item)}
-                      className="block rounded px-2 py-1.5 text-[11px] text-slate-700 hover:bg-black/5 hover:text-slate-900"
+                      className={`block rounded px-2 py-1.5 text-sm text-slate-700 hover:bg-black/5 hover:text-slate-900 ${
+                        index < arr.length - 1 ? "border-b border-black/10" : ""
+                      }`}
                       onClick={() => setLanguageOpen(false)}
                     >
                       {localeLabel[item]}
@@ -149,9 +152,7 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
                   ))}
               </div>
             ) : null}
-          </div>
-
-        </nav>
+        </div>
       </div>
 
       {mobileOpen ? (
@@ -161,7 +162,7 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`w-full max-w-sm rounded-md px-2 py-2 text-center text-sm transition-colors hover:bg-black/5 hover:text-slate-900 ${
+                className={`w-full max-w-sm rounded-md px-3 py-3 text-center text-base transition-colors hover:bg-black/5 hover:text-slate-900 ${
                   isActive(link.href)
                     ? "bg-primary/10 font-semibold text-primary"
                     : "text-slate-700"
@@ -173,10 +174,10 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
             ))}
 
             <div className="mt-2 flex w-full max-w-sm items-center justify-center px-2">
-              <div className="relative">
+              <div className="w-full">
                 <button
                   type="button"
-                  className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-sm text-slate-700 hover:bg-black/5"
+                  className="inline-flex w-full items-center justify-center gap-1 rounded-md px-3 py-3 text-base font-normal text-slate-700 hover:bg-black/5"
                   onClick={() => setMobileLanguageOpen((prev) => !prev)}
                   aria-expanded={mobileLanguageOpen}
                   aria-haspopup="menu"
@@ -186,14 +187,16 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
                 </button>
 
                 {mobileLanguageOpen ? (
-                  <div className="absolute left-0 top-full z-10 mt-1 min-w-36 rounded-md border border-black/10 bg-surface p-1 shadow-md">
+                  <div className="mt-1 w-full rounded-md border border-black/10 bg-surface p-1">
                     {locales
                       .filter((item) => item !== locale)
-                      .map((item) => (
+                      .map((item, index, arr) => (
                         <Link
                           key={item}
                           href={getLocalizedPath(pathname, item)}
-                          className="block rounded px-2 py-1.5 text-sm text-slate-700 hover:bg-black/5 hover:text-slate-900"
+                          className={`block w-full rounded px-2 py-2 text-center text-sm text-slate-700 hover:bg-black/5 hover:text-slate-900 ${
+                            index < arr.length - 1 ? "border-b border-black/10" : ""
+                          }`}
                           onClick={() => {
                             setMobileLanguageOpen(false);
                             setMobileOpen(false);

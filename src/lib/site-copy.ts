@@ -70,14 +70,11 @@ export type HomeCopy = {
   contact: {
     eyebrow: string;
     title: string;
-    formName: string;
-    formEmail: string;
-    formMessage: string;
-    formSubmit: string;
     callTitle: string;
     callDescription: string;
     callCta: string;
     connectTitle: string;
+    connectDescription: string;
     connectItems: string[];
   };
   footer: {
@@ -93,6 +90,43 @@ export type HomeCopy = {
     whatWeDoBody: string;
     collaborateTitle: string;
     collaborateBody: string;
+  };
+  aboutPage: {
+    heroIntro: string;
+    heroCta: string;
+    whoWeAreTitle: string;
+    whoWeAreIntro: string;
+    whoWeAreStrategicTitle: string;
+    whoWeAreStrategicBody: string;
+    whoWeAreLivedTitle: string;
+    whoWeAreLivedBody: string;
+    whoWeAreOutro: string;
+    whyTitle: string;
+    whyIntro: string;
+    whyAmaTitle: string;
+    whyAmaBody: string;
+    whyAwaTitle: string;
+    whyAwaBody: string;
+    whyVenturesTitle: string;
+    whyVenturesBody: string;
+    whyOutro: string;
+    philosophyTitle: string;
+    philosophyBeliefTitle: string;
+    philosophyBelief1: string;
+    philosophyBelief2: string;
+    philosophyBelief3: string;
+    philosophyOutro: string;
+    impactTitle: string;
+    impactMetric1Value: string;
+    impactMetric1Label: string;
+    impactMetric2Value: string;
+    impactMetric2Label: string;
+    impactMetric3Value: string;
+    impactMetric3Label: string;
+    impactNote1: string;
+    impactNote2: string;
+    ecosystemTitle: string;
+    ecosystemDescription: string;
   };
 };
 
@@ -201,15 +235,13 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
     contact: {
       eyebrow: "Get in touch",
       title: "If something here resonates, let's talk.",
-      formName: "Your name",
-      formEmail: "Your email",
-      formMessage: "Your message",
-      formSubmit: "Send message",
       callTitle: "Book a discovery call",
       callDescription:
         "Prefer a conversation? Schedule a free 30 minute call to explore how we can work together.",
       callCta: "Schedule a call",
       connectTitle: "Connect with us",
+      connectDescription:
+        "Follow our journey or reach out directly — we'd love to hear from you.",
       connectItems: ["Email", "Instagram", "LinkedIn"],
     },
     footer: {
@@ -229,6 +261,57 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       collaborateTitle: "Collaborate with Us",
       collaborateBody:
         "Looking for a partner in innovation and learning? Let's build something meaningful together.",
+    },
+    aboutPage: {
+      heroIntro:
+        "Amawa Ventures is a platform built on more than 15 years of experience in innovation, venture building and ecosystem development across Europe. We have worked with startups, universities, corporations and public institutions, designing acceleration programs, technology transfer initiatives and applied learning experiences connected to real-world challenges.",
+      heroCta: "Get in touch",
+      whoWeAreTitle: "Who We Are",
+      whoWeAreIntro:
+        "Amawa is shaped by two complementary forces: strategic depth and lived experience.",
+      whoWeAreStrategicTitle: "Strategic Depth",
+      whoWeAreStrategicBody:
+        "A strong foundation in innovation strategy, venture building and ecosystem design.",
+      whoWeAreLivedTitle: "Lived Experience",
+      whoWeAreLivedBody:
+        "A deep connection to nature, exploration and movement, through collaboration with experienced outdoor professionals from mountain environments to the sea.",
+      whoWeAreOutro:
+        "We also collaborate with people who have led pioneering expeditions and designed complex experiences in demanding natural settings. This balance between structure and wildness, strategy and presence, defines how we work.",
+      whyTitle: "Why Amawa Ventures",
+      whyIntro: "The name Amawa reflects what we stand for.",
+      whyAmaTitle: "Ama",
+      whyAmaBody:
+        "means love (in Spanish, it is the imperative form of amar: a call to love), a reminder that meaningful work begins with care, intention and human connection.",
+      whyAwaTitle: "Awa",
+      whyAwaBody:
+        "evokes communities that live in deep symbiosis with nature, a way of being that values balance, interdependence and respect for the environment.",
+      whyVenturesTitle: "Ventures",
+      whyVenturesBody:
+        "carries a complementary meaning. It speaks to the spirit of exploration: stepping into the unknown with courage and curiosity. It also speaks to entrepreneurship: building ideas, initiatives and companies, shaping what does not yet exist.",
+      whyOutro:
+        "Together, Amawa Ventures represents the balance between care and ambition, building innovation while staying grounded and connected to what is essential.",
+      philosophyTitle: "Our Philosophy",
+      philosophyBeliefTitle: "We believe",
+      philosophyBelief1:
+        "in learning that is lived and felt: learning that engages emotions, senses and experience, making it deeper and longer-lasting.",
+      philosophyBelief2: "in innovation with intention, not as a trend.",
+      philosophyBelief3:
+        "in the power of slowing down, observing and reconnecting with what truly matters.",
+      philosophyOutro:
+        "By combining strategy, experience and movement, often in contact with nature, we design the conditions for deeper learning, clearer thinking and lasting change.",
+      impactTitle: "Selected Impact",
+      impactMetric1Value: "200+",
+      impactMetric1Label: "startups supported",
+      impactMetric2Value: "6",
+      impactMetric2Label: "deep-tech ventures launched",
+      impactMetric3Value: "€3M+",
+      impactMetric3Label: "in public-private investment structures designed",
+      impactNote1:
+        "Acceleration and innovation programs delivered across corporate, academic and startup environments",
+      impactNote2: "International collaborations across Spain, Slovakia and Nepal",
+      ecosystemTitle: "Ecosystem & Collaborations",
+      ecosystemDescription:
+        "Our professional experience includes collaboration with leading organizations across innovation, education and impact ecosystems. From venture building and academia to public innovation and impact partners, this network enables cross-border learning and long-term collaboration.",
     },
   },
   es: {
@@ -335,15 +418,13 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
     contact: {
       eyebrow: "Contacto",
       title: "Si algo de esto resuena contigo, conversemos.",
-      formName: "Tu nombre",
-      formEmail: "Tu correo",
-      formMessage: "Tu mensaje",
-      formSubmit: "Enviar mensaje",
       callTitle: "Reserva una llamada",
       callDescription:
         "¿Prefieres conversar? Agenda una llamada gratuita de 30 minutos.",
       callCta: "Agendar llamada",
       connectTitle: "Conecta con nosotros",
+      connectDescription:
+        "Sigue nuestro camino o escríbenos directamente — nos encantaría saber de ti.",
       connectItems: ["Correo", "Instagram", "LinkedIn"],
     },
     footer: {
@@ -363,6 +444,57 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       collaborateTitle: "Colabora con nosotros",
       collaborateBody:
         "¿Buscas un aliado en innovación y aprendizaje? Construyamos algo valioso.",
+    },
+    aboutPage: {
+      heroIntro:
+        "Amawa Ventures es una plataforma construida sobre más de 15 años de experiencia en innovación, venture building y desarrollo de ecosistemas en Europa. Hemos trabajado con startups, universidades, corporaciones e instituciones públicas, diseñando programas de aceleración, iniciativas de transferencia tecnológica y experiencias de aprendizaje aplicado conectadas a retos reales.",
+      heroCta: "Contacto",
+      whoWeAreTitle: "Quiénes Somos",
+      whoWeAreIntro:
+        "Amawa está moldeada por dos fuerzas complementarias: profundidad estratégica y experiencia vivida.",
+      whoWeAreStrategicTitle: "Profundidad Estratégica",
+      whoWeAreStrategicBody:
+        "Una base sólida en estrategia de innovación, venture building y diseño de ecosistemas.",
+      whoWeAreLivedTitle: "Experiencia Vivida",
+      whoWeAreLivedBody:
+        "Una conexión profunda con la naturaleza, la exploración y el movimiento, a través de la colaboración con profesionales outdoor experimentados desde la montaña hasta el mar.",
+      whoWeAreOutro:
+        "También colaboramos con personas que han liderado expediciones pioneras y diseñado experiencias complejas en entornos naturales exigentes. Este equilibrio entre estructura y naturaleza, estrategia y presencia, define cómo trabajamos.",
+      whyTitle: "Por Qué Amawa Ventures",
+      whyIntro: "El nombre Amawa refleja lo que representamos.",
+      whyAmaTitle: "Ama",
+      whyAmaBody:
+        "significa amor (en español, es el imperativo de amar: una llamada a amar), recordándonos que el trabajo con sentido comienza con cuidado, intención y conexión humana.",
+      whyAwaTitle: "Awa",
+      whyAwaBody:
+        "evoca comunidades que viven en profunda simbiosis con la naturaleza, una forma de ser que valora el equilibrio, la interdependencia y el respeto por el entorno.",
+      whyVenturesTitle: "Ventures",
+      whyVenturesBody:
+        "aporta un significado complementario. Habla del espíritu de exploración: entrar en lo desconocido con valentía y curiosidad. También habla de emprendimiento: crear ideas, iniciativas y empresas, dando forma a lo que aún no existe.",
+      whyOutro:
+        "Juntas, Amawa Ventures representa el equilibrio entre cuidado y ambición, construyendo innovación sin perder lo esencial.",
+      philosophyTitle: "Nuestra Filosofía",
+      philosophyBeliefTitle: "Creemos",
+      philosophyBelief1:
+        "en un aprendizaje vivido y sentido: un aprendizaje que involucra emociones, sentidos y experiencia, haciéndolo más profundo y duradero.",
+      philosophyBelief2: "en la innovación con intención, no como tendencia.",
+      philosophyBelief3:
+        "en el poder de pausar, observar y reconectar con lo que realmente importa.",
+      philosophyOutro:
+        "Combinando estrategia, experiencia y movimiento, a menudo en contacto con la naturaleza, diseñamos las condiciones para un aprendizaje más profundo, pensamiento más claro y cambio duradero.",
+      impactTitle: "Impacto Seleccionado",
+      impactMetric1Value: "200+",
+      impactMetric1Label: "startups apoyadas",
+      impactMetric2Value: "6",
+      impactMetric2Label: "ventures deep-tech lanzadas",
+      impactMetric3Value: "€3M+",
+      impactMetric3Label: "en estructuras de inversión público-privada diseñadas",
+      impactNote1:
+        "Programas de aceleración e innovación ejecutados en entornos corporativos, académicos y startup",
+      impactNote2: "Colaboraciones internacionales en España, Eslovaquia y Nepal",
+      ecosystemTitle: "Ecosistema y Colaboraciones",
+      ecosystemDescription:
+        "Nuestra experiencia profesional incluye colaboración con organizaciones líderes en innovación, educación y ecosistemas de impacto. Desde venture building y academia hasta innovación pública y aliados de impacto, esta red habilita aprendizaje transfronterizo y colaboración a largo plazo.",
     },
   },
   sk: {
@@ -466,15 +598,13 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
     contact: {
       eyebrow: "Kontakt",
       title: "Ak vás to oslovilo, poďme sa porozprávať.",
-      formName: "Vaše meno",
-      formEmail: "Váš email",
-      formMessage: "Vaša správa",
-      formSubmit: "Odoslať správu",
       callTitle: "Rezervujte si hovor",
       callDescription:
         "Preferujete rozhovor? Rezervujte si bezplatný 30-minútový hovor.",
       callCta: "Rezervovať",
       connectTitle: "Spojte sa s nami",
+      connectDescription:
+        "Sledujte našu cestu alebo nás kontaktujte priamo — radi sa s vami spojíme.",
       connectItems: ["Email", "Instagram", "LinkedIn"],
     },
     footer: {
@@ -494,6 +624,57 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       collaborateTitle: "Spolupracujte s nami",
       collaborateBody:
         "Hľadáte partnera pre inovácie a učenie? Poďme niečo vytvoriť spolu.",
+    },
+    aboutPage: {
+      heroIntro:
+        "Amawa Ventures je platforma postavená na viac ako 15 rokoch skúseností v inováciách, venture buildingu a rozvoji ekosystémov naprieč Európou. Spolupracovali sme so startupmi, univerzitami, firmami aj verejnými inštitúciami, navrhovali akceleračné programy, iniciatívy transferu technológií a aplikované vzdelávacie skúsenosti pre reálne výzvy.",
+      heroCta: "Kontakt",
+      whoWeAreTitle: "Kto Sme",
+      whoWeAreIntro:
+        "Amawa je formovaná dvoma dopĺňajúcimi sa silami: strategickou hĺbkou a prežitou skúsenosťou.",
+      whoWeAreStrategicTitle: "Strategická Hĺbka",
+      whoWeAreStrategicBody:
+        "Silný základ v inovačnej stratégii, venture buildingu a dizajne ekosystémov.",
+      whoWeAreLivedTitle: "Prežitá Skúsenosť",
+      whoWeAreLivedBody:
+        "Hlboké prepojenie s prírodou, objavovaním a pohybom v spolupráci so skúsenými outdoor profesionálmi od horského prostredia až po more.",
+      whoWeAreOutro:
+        "Spolupracujeme aj s ľuďmi, ktorí viedli priekopnícke expedície a navrhovali komplexné skúsenosti v náročných prírodných podmienkach. Táto rovnováha medzi štruktúrou a divokosťou, stratégiou a prítomnosťou, definuje našu prácu.",
+      whyTitle: "Prečo Amawa Ventures",
+      whyIntro: "Názov Amawa odráža to, za čím stojíme.",
+      whyAmaTitle: "Ama",
+      whyAmaBody:
+        "znamená lásku (v španielčine ide o imperatív slovesa amar: výzvu milovať), pripomienku, že zmysluplná práca začína starostlivosťou, zámerom a ľudským prepojením.",
+      whyAwaTitle: "Awa",
+      whyAwaBody:
+        "evokuje komunity žijúce v hlbokej symbióze s prírodou, spôsob bytia, ktorý si ctí rovnováhu, vzájomnú závislosť a rešpekt k prostrediu.",
+      whyVenturesTitle: "Ventures",
+      whyVenturesBody:
+        "nesie dopĺňajúci význam. Hovorí o duchu objavovania: vstupovaní do neznáma s odvahou a zvedavosťou. Zároveň hovorí o podnikaní: budovaní nápadov, iniciatív a firiem, formovaní toho, čo ešte neexistuje.",
+      whyOutro:
+        "Spolu Amawa Ventures predstavuje rovnováhu medzi starostlivosťou a ambíciou, budovaním inovácií pri zachovaní prepojenia s tým podstatným.",
+      philosophyTitle: "Naša Filozofia",
+      philosophyBeliefTitle: "Veríme",
+      philosophyBelief1:
+        "v učenie, ktoré je prežité a precítené: učenie, ktoré zapája emócie, zmysly a skúsenosť, čím sa stáva hlbším a trvácnejším.",
+      philosophyBelief2: "v inovácie so zámerom, nie ako trend.",
+      philosophyBelief3:
+        "v silu spomaliť, pozorovať a znovu sa napojiť na to, čo je skutočne dôležité.",
+      philosophyOutro:
+        "Spájaním stratégie, skúsenosti a pohybu, často v kontakte s prírodou, vytvárame podmienky pre hlbšie učenie, jasnejšie myslenie a trvalú zmenu.",
+      impactTitle: "Vybraný Dopad",
+      impactMetric1Value: "200+",
+      impactMetric1Label: "podporených startupov",
+      impactMetric2Value: "6",
+      impactMetric2Label: "spustených deep-tech venture projektov",
+      impactMetric3Value: "€3M+",
+      impactMetric3Label: "navrhnutých verejno-súkromných investičných štruktúr",
+      impactNote1:
+        "Akceleračné a inovačné programy realizované v korporátnom, akademickom a startup prostredí",
+      impactNote2: "Medzinárodné spolupráce v Španielsku, na Slovensku a v Nepále",
+      ecosystemTitle: "Ekosystém a Spolupráce",
+      ecosystemDescription:
+        "Naše profesionálne skúsenosti zahŕňajú spoluprácu s poprednými organizáciami v oblasti inovácií, vzdelávania a impact ekosystémov. Od venture buildingu a akademického prostredia po verejné inovácie a impact partnerov, táto sieť umožňuje cezhraničné učenie a dlhodobú spoluprácu.",
     },
   },
 };

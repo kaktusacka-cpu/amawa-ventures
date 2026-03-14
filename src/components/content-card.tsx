@@ -27,18 +27,24 @@ export function ContentCard({ title, description, cta, image, imageAlt, href }: 
       )}
       <div className="flex flex-col gap-4 px-6 pt-6 pb-6">
         <div className="space-y-2">
-          <div className="text-[20px] font-semibold leading-none">{title}</div>
-          <div className="text-muted-foreground text-base leading-5 font-extralight">{description}</div>
+          <div className="text-[18px] font-medium leading-none">{title}</div>
+          <div className="text-muted-foreground text-base leading-5 font-normal">{description}</div>
         </div>
         {href ? (
-          <span className="inline-flex items-center gap-1.5 text-base font-medium text-[#cd6f3f] self-start cursor-pointer">
+          <span className="text-base font-medium text-[#cd6f3f] self-start cursor-pointer inline-flex items-center gap-2">
             {cta}
-            <Image src="/go-right.svg" alt="" width={16} height={16} />
+            <span
+              aria-hidden="true"
+              className="inline-block h-[1em] w-[1em] bg-current transition-transform duration-200 ease-out group-hover:translate-x-0.5 [mask:url('/forward.svg')_center/contain_no-repeat] [-webkit-mask:url('/forward.svg')_center/contain_no-repeat]"
+            />
           </span>
         ) : (
-          <Button variant="link" className="h-auto p-0 text-base font-medium text-[#cd6f3f] gap-1.5 self-start">
+          <Button variant="link" className="group h-auto p-0 text-base font-medium text-[#cd6f3f] self-start inline-flex items-center gap-2">
             {cta}
-            <Image src="/go-right.svg" alt="" width={16} height={16} />
+            <span
+              aria-hidden="true"
+              className="inline-block h-[1em] w-[1em] bg-current transition-transform duration-200 ease-out group-hover:translate-x-0.5 [mask:url('/forward.svg')_center/contain_no-repeat] [-webkit-mask:url('/forward.svg')_center/contain_no-repeat]"
+            />
           </Button>
         )}
       </div>
@@ -49,7 +55,7 @@ export function ContentCard({ title, description, cta, image, imageAlt, href }: 
     return (
       <Link
         href={href}
-        className={`block overflow-hidden rounded-xl border border-[#e4e6e8] shadow-none cursor-pointer transition-colors ${image ? "bg-surface-alt hover:bg-surface-alt-hover" : "bg-surface hover:bg-surface-hover"}`}
+        className={`group block overflow-hidden rounded-xl border border-[#e4e6e8] shadow-none cursor-pointer transition-colors ${image ? "bg-surface-alt hover:bg-surface-alt-hover" : "bg-white hover:bg-surface-hover"}`}
       >
         {cardContent}
       </Link>
@@ -57,7 +63,7 @@ export function ContentCard({ title, description, cta, image, imageAlt, href }: 
   }
 
   return (
-    <div className={`overflow-hidden rounded-xl border border-[#e4e6e8] shadow-none ${image ? "bg-surface-alt" : "bg-surface"}`}>
+    <div className={`overflow-hidden rounded-xl border border-[#e4e6e8] shadow-none ${image ? "bg-surface-alt" : "bg-white"}`}>
       {cardContent}
     </div>
   );

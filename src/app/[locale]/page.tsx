@@ -49,7 +49,7 @@ export default async function HomePage({
             {content.hero.lead} <span className="text-amber-600 font-medium">{content.hero.thinkWord}</span>, act
             with intention and <span className="text-emerald-700 font-medium">{content.hero.growWord}</span>.
           </p>
-          <p className="mx-auto mt-4 max-w-3xl text-base leading-7 text-muted-foreground">
+          <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-muted-foreground">
             {content.hero.subLead}
           </p>
 
@@ -186,7 +186,7 @@ export default async function HomePage({
                   <p className="mt-3 text-base leading-7 text-slate-700">
                     {content.contact.callDescription}
                   </p>
-                  <Button variant="outline" className="mt-4 h-10 rounded-full px-6 text-base bg-white hover:bg-surface-hover cursor-pointer">
+                  <Button variant="outline" className="mt-4 h-10 rounded-full px-6 text-base bg-white cursor-pointer">
                     {content.contact.callCta}
                   </Button>
                 </div>
@@ -196,6 +196,9 @@ export default async function HomePage({
                   <h3 className="font-display text-2xl text-slate-900">
                     {content.contact.connectTitle}
                   </h3>
+                  <p className="mt-3 text-base leading-7 text-slate-700">
+                    {content.contact.connectDescription}
+                  </p>
                   <div className="mt-4 flex gap-4">
                     {[
                       {
@@ -219,7 +222,7 @@ export default async function HomePage({
                         asChild
                         variant="outline"
                         size="icon"
-                        className="h-13 w-13 rounded-full bg-white p-4 hover:bg-surface-hover cursor-pointer"
+                        className="h-13 w-13 rounded-full bg-white p-4 cursor-pointer"
                       >
                         <a href={social.href} aria-label={social.label} target="_blank" rel="noopener noreferrer">
                           <Image src={social.icon} alt={social.label} width={socialIconSize} height={socialIconSize} />

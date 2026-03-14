@@ -26,7 +26,7 @@ export default async function LocaleLayout({
   return (
     <div className="flex min-h-screen flex-col bg-surface">
       <SiteNavbar locale={locale as Locale} labels={content.nav} />
-      <div className="flex-1">{children}</div>
+      <div className="page-appear flex-1">{children}</div>
       <SiteFooter brand={content.footer.brand} copyright={content.footer.copyright} />
     </div>
   );

@@ -55,6 +55,14 @@ export function TestimonialsSlider({ items }: TestimonialsSliderProps) {
     }, 5000);
   };
 
+  const handlePrev = () => {
+    handleDotClick((activeIndex - 1 + items.length) % items.length);
+  };
+
+  const handleNext = () => {
+    handleDotClick((activeIndex + 1) % items.length);
+  };
+
   if (!active) return null;
 
   return (
@@ -85,20 +93,40 @@ export function TestimonialsSlider({ items }: TestimonialsSliderProps) {
       <p className="mt-7 text-base font-medium">{active.author}</p>
       <p className="text-sm text-muted-foreground">{active.role}</p>
 
-      <div className="mt-5 flex items-center justify-center gap-2">
-        {items.map((item, index) => (
-          <button
-            key={`${item.author}-${index}`}
-            type="button"
-            onClick={() => handleDotClick(index)}
-            className={`h-2.5 w-2.5 rounded-full transition-colors ${
-              index === activeIndex ? "bg-primary" : "bg-slate-300 hover:bg-slate-400"
-            }`}
-            style={{ color: "rgba(15, 23, 43, 1)" }}
-            aria-label={`Go to testimonial ${index + 1}`}
-            aria-current={index === activeIndex}
-          />
-        ))}
+      <div className="mt-5 flex items-center justify-center gap-4">
+        <button
+          type="button"
+          onClick={handlePrev}
+          className="inline-flex h-8 w-8 items-center justify-center rounded-full transition-opacity hover:opacity-80"
+          aria-label="Previous testimonial"
+        >
+          <Image src="/go-left.svg" alt="" width={20} height={20} aria-hidden="true" />
+        </button>
+
+        <div className="flex items-center justify-center gap-2">
+          {items.map((item, index) => (
+            <button
+              key={`${item.author}-${index}`}
+              type="button"
+              onClick={() => handleDotClick(index)}
+              className={`h-2.5 w-2.5 rounded-full transition-colors ${
+                index === activeIndex ? "bg-primary" : "bg-slate-300 hover:bg-slate-400"
+              }`}
+              style={{ color: "rgba(15, 23, 43, 1)" }}
+              aria-label={`Go to testimonial ${index + 1}`}
+              aria-current={index === activeIndex}
+            />
+          ))}
+        </div>
+
+        <button
+          type="button"
+          onClick={handleNext}
+          className="inline-flex h-8 w-8 items-center justify-center rounded-full transition-opacity hover:opacity-80"
+          aria-label="Next testimonial"
+        >
+          <Image src="/go-right.svg" alt="" width={20} height={20} aria-hidden="true" />
+        </button>
       </div>
     </div>
   );

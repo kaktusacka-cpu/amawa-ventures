@@ -86,6 +86,7 @@ export const getHomePageContent = cache(
       const contact = getRows(allRows, "contact");
       const footer = getRows(allRows, "footer");
       const pages = getRows(allRows, "pages");
+      const aboutPage = getRows(allRows, "aboutPage");
 
       // Fetch dynamic items from separate databases
       const [pathCardItems, coreCardItems, metricItems, contactItemRows] = await Promise.all([
@@ -157,14 +158,11 @@ export const getHomePageContent = cache(
         contact: {
           eyebrow: t(contact, "eyebrow", locale) || fallback.contact.eyebrow,
           title: t(contact, "title", locale) || fallback.contact.title,
-          formName: t(contact, "formName", locale) || fallback.contact.formName,
-          formEmail: t(contact, "formEmail", locale) || fallback.contact.formEmail,
-          formMessage: t(contact, "formMessage", locale) || fallback.contact.formMessage,
-          formSubmit: t(contact, "formSubmit", locale) || fallback.contact.formSubmit,
           callTitle: t(contact, "callTitle", locale) || fallback.contact.callTitle,
           callDescription: t(contact, "callDescription", locale) || fallback.contact.callDescription,
           callCta: t(contact, "callCta", locale) || fallback.contact.callCta,
           connectTitle: t(contact, "connectTitle", locale) || fallback.contact.connectTitle,
+          connectDescription: t(contact, "connectDescription", locale) || fallback.contact.connectDescription,
           connectItems: connectItems.length > 0 ? connectItems : fallback.contact.connectItems,
         },
         footer: {
@@ -180,6 +178,47 @@ export const getHomePageContent = cache(
           whatWeDoBody: t(pages, "whatWeDoBody", locale) || fallback.pages.whatWeDoBody,
           collaborateTitle: t(pages, "collaborateTitle", locale) || fallback.pages.collaborateTitle,
           collaborateBody: t(pages, "collaborateBody", locale) || fallback.pages.collaborateBody,
+        },
+        aboutPage: {
+          heroIntro: t(aboutPage, "heroIntro", locale) || fallback.aboutPage.heroIntro,
+          heroCta: t(aboutPage, "heroCta", locale) || fallback.aboutPage.heroCta,
+          whoWeAreTitle: t(aboutPage, "whoWeAreTitle", locale) || fallback.aboutPage.whoWeAreTitle,
+          whoWeAreIntro: t(aboutPage, "whoWeAreIntro", locale) || fallback.aboutPage.whoWeAreIntro,
+          whoWeAreStrategicTitle:
+            t(aboutPage, "whoWeAreStrategicTitle", locale) || fallback.aboutPage.whoWeAreStrategicTitle,
+          whoWeAreStrategicBody:
+            t(aboutPage, "whoWeAreStrategicBody", locale) || fallback.aboutPage.whoWeAreStrategicBody,
+          whoWeAreLivedTitle: t(aboutPage, "whoWeAreLivedTitle", locale) || fallback.aboutPage.whoWeAreLivedTitle,
+          whoWeAreLivedBody: t(aboutPage, "whoWeAreLivedBody", locale) || fallback.aboutPage.whoWeAreLivedBody,
+          whoWeAreOutro: t(aboutPage, "whoWeAreOutro", locale) || fallback.aboutPage.whoWeAreOutro,
+          whyTitle: t(aboutPage, "whyTitle", locale) || fallback.aboutPage.whyTitle,
+          whyIntro: t(aboutPage, "whyIntro", locale) || fallback.aboutPage.whyIntro,
+          whyAmaTitle: t(aboutPage, "whyAmaTitle", locale) || fallback.aboutPage.whyAmaTitle,
+          whyAmaBody: t(aboutPage, "whyAmaBody", locale) || fallback.aboutPage.whyAmaBody,
+          whyAwaTitle: t(aboutPage, "whyAwaTitle", locale) || fallback.aboutPage.whyAwaTitle,
+          whyAwaBody: t(aboutPage, "whyAwaBody", locale) || fallback.aboutPage.whyAwaBody,
+          whyVenturesTitle: t(aboutPage, "whyVenturesTitle", locale) || fallback.aboutPage.whyVenturesTitle,
+          whyVenturesBody: t(aboutPage, "whyVenturesBody", locale) || fallback.aboutPage.whyVenturesBody,
+          whyOutro: t(aboutPage, "whyOutro", locale) || fallback.aboutPage.whyOutro,
+          philosophyTitle: t(aboutPage, "philosophyTitle", locale) || fallback.aboutPage.philosophyTitle,
+          philosophyBeliefTitle:
+            t(aboutPage, "philosophyBeliefTitle", locale) || fallback.aboutPage.philosophyBeliefTitle,
+          philosophyBelief1: t(aboutPage, "philosophyBelief1", locale) || fallback.aboutPage.philosophyBelief1,
+          philosophyBelief2: t(aboutPage, "philosophyBelief2", locale) || fallback.aboutPage.philosophyBelief2,
+          philosophyBelief3: t(aboutPage, "philosophyBelief3", locale) || fallback.aboutPage.philosophyBelief3,
+          philosophyOutro: t(aboutPage, "philosophyOutro", locale) || fallback.aboutPage.philosophyOutro,
+          impactTitle: t(aboutPage, "impactTitle", locale) || fallback.aboutPage.impactTitle,
+          impactMetric1Value: t(aboutPage, "impactMetric1Value", locale) || fallback.aboutPage.impactMetric1Value,
+          impactMetric1Label: t(aboutPage, "impactMetric1Label", locale) || fallback.aboutPage.impactMetric1Label,
+          impactMetric2Value: t(aboutPage, "impactMetric2Value", locale) || fallback.aboutPage.impactMetric2Value,
+          impactMetric2Label: t(aboutPage, "impactMetric2Label", locale) || fallback.aboutPage.impactMetric2Label,
+          impactMetric3Value: t(aboutPage, "impactMetric3Value", locale) || fallback.aboutPage.impactMetric3Value,
+          impactMetric3Label: t(aboutPage, "impactMetric3Label", locale) || fallback.aboutPage.impactMetric3Label,
+          impactNote1: t(aboutPage, "impactNote1", locale) || fallback.aboutPage.impactNote1,
+          impactNote2: t(aboutPage, "impactNote2", locale) || fallback.aboutPage.impactNote2,
+          ecosystemTitle: t(aboutPage, "ecosystemTitle", locale) || fallback.aboutPage.ecosystemTitle,
+          ecosystemDescription:
+            t(aboutPage, "ecosystemDescription", locale) || fallback.aboutPage.ecosystemDescription,
         },
       };
     } catch {

@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { isLocale, type Locale } from "@/lib/i18n";
 import { getHomePageContent } from "@/lib/notion/get-content";
 
+const socialIconSize = 20;
+
 export default async function CollaboratePage({
   params,
 }: {
@@ -13,17 +15,16 @@ export default async function CollaboratePage({
   if (!isLocale(locale)) notFound();
 
   const content = await getHomePageContent(locale as Locale);
-  const socialIconSize = 28;
 
   return (
     <main className="bg-surface text-slate-900 flex flex-col justify-center items-center">
       <section className="w-full px-4 py-[80px] sm:px-6 md:py-[60px] lg:py-[160px] lg:px-8 flex flex-col justify-center items-center bg-surface">
         <div className="w-full max-w-[1000px] text-center space-y-2 sm:space-y-6">
           <p className="text-base uppercase tracking-[0.24em] text-emerald-700 sm:text-base">
-            Get in touch
+            {content.contact.eyebrow}
           </p>
           <h1 className="font-display text-3xl md:text-5xl lg:text-6xl text-slate-900">
-            If something here resonates, let&apos;s talk.
+            {content.contact.title}
           </h1>
           <p className="mx-auto max-w-3xl text-base leading-7 text-slate-700">
             {content.pages.collaborateBody}
@@ -39,8 +40,10 @@ export default async function CollaboratePage({
                 <p className="mt-3 text-base leading-7 text-slate-700">
                   {content.contact.callDescription}
                 </p>
-                <Button variant="outline" className="mt-4 h-10 rounded-full px-6 text-base bg-white hover:bg-surface-alt-hover cursor-pointer">
-                  {content.contact.callCta}
+                <Button asChild variant="outline" className="mt-4 h-10 rounded-full px-6 text-base bg-white cursor-pointer">
+                  <a href={`/${locale}/collaborate`}>
+                    {content.contact.callCta}
+                  </a>
                 </Button>
               </div>
               <div className="hidden w-px bg-[#d8d8ea] md:my-8 md:block" />
@@ -49,6 +52,9 @@ export default async function CollaboratePage({
                 <h3 className="font-display text-2xl text-slate-900">
                   {content.contact.connectTitle}
                 </h3>
+                <p className="mt-3 text-base leading-7 text-slate-700">
+                  {content.contact.connectDescription}
+                </p>
                 <div className="mt-4 flex gap-4">
                   {[
                     {
@@ -72,7 +78,7 @@ export default async function CollaboratePage({
                       asChild
                       variant="outline"
                       size="icon"
-                      className="h-13 w-13 rounded-full bg-white p-4 hover:bg-surface-alt-hover cursor-pointer"
+                      className="h-13 w-13 rounded-full bg-white p-4 cursor-pointer"
                     >
                       <a href={social.href} aria-label={social.label} target="_blank" rel="noopener noreferrer">
                         <Image src={social.icon} alt={social.label} width={socialIconSize} height={socialIconSize} />
