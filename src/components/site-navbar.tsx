@@ -1,9 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { ChevronDown } from "lucide-react";
 import { locales, type Locale } from "@/lib/i18n";
 
@@ -35,6 +34,7 @@ function getLocalizedPath(pathname: string, locale: Locale): string {
 
 export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
   const pathname = usePathname();
+  const hasMounted = useRef(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [languageOpen, setLanguageOpen] = useState(false);
   const [mobileLanguageOpen, setMobileLanguageOpen] = useState(false);
@@ -68,12 +68,51 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    if (!hasMounted.current) {
+      hasMounted.current = true;
+      return;
+    }
+
+    if (window.location.hash) return;
+
+    // Force route changes to start at top immediately.
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  const handleNavRouteClick = () => {
+    setMobileOpen(false);
+    setLanguageOpen(false);
+    setMobileLanguageOpen(false);
+  };
+
+  const handleHardNavigate = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (
+      event.defaultPrevented ||
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey
+    ) {
+      return;
+    }
+
+    event.preventDefault();
+    handleNavRouteClick();
+    window.location.href = href;
+  };
+
   return (
     <header
       className={`sticky top-0 z-40 border-b border-white/40 bg-surface/35 backdrop-blur-xl backdrop-saturate-150 relative ${isScrolled ? "shadow-[0_8px_24px_rgba(15,23,42,0.06)]" : ""}`}
     >
       <div className="relative mx-auto flex w-full max-w-[1800px] items-center justify-between px-4 py-4 sm:px-6 lg:h-16 lg:py-0 lg:px-8">
-        <Link href={`/${locale}`} className="inline-flex items-center text-xs font-semibold tracking-wide text-slate-900">
+        <a
+          href={`/${locale}`}
+          onClick={(event) => handleHardNavigate(event, `/${locale}`)}
+          className="inline-flex items-center text-xs font-semibold tracking-wide text-slate-900"
+        >
           <Image
             src="/logo-amawa-mark.svg"
             alt="Amawa"
@@ -90,7 +129,7 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
             className="hidden h-8 max-h-4 w-auto lg:block"
             priority
           />
-        </Link>
+        </a>
 
         <button
           type="button"
@@ -108,9 +147,10 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
 
         <nav className="hidden lg:absolute lg:left-1/2 lg:flex lg:-translate-x-1/2 lg:items-center lg:gap-5">
           {navLinks.map((link) => (
-            <Link
+            <a
               key={link.href}
               href={link.href}
+              onClick={(event) => handleHardNavigate(event, link.href)}
               className={`inline-flex px-2 py-2 text-base font-normal transition-colors ${
                 isActive(link.href)
                   ? "text-primary underline underline-offset-8 decoration-2 decoration-primary"
@@ -118,7 +158,7 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
               }`}
             >
               {link.label}
-            </Link>
+            </a>
           ))}
         </nav>
 
@@ -138,18 +178,21 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
               <div className="absolute right-0 top-full mt-2 min-w-36 rounded-md border border-black/10 bg-surface p-1 shadow-md">
                 {locales
                   .filter((item) => item !== locale)
-                  .map((item, index, arr) => (
-                    <Link
+                  .map((item, index, arr) => {
+                    const localizedPath = getLocalizedPath(pathname, item);
+                    return (
+                    <a
                       key={item}
-                      href={getLocalizedPath(pathname, item)}
+                      href={localizedPath}
                       className={`block rounded px-2 py-1.5 text-sm text-slate-700 hover:bg-black/5 hover:text-slate-900 ${
                         index < arr.length - 1 ? "border-b border-black/10" : ""
                       }`}
-                      onClick={() => setLanguageOpen(false)}
+                      onClick={(event) => handleHardNavigate(event, localizedPath)}
                     >
                       {localeLabel[item]}
-                    </Link>
-                  ))}
+                    </a>
+                    );
+                  })}
               </div>
             ) : null}
         </div>
@@ -159,7 +202,7 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
         <div className="absolute left-0 right-0 top-full z-50 border-t border-black/10 bg-surface-alt lg:hidden">
           <nav className="mx-auto flex w-full max-w-[1800px] flex-col items-center gap-1 px-4 py-4 sm:px-6">
             {navLinks.map((link) => (
-              <Link
+              <a
                 key={link.href}
                 href={link.href}
                 className={`w-full max-w-sm rounded-md px-3 py-3 text-center text-base transition-colors hover:bg-black/5 hover:text-slate-900 ${
@@ -167,10 +210,10 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
                     ? "bg-primary/10 font-semibold text-primary"
                     : "text-slate-700"
                 }`}
-                onClick={() => setMobileOpen(false)}
+                onClick={(event) => handleHardNavigate(event, link.href)}
               >
                 {link.label}
-              </Link>
+              </a>
             ))}
 
             <div className="mt-2 flex w-full max-w-sm items-center justify-center px-2">
@@ -190,21 +233,21 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
                   <div className="mt-1 w-full rounded-md border border-black/10 bg-surface p-1">
                     {locales
                       .filter((item) => item !== locale)
-                      .map((item, index, arr) => (
-                        <Link
+                      .map((item, index, arr) => {
+                        const localizedPath = getLocalizedPath(pathname, item);
+                        return (
+                        <a
                           key={item}
-                          href={getLocalizedPath(pathname, item)}
+                          href={localizedPath}
                           className={`block w-full rounded px-2 py-2 text-center text-sm text-slate-700 hover:bg-black/5 hover:text-slate-900 ${
                             index < arr.length - 1 ? "border-b border-black/10" : ""
                           }`}
-                          onClick={() => {
-                            setMobileLanguageOpen(false);
-                            setMobileOpen(false);
-                          }}
+                          onClick={(event) => handleHardNavigate(event, localizedPath)}
                         >
                           {localeLabel[item]}
-                        </Link>
-                      ))}
+                        </a>
+                        );
+                      })}
                   </div>
                 ) : null}
               </div>
