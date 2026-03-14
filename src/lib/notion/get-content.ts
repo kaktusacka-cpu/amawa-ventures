@@ -13,10 +13,16 @@ import {
   DB_IDS,
   fetchRows,
   fetchExperienceItems,
+  fetchCardItems,
+  fetchMetricItems,
+  fetchContactItems,
   getRows,
   getText,
   type NotionRow,
   type ExperienceItemRow,
+  type CardItemRow,
+  type MetricItemRow,
+  type ContactItemRow,
 } from "./client";
 
 function t(rows: NotionRow[], field: string, locale: string): string {
@@ -36,24 +42,28 @@ function itemToExperience(item: ExperienceItemRow, locale: string) {
   };
 }
 
-function buildCards(
-  allRows: NotionRow[],
-  sectionPrefix: string,
-  count: number,
-  locale: string,
-  fields: string[],
-) {
-  const cards = [];
-  for (let i = 1; i <= count; i++) {
-    const rows = getRows(allRows, `${sectionPrefix}.${i}`);
-    if (rows.length === 0) break;
-    const card: Record<string, string> = {};
-    for (const f of fields) {
-      card[f] = t(rows, f, locale);
-    }
-    cards.push(card);
-  }
-  return cards;
+function cardItemToCard(item: CardItemRow, locale: string) {
+  const titleMap: Record<string, string> = { en: item.enTitle, es: item.esTitle, sk: item.skTitle };
+  const descMap: Record<string, string> = { en: item.enDescription, es: item.esDescription, sk: item.skDescription };
+  const ctaMap: Record<string, string> = { en: item.enCta, es: item.esCta, sk: item.skCta };
+  return {
+    title: titleMap[locale] || item.enTitle,
+    description: descMap[locale] || item.enDescription,
+    cta: ctaMap[locale] || item.enCta,
+  };
+}
+
+function metricItemToMetric(item: MetricItemRow, locale: string) {
+  const labelMap: Record<string, string> = { en: item.enLabel, es: item.esLabel, sk: item.skLabel };
+  return {
+    value: item.value,
+    label: labelMap[locale] || item.enLabel,
+  };
+}
+
+function contactItemToLabel(item: ContactItemRow, locale: string) {
+  const labelMap: Record<string, string> = { en: item.enLabel, es: item.esLabel, sk: item.skLabel };
+  return labelMap[locale] || item.enLabel;
 }
 
 export const getHomePageContent = cache(
@@ -77,26 +87,18 @@ export const getHomePageContent = cache(
       const footer = getRows(allRows, "footer");
       const pages = getRows(allRows, "pages");
 
-      const pathCards = buildCards(allRows, "paths.card", 3, locale, ["title", "description", "cta"]);
-      const coreCards = buildCards(allRows, "coreWork.card", 4, locale, ["title", "description", "cta"]);
+      // Fetch dynamic items from separate databases
+      const [pathCardItems, coreCardItems, metricItems, contactItemRows] = await Promise.all([
+        DB_IDS.pathCards ? fetchCardItems(DB_IDS.pathCards) : [],
+        DB_IDS.coreWorkCards ? fetchCardItems(DB_IDS.coreWorkCards) : [],
+        DB_IDS.impactMetrics ? fetchMetricItems(DB_IDS.impactMetrics) : [],
+        DB_IDS.contactItems ? fetchContactItems(DB_IDS.contactItems) : [],
+      ]);
 
-      const metrics = [];
-      for (let i = 1; i <= 4; i++) {
-        const mRows = getRows(allRows, `impact.metric.${i}`);
-        if (mRows.length === 0) break;
-        const row = mRows[0];
-        metrics.push({
-          value: row.value || "",
-          label: t(mRows, "label", locale),
-        });
-      }
-
-      const connectItems = [];
-      for (let i = 1; i <= 5; i++) {
-        const iRows = getRows(allRows, `contact.item.${i}`);
-        if (iRows.length === 0) break;
-        connectItems.push(t(iRows, "label", locale));
-      }
+      const pathCards = pathCardItems.map((item) => cardItemToCard(item, locale));
+      const coreCards = coreCardItems.map((item) => cardItemToCard(item, locale));
+      const metrics = metricItems.map((item) => metricItemToMetric(item, locale));
+      const connectItems = contactItemRows.map((item) => contactItemToLabel(item, locale));
 
       return {
         nav: {

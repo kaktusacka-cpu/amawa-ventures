@@ -18,7 +18,7 @@ export function MeaningTabs({ items }: MeaningTabsProps) {
   if (!activeItem) return null;
 
   return (
-    <div className="rounded-xl border border-[#d8d8ea] bg-[#FAF8F5] p-5">
+    <div className="rounded-xl border border-[#d8d8ea] bg-surface p-5">
       <div className="flex flex-wrap gap-2">
         {items.map((item, index) => {
           const isActive = index === activeIndex;
@@ -29,8 +29,8 @@ export function MeaningTabs({ items }: MeaningTabsProps) {
               onClick={() => setActiveIndex(index)}
               className={`rounded-full border px-3 py-1 text-sm transition-colors ${
                 isActive
-                  ? "border-[#c9d7ea] bg-[#F3F1ED] text-slate-900"
-                  : "border-[#d8d8ea] bg-[#FAF8F5] text-slate-700 hover:bg-[#F3F1ED]"
+                  ? "border-[#c9d7ea] bg-surface-alt text-slate-900"
+                  : "border-[#d8d8ea] bg-surface text-slate-700 hover:bg-surface-alt"
               }`}
             >
               {item.title}
@@ -39,7 +39,7 @@ export function MeaningTabs({ items }: MeaningTabsProps) {
         })}
       </div>
 
-      <div className="mt-4 rounded-lg border border-[#d8d8ea] bg-[#F3F1ED] p-4">
+      <div className="mt-4 rounded-lg border border-[#d8d8ea] bg-surface-alt p-4">
         <h3 className="font-display text-2xl text-slate-900">{activeItem.title}</h3>
         <p className="mt-2 text-base leading-7 text-slate-700">{activeItem.description}</p>
       </div>

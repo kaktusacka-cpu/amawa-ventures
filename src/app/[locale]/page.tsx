@@ -1,20 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ContactForm } from "@/components/contact-form";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Divider } from "@/components/ui/divider";
+import { ContentCard } from "@/components/content-card";
 import { AnimatedMetrics } from "@/components/animated-metrics";
 import { TestimonialsSlider } from "@/components/testimonials-slider";
 import { isLocale, type Locale } from "@/lib/i18n";
-import { getHomePageContent } from "@/lib/sanity/get-home-page-content";
+import { getHomePageContent } from "@/lib/notion/get-content";
 
 export default async function HomePage({
   params,
@@ -45,7 +37,7 @@ export default async function HomePage({
   ];
 
   return (
-    <main className="bg-[#FAF8F5] text-slate-900">
+    <main className="bg-surface text-slate-900">
       <section className="w-full px-4 pt-[80px] sm:px-6 md:pt-[60px] lg:pt-[160px] lg:px-8 flex flex-col justify-center items-center">
         <div className="w-full max-w-[1000px] text-center">
           <p className="text-base uppercase tracking-[0.24em] text-emerald-700 sm:text-base">
@@ -74,11 +66,11 @@ export default async function HomePage({
 
       <div className="h-[80px] sm:h-[160px]" />
 
-      <div className="relative z-10 mx-auto flex aspect-[1920/1080] w-[calc(100%-2rem)] max-w-5xl items-center justify-center rounded-2xl border border-[#d8d8ea] bg-[#FAF8F5]">
+      <div className="relative z-10 mx-auto flex aspect-[1920/1080] w-[calc(100%-2rem)] max-w-5xl items-center justify-center rounded-2xl border border-[#d8d8ea] bg-surface">
         <span className="text-xs text-[#6559dd]">{content.hero.videoPlaceholder}</span>
       </div>
 
-      <section className="relative -mt-[96px] bg-[#F3F1ED] pb-[80px] pt-[176px] sm:-mt-[288px] sm:pb-[160px] sm:pt-[448px]">
+      <section className="relative -mt-[96px] bg-surface-alt pb-[80px] pt-[176px] sm:-mt-[288px] sm:pb-[160px] sm:pt-[448px]">
         <div className="mx-auto max-w-xl px-4 text-center sm:px-6">
           <Image
             src="/logo-amawa-mark.svg"
@@ -95,53 +87,46 @@ export default async function HomePage({
       <section className="mx-auto max-w-5xl px-4 py-[80px] sm:px-6 md:py-[60px] lg:py-[160px] flex flex-col justify-center items-center">
         <h2 className="font-display text-center text-[32px] sm:text-5xl">{content.paths.title}</h2>
         <div className="mt-9 grid w-full gap-6 md:grid-cols-3">
-          {content.paths.cards.map((card, index) => (
-            <Card key={card.title} className="overflow-hidden border-[#e4e6e8] bg-[#FAF8F5] shadow-none pt-0 pb-0 w-full mw-[460px]">
-              <div
-                className="h-[180px]"
-                style={{
-                  background:
-                    index === 0
-                      ? "linear-gradient(140deg,#c6dff5,#95bad6)"
-                      : index === 1
-                        ? "linear-gradient(140deg,#bad7ed,#d3e5cf)"
-                        : "linear-gradient(140deg,#b4d0ea,#b5d8bc)",
-                }}
+          {content.paths.cards.map((card, index) => {
+            const cardImages = [
+              "https://images.unsplash.com/photo-1551632811-561732d1e306?w=600&h=360&fit=crop",
+              "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&h=360&fit=crop",
+              "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600&h=360&fit=crop",
+            ];
+            const cardAnchors = ["individuals", "teams", "ecosystems"];
+            return (
+              <ContentCard
+                key={card.title}
+                title={card.title}
+                description={card.description}
+                cta={card.cta}
+                image={cardImages[index]}
+                href={`/${locale}/experiences#${cardAnchors[index]}`}
               />
-              <CardHeader className="space-y-2 px-6 pb-0 pt-5">
-                <CardTitle className="text-[20px] font-semibold">{card.title}</CardTitle>
-                <CardDescription className="text-base leading-6">{card.description}</CardDescription>
-              </CardHeader>
-              <CardContent className="px-6 pb-6 pt-0">
-                <Button variant="link" className="h-auto p-0 text-base text-[#cd6f3f]">
-                  {card.cta}
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
+            );
+          })}
         </div>
       </section>
 
-      <section className="bg-[#F3F1ED] py-[80px] md:py-[60px] lg:py-[160px]">
+      <section className="bg-surface-alt py-[80px] md:py-[60px] lg:py-[160px]">
         <div className="mx-auto max-w-4xl px-4 sm:px-6">
           <p className="text-center text-base uppercase tracking-[0.24em] text-emerald-700 sm:text-base">
             {content.coreWork.eyebrow}
           </p>
           <h2 className="font-display mt-4 text-center text-[32px] sm:text-5xl">{content.coreWork.title}</h2>
           <div className="mt-9 grid gap-6 sm:grid-cols-2">
-            {content.coreWork.cards.map((area) => (
-              <Card key={area.title} className="flex flex-col gap-4 border-[#e3e6ea] bg-[#FAF8F5] py-0 shadow-none h-fit">
-                <CardHeader className="space-y-2 px-6 pb-0 pt-6 gap-2">
-                  <CardTitle className="mb-0 text-[20px] font-semibold">{area.title}</CardTitle>
-                  <CardDescription className="text-base leading-5 font-extralight">{area.description}</CardDescription>
-                </CardHeader>
-                <CardContent className="px-6 pb-6 pt-0">
-                  <Button variant="link" className="h-auto p-0 text-base text-[#cd6f3f]">
-                    {area.cta}
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
+            {content.coreWork.cards.map((area, index) => {
+              const areaAnchors = ["venture", "learning", "ecosystem", "purpose"];
+              return (
+                <ContentCard
+                  key={area.title}
+                  title={area.title}
+                  description={area.description}
+                  cta={area.cta}
+                  href={`/${locale}/what-we-do#${areaAnchors[index]}`}
+                />
+              );
+            })}
           </div>
         </div>
       </section>
@@ -156,7 +141,7 @@ export default async function HomePage({
         </p>
       </section>
 
-      <section className="bg-[#F3F1ED] py-[80px] md:py-[60px] lg:py-[160px]">
+      <section className="bg-surface-alt py-[80px] md:py-[60px] lg:py-[160px]">
         <div className="mx-auto flex max-w-5xl flex-col items-center justify-center px-4 text-center sm:px-6">
           <p className="text-base uppercase tracking-[0.24em] text-emerald-700 sm:text-base">
             {content.impact.eyebrow}
@@ -166,8 +151,12 @@ export default async function HomePage({
             {content.impact.description}
           </p>
           <AnimatedMetrics
-            metrics={content.impact.metrics}
-            className="mt-[80px] grid grid-cols-1 justify-items-center gap-y-10 sm:mt-[120px] sm:grid-cols-2 md:grid-cols-4 md:gap-x-16 md:gap-y-16"
+            metrics={[
+              { value: "200+", label: "startups supported" },
+              { value: "6", label: "deep-tech ventures launched" },
+              { value: "€3M+", label: "in public-private investment structures designed" },
+            ]}
+            className="mt-[80px] grid grid-cols-1 justify-items-center gap-y-10 sm:mt-[120px] sm:grid-cols-3 md:gap-x-16"
           />
         </div>
       </section>
@@ -180,84 +169,64 @@ export default async function HomePage({
         <TestimonialsSlider items={testimonialItems} />
       </section>
 
-      <section className="bg-[#F3F1ED] py-[80px] md:py-[60px] lg:py-[160px]">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6">
+      <section className="bg-surface-alt py-[80px] md:py-[60px] lg:py-[160px]">
+        <div className="mx-auto max-w-[1000px] px-4 sm:px-6 flex flex-col justify-center items-center">
           <p className="text-center text-base uppercase tracking-[0.24em] text-emerald-700 sm:text-base">
             {content.contact.eyebrow}
           </p>
           <h2 className="font-display mt-4 text-center text-[32px] sm:text-5xl">{content.contact.title}</h2>
 
-          <div className="mt-10 flex flex-col items-center justify-center gap-10 md:flex-row md:items-start">
-            <ContactForm
-              namePlaceholder={content.contact.formName}
-              emailPlaceholder={content.contact.formEmail}
-              messagePlaceholder={content.contact.formMessage}
-              submitLabel={content.contact.formSubmit}
-            />
-
-            <div className="w-full max-w-[400px] space-y-8">
-              <div>
-                <h3
-                  className="font-display text-xl"
-                  style={{ fontFamily: '"Haas Grot Disp Trial"', fontWeight: 500 }}
-                >
-                  {content.contact.callTitle}
-                </h3>
-                <p className="mt-2 text-base leading-6 text-muted-foreground">
-                  {content.contact.callDescription}
-                </p>
-                <Button variant="outline" className="mt-4 h-10 rounded-full px-6 text-base">
-                  {content.contact.callCta}
-                </Button>
-
-                
-              </div>
-
-              <Divider className="bg-[#d8d8ea]" />
-
-              <div>
-                <h3 className="font-display text-xl"
-                style={{ fontFamily: '"Haas Grot Disp Trial"', fontWeight: 500 }}>{content.contact.connectTitle}</h3>
-                <div className="mt-4 flex gap-4">
-                  {[
-                    {
-                      icon: "/socials/social-3.svg",
-                      label: content.contact.connectItems[0] ?? "Email",
-                      href: "mailto:martina.luckanicova@gmail.com",
-                    },
-                    {
-                      icon: "/socials/social-2.svg",
-                      label: content.contact.connectItems[2] ?? "LinkedIn",
-                      href: "https://www.linkedin.com/in/martinaluckanic/",
-                    },
-                    {
-                      icon: "/socials/social-1.svg",
-                      label: content.contact.connectItems[1] ?? "Instagram",
-                      href: "https://www.instagram.com/solymar_marysol?igsh=cmIxMTJvczBjN3d0",
-                    }
-                    
-                  ].map((social) => (
-                    <Button
-                      key={social.icon}
-                      asChild
-                      variant="outline"
-                      size="icon"
-                      className="h-13 w-13 rounded-full bg-white p-4"                    >
-                      <a
-                        href={social.href}
-                        aria-label={social.label}
-                        target="_blank"
-                        rel="noopener noreferrer"
+          <div className="w-full pt-10 sm:pt-16">
+            <div className="overflow-hidden rounded-2xl border border-[#d8d8ea] bg-surface">
+              <div className="grid md:grid-cols-[1fr_auto_1fr]">
+                <div className="p-6 md:p-8">
+                  <h3 className="font-display text-2xl text-slate-900">
+                    {content.contact.callTitle}
+                  </h3>
+                  <p className="mt-3 text-base leading-7 text-slate-700">
+                    {content.contact.callDescription}
+                  </p>
+                  <Button variant="outline" className="mt-4 h-10 rounded-full px-6 text-base bg-white hover:bg-surface-hover cursor-pointer">
+                    {content.contact.callCta}
+                  </Button>
+                </div>
+                <div className="hidden w-px bg-[#d8d8ea] md:my-8 md:block" />
+                <div className="mx-6 h-px bg-[#d8d8ea] md:hidden" />
+                <div className="p-6 md:p-8">
+                  <h3 className="font-display text-2xl text-slate-900">
+                    {content.contact.connectTitle}
+                  </h3>
+                  <div className="mt-4 flex gap-4">
+                    {[
+                      {
+                        icon: "/socials/social-3.svg",
+                        label: content.contact.connectItems[0] ?? "Email",
+                        href: "mailto:martina.luckanicova@gmail.com",
+                      },
+                      {
+                        icon: "/socials/social-2.svg",
+                        label: content.contact.connectItems[2] ?? "LinkedIn",
+                        href: "https://www.linkedin.com/in/martinaluckanic/",
+                      },
+                      {
+                        icon: "/socials/social-1.svg",
+                        label: content.contact.connectItems[1] ?? "Instagram",
+                        href: "https://www.instagram.com/solymar_marysol?igsh=cmIxMTJvczBjN3d0",
+                      },
+                    ].map((social) => (
+                      <Button
+                        key={social.icon}
+                        asChild
+                        variant="outline"
+                        size="icon"
+                        className="h-13 w-13 rounded-full bg-white p-4 hover:bg-surface-hover cursor-pointer"
                       >
-                        <Image
-                          src={social.icon}
-                          alt={social.label}
-                          width={socialIconSize}
-                          height={socialIconSize}
-                        />
-                      </a>
-                    </Button>
-                  ))}
+                        <a href={social.href} aria-label={social.label} target="_blank" rel="noopener noreferrer">
+                          <Image src={social.icon} alt={social.label} width={socialIconSize} height={socialIconSize} />
+                        </a>
+                      </Button>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>

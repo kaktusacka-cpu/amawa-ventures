@@ -6,6 +6,10 @@ export const DB_IDS = {
   experiences: process.env.NOTION_EXPERIENCES_DB_ID,
   experienceItems: process.env.NOTION_EXPERIENCE_ITEMS_DB_ID,
   whatWeDo: process.env.NOTION_WHAT_WE_DO_DB_ID,
+  pathCards: process.env.NOTION_PATH_CARDS_DB_ID,
+  coreWorkCards: process.env.NOTION_CORE_WORK_CARDS_DB_ID,
+  impactMetrics: process.env.NOTION_IMPACT_METRICS_DB_ID,
+  contactItems: process.env.NOTION_CONTACT_ITEMS_DB_ID,
 } as const;
 
 export type NotionRow = {
@@ -91,6 +95,80 @@ function parseExperienceItem(page: any): ExperienceItemRow {
   };
 }
 
+export type CardItemRow = {
+  name: string;
+  order: number;
+  enTitle: string;
+  esTitle: string;
+  skTitle: string;
+  enDescription: string;
+  esDescription: string;
+  skDescription: string;
+  enCta: string;
+  esCta: string;
+  skCta: string;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function parseCardItem(page: any): CardItemRow {
+  const p = page.properties;
+  return {
+    name: extractTitle(p.Name),
+    order: extractNumber(p.Order),
+    enTitle: extractText(p.EN_Title),
+    esTitle: extractText(p.ES_Title),
+    skTitle: extractText(p.SK_Title),
+    enDescription: extractText(p.EN_Description),
+    esDescription: extractText(p.ES_Description),
+    skDescription: extractText(p.SK_Description),
+    enCta: extractText(p.EN_Cta),
+    esCta: extractText(p.ES_Cta),
+    skCta: extractText(p.SK_Cta),
+  };
+}
+
+export type MetricItemRow = {
+  name: string;
+  order: number;
+  value: string;
+  enLabel: string;
+  esLabel: string;
+  skLabel: string;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function parseMetricItem(page: any): MetricItemRow {
+  const p = page.properties;
+  return {
+    name: extractTitle(p.Name),
+    order: extractNumber(p.Order),
+    value: extractText(p.Value),
+    enLabel: extractText(p.EN_Label),
+    esLabel: extractText(p.ES_Label),
+    skLabel: extractText(p.SK_Label),
+  };
+}
+
+export type ContactItemRow = {
+  name: string;
+  order: number;
+  enLabel: string;
+  esLabel: string;
+  skLabel: string;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function parseContactItem(page: any): ContactItemRow {
+  const p = page.properties;
+  return {
+    name: extractTitle(p.Name),
+    order: extractNumber(p.Order),
+    enLabel: extractText(p.EN_Label),
+    esLabel: extractText(p.ES_Label),
+    skLabel: extractText(p.SK_Label),
+  };
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const cache = new Map<string, { rows: any[]; time: number }>();
 const CACHE_TTL = 60_000; // 1 minute
@@ -140,6 +218,21 @@ export async function fetchRows(dbId: string): Promise<NotionRow[]> {
 export async function fetchExperienceItems(dbId: string): Promise<ExperienceItemRow[]> {
   const pages = await queryDb(dbId);
   return pages.map(parseExperienceItem).sort((a, b) => a.order - b.order);
+}
+
+export async function fetchCardItems(dbId: string): Promise<CardItemRow[]> {
+  const pages = await queryDb(dbId);
+  return pages.map(parseCardItem).sort((a, b) => a.order - b.order);
+}
+
+export async function fetchMetricItems(dbId: string): Promise<MetricItemRow[]> {
+  const pages = await queryDb(dbId);
+  return pages.map(parseMetricItem).sort((a, b) => a.order - b.order);
+}
+
+export async function fetchContactItems(dbId: string): Promise<ContactItemRow[]> {
+  const pages = await queryDb(dbId);
+  return pages.map(parseContactItem).sort((a, b) => a.order - b.order);
 }
 
 export function getRows(allRows: NotionRow[], section?: string): NotionRow[] {

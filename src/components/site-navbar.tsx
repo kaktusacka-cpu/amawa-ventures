@@ -70,8 +70,7 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
 
   return (
     <header
-      className={`sticky top-0 z-40 border-b border-white/40 backdrop-blur-xl backdrop-saturate-150 relative ${isScrolled ? "shadow-[0_8px_24px_rgba(15,23,42,0.06)]" : ""}`}
-      style={{ backgroundColor: "rgba(243, 241, 237, 0.35)" }}
+      className={`sticky top-0 z-40 border-b border-white/40 bg-surface/35 backdrop-blur-xl backdrop-saturate-150 relative ${isScrolled ? "shadow-[0_8px_24px_rgba(15,23,42,0.06)]" : ""}`}
     >
       <div className="mx-auto flex w-full max-w-[1800px] items-center justify-between px-4 py-4 sm:px-6 lg:h-16 lg:py-0 lg:px-8">
         <Link href={`/${locale}`} className="inline-flex items-center text-xs font-semibold tracking-wide text-slate-900">
@@ -112,9 +111,9 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
             <Link
               key={link.href}
               href={link.href}
-              className={`inline-flex px-1 text-[14px] transition-colors ${
+              className={`inline-flex px-1 text-[14px] font-medium transition-colors ${
                 isActive(link.href)
-                  ? "font-semibold text-primary underline underline-offset-8 decoration-2 decoration-primary"
+                  ? "text-primary underline underline-offset-8 decoration-2 decoration-primary"
                   : "text-slate-700 hover:text-slate-900"
               }`}
             >
@@ -125,7 +124,7 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
           <div className="relative">
             <button
               type="button"
-              className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-[14px] text-slate-700 hover:bg-black/5"
+              className="inline-flex items-center gap-1 rounded-md px-2 py-1 text-[14px] font-medium text-slate-700 hover:bg-black/5"
               onClick={() => setLanguageOpen((prev) => !prev)}
               aria-expanded={languageOpen}
               aria-haspopup="menu"
@@ -135,7 +134,7 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
             </button>
 
             {languageOpen ? (
-              <div className="absolute right-0 top-full mt-2 min-w-36 rounded-md border border-black/10 bg-[#FAF8F5] p-1 shadow-md">
+              <div className="absolute right-0 top-full mt-2 min-w-36 rounded-md border border-black/10 bg-surface p-1 shadow-md">
                 {locales
                   .filter((item) => item !== locale)
                   .map((item) => (
@@ -156,7 +155,7 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
       </div>
 
       {mobileOpen ? (
-        <div className="absolute left-0 right-0 top-full z-50 border-t border-black/10 bg-[#F3F1ED] lg:hidden">
+        <div className="absolute left-0 right-0 top-full z-50 border-t border-black/10 bg-surface-alt lg:hidden">
           <nav className="mx-auto flex w-full max-w-[1800px] flex-col items-center gap-1 px-4 py-4 sm:px-6">
             {navLinks.map((link) => (
               <Link
@@ -187,7 +186,7 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
                 </button>
 
                 {mobileLanguageOpen ? (
-                  <div className="absolute left-0 top-full z-10 mt-1 min-w-36 rounded-md border border-black/10 bg-[#FAF8F5] p-1 shadow-md">
+                  <div className="absolute left-0 top-full z-10 mt-1 min-w-36 rounded-md border border-black/10 bg-surface p-1 shadow-md">
                     {locales
                       .filter((item) => item !== locale)
                       .map((item) => (

@@ -214,7 +214,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
     },
     footer: {
       brand: "Amawa Ventures",
-      copyright: "2026 Amawa Ventures. All rights reserved.",
+      copyright: "© 2026 bydomi.design",
     },
     pages: {
       aboutTitle: "About Amawa",
@@ -348,7 +348,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
     },
     footer: {
       brand: "Amawa Ventures",
-      copyright: "2026 Amawa Ventures. Todos los derechos reservados.",
+      copyright: "© 2026 bydomi.design",
     },
     pages: {
       aboutTitle: "Sobre Amawa",
@@ -479,7 +479,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
     },
     footer: {
       brand: "Amawa Ventures",
-      copyright: "2026 Amawa Ventures. Všetky práva vyhradené.",
+      copyright: "© 2026 bydomi.design",
     },
     pages: {
       aboutTitle: "O Amawa",
