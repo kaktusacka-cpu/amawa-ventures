@@ -35,6 +35,10 @@ function extractNumber(prop: { number?: number | null }): number {
   return prop?.number ?? 0;
 }
 
+function extractUrl(prop: { url?: string | null }): string {
+  return prop?.url ?? "";
+}
+
 function extractFiles(prop: { files?: { file?: { url: string }; external?: { url: string } }[] }): string {
   const file = prop?.files?.[0];
   return file?.file?.url ?? file?.external?.url ?? "";
@@ -65,6 +69,10 @@ export type ExperienceItemRow = {
   enDescription: string;
   esDescription: string;
   skDescription: string;
+  enCtaLabel: string;
+  esCtaLabel: string;
+  skCtaLabel: string;
+  ctaUrl: string;
   isUpcoming: boolean;
   image: string;
 };
@@ -90,6 +98,10 @@ function parseExperienceItem(page: any): ExperienceItemRow {
     enDescription: extractText(p.EN_Description),
     esDescription: extractText(p.ES_Description),
     skDescription: extractText(p.SK_Description),
+    enCtaLabel: extractText(p.EN_CtaLabel),
+    esCtaLabel: extractText(p.ES_CtaLabel),
+    skCtaLabel: extractText(p.SK_CtaLabel),
+    ctaUrl: extractUrl(p.website) || extractUrl(p.Website) || extractText(p.CtaUrl),
     isUpcoming: extractCheckbox(p.IsUpcoming),
     image: extractFiles(p.Image),
   };
@@ -107,6 +119,7 @@ export type CardItemRow = {
   enCta: string;
   esCta: string;
   skCta: string;
+  image: string;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -124,6 +137,7 @@ function parseCardItem(page: any): CardItemRow {
     enCta: extractText(p.EN_Cta),
     esCta: extractText(p.ES_Cta),
     skCta: extractText(p.SK_Cta),
+    image: extractFiles(p.Image),
   };
 }
 
@@ -246,4 +260,9 @@ export function getText(rows: NotionRow[], field: string, locale: string): strin
   if (!row) return "";
   const localeMap: Record<string, string> = { en: row.en, es: row.es, sk: row.sk };
   return localeMap[locale] || row.en || "";
+}
+
+export function getImage(rows: NotionRow[], field: string): string {
+  const row = rows.find((r) => r.field === field);
+  return row?.image || row?.en || "";
 }

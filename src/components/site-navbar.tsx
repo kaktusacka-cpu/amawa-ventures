@@ -122,11 +122,11 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
             priority
           />
           <Image
-            src="/logo-amawa-nav.svg"
+            src="/logo-amawa-full.svg"
             alt="Amawa Ventures"
             width={180}
-            height={32}
-            className="hidden h-8 max-h-4 w-auto lg:block"
+            height={24}
+            className="hidden h-4 w-auto lg:block"
             priority
           />
         </a>
@@ -199,13 +199,13 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
       </div>
 
       {mobileOpen ? (
-        <div className="absolute left-0 right-0 top-full z-50 border-t border-black/10 bg-surface-alt lg:hidden">
+        <div className="absolute left-0 right-0 top-full z-50 border-t border-black/10 bg-surface-alt lg:hidden reveal-scale-in">
           <nav className="mx-auto flex w-full max-w-[1800px] flex-col items-center gap-1 px-4 py-4 sm:px-6">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className={`w-full max-w-sm rounded-md px-3 py-3 text-center text-base transition-colors hover:bg-black/5 hover:text-slate-900 ${
+                className={`w-full max-w-sm rounded-md px-3 py-3 text-center text-base font-normal transition-colors hover:bg-black/5 hover:text-slate-900 ${
                   isActive(link.href)
                     ? "bg-primary/10 font-semibold text-primary"
                     : "text-slate-700"

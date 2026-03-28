@@ -4,6 +4,7 @@ export type HomePathCard = {
   title: string;
   description: string;
   cta: string;
+  image: string;
 };
 
 export type HomeAreaCard = {
@@ -30,6 +31,7 @@ export type HomeCopy = {
     title: string;
     lead: string;
     thinkWord: string;
+    connectText: string;
     growWord: string;
     subLead: string;
     primaryCta: string;
@@ -76,6 +78,9 @@ export type HomeCopy = {
     connectTitle: string;
     connectDescription: string;
     connectItems: string[];
+    emailUrl: string;
+    linkedinUrl: string;
+    instagramUrl: string;
   };
   footer: {
     brand: string;
@@ -127,6 +132,9 @@ export type HomeCopy = {
     impactNote2: string;
     ecosystemTitle: string;
     ecosystemDescription: string;
+    heroImage: string;
+    boundaryImage1: string;
+    boundaryImage2: string;
   };
 };
 
@@ -145,6 +153,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       lead:
         "designs learning, innovation and entrepreneurial experiences that help individuals and organizations",
       thinkWord: "think better",
+      connectText: "act with intention and",
       growWord: "grow with purpose",
       subLead: "We create spaces to slow down, reflect and reconnect with what truly matters.",
       primaryCta: "Explore our programs",
@@ -163,16 +172,19 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
           title: "For Individuals",
           description: "Build your voice in moments that matter.",
           cta: "See your journey",
+          image: "https://images.unsplash.com/photo-1551632811-561732d1e306?w=600&h=360&fit=crop",
         },
         {
           title: "For Teams & Companies",
           description: "Practice purpose-driven leadership and collaboration.",
           cta: "Explore team pathways",
+          image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&h=360&fit=crop",
         },
         {
           title: "For Ecosystems & Hubs",
           description: "Create stronger bridges across sectors and regions.",
           cta: "Explore ecosystem paths",
+          image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600&h=360&fit=crop",
         },
       ],
     },
@@ -243,6 +255,9 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       connectDescription:
         "Follow our journey or reach out directly — we'd love to hear from you.",
       connectItems: ["Email", "Instagram", "LinkedIn"],
+      emailUrl: "mailto:martina.luckanicova@gmail.com",
+      linkedinUrl: "https://www.linkedin.com/in/martinaluckanic/",
+      instagramUrl: "https://www.instagram.com/solymar_marysol?igsh=cmIxMTJvczBjN3d0",
     },
     footer: {
       brand: "Amawa Ventures",
@@ -312,6 +327,9 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       ecosystemTitle: "Ecosystem & Collaborations",
       ecosystemDescription:
         "Our professional experience includes collaboration with leading organizations across innovation, education and impact ecosystems. From venture building and academia to public innovation and impact partners, this network enables cross-border learning and long-term collaboration.",
+      heroImage: "/about-hero.svg",
+      boundaryImage1: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600&h=500&fit=crop",
+      boundaryImage2: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&h=500&fit=crop",
     },
   },
   es: {
@@ -334,6 +352,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       primaryCta: "Explorar programas",
       secondaryCta: "Conocer más",
       videoPlaceholder: "vista previa",
+      connectText: "actúa con intención y",
     },
     about: {
       title: "¿Qué es Amawa?",
@@ -347,16 +366,19 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
           title: "Para individuos",
           description: "Desarrolla tu voz en momentos que importan.",
           cta: "Ver recorrido",
+          image: "https://images.unsplash.com/photo-1551632811-561732d1e306?w=600&h=360&fit=crop",
         },
         {
           title: "Para equipos y empresas",
           description: "Practica liderazgo y colaboración con propósito.",
           cta: "Explorar equipo",
+          image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&h=360&fit=crop",
         },
         {
           title: "Para ecosistemas y hubs",
           description: "Crea puentes entre sectores y regiones.",
           cta: "Explorar ecosistema",
+          image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600&h=360&fit=crop",
         },
       ],
     },
@@ -426,6 +448,9 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       connectDescription:
         "Sigue nuestro camino o escríbenos directamente — nos encantaría saber de ti.",
       connectItems: ["Correo", "Instagram", "LinkedIn"],
+      emailUrl: "mailto:martina.luckanicova@gmail.com",
+      linkedinUrl: "https://www.linkedin.com/in/martinaluckanic/",
+      instagramUrl: "https://www.instagram.com/solymar_marysol?igsh=cmIxMTJvczBjN3d0",
     },
     footer: {
       brand: "Amawa Ventures",
@@ -495,6 +520,9 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       ecosystemTitle: "Ecosistema y Colaboraciones",
       ecosystemDescription:
         "Nuestra experiencia profesional incluye colaboración con organizaciones líderes en innovación, educación y ecosistemas de impacto. Desde venture building y academia hasta innovación pública y aliados de impacto, esta red habilita aprendizaje transfronterizo y colaboración a largo plazo.",
+      heroImage: "/about-hero.svg",
+      boundaryImage1: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600&h=500&fit=crop",
+      boundaryImage2: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&h=500&fit=crop",
     },
   },
   sk: {
@@ -517,6 +545,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       primaryCta: "Preskúmať programy",
       secondaryCta: "Zistiť viac",
       videoPlaceholder: "ukážka videa",
+      connectText: "konaj s úmyslom a",
     },
     about: {
       title: "Čo je Amawa?",
@@ -530,16 +559,19 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
           title: "Pre jednotlivcov",
           description: "Budujte svoj hlas v dôležitých momentoch.",
           cta: "Pozrieť cestu",
+          image: "https://images.unsplash.com/photo-1551632811-561732d1e306?w=600&h=360&fit=crop",
         },
         {
           title: "Pre tímy a firmy",
           description: "Rozvíjajte líderstvo a spoluprácu so zmyslom.",
           cta: "Preskúmať tímy",
+          image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&h=360&fit=crop",
         },
         {
           title: "Pre ekosystémy a huby",
           description: "Vytvárajte mosty medzi sektormi a regiónmi.",
           cta: "Preskúmať ekosystém",
+          image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600&h=360&fit=crop",
         },
       ],
     },
@@ -606,6 +638,9 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       connectDescription:
         "Sledujte našu cestu alebo nás kontaktujte priamo — radi sa s vami spojíme.",
       connectItems: ["Email", "Instagram", "LinkedIn"],
+      emailUrl: "mailto:martina.luckanicova@gmail.com",
+      linkedinUrl: "https://www.linkedin.com/in/martinaluckanic/",
+      instagramUrl: "https://www.instagram.com/solymar_marysol?igsh=cmIxMTJvczBjN3d0",
     },
     footer: {
       brand: "Amawa Ventures",
@@ -675,6 +710,9 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       ecosystemTitle: "Ekosystém a Spolupráce",
       ecosystemDescription:
         "Naše profesionálne skúsenosti zahŕňajú spoluprácu s poprednými organizáciami v oblasti inovácií, vzdelávania a impact ekosystémov. Od venture buildingu a akademického prostredia po verejné inovácie a impact partnerov, táto sieť umožňuje cezhraničné učenie a dlhodobú spoluprácu.",
+      heroImage: "/about-hero.svg",
+      boundaryImage1: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600&h=500&fit=crop",
+      boundaryImage2: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&h=500&fit=crop",
     },
   },
 };
@@ -691,6 +729,8 @@ export type ExperienceItem = {
   image: string;
   imageAlt: string;
   isUpcoming: boolean;
+  ctaLabel: string;
+  ctaUrl: string;
 };
 
 export type ExperienceCategory = {
@@ -706,6 +746,7 @@ export type ExperiencesCopy = {
     tagline: string;
     description: string;
     ctaLabel: string;
+    image: string;
   };
   statusLabels: {
     upcoming: string;
@@ -723,6 +764,7 @@ export const experiencesCopyByLocale: Record<Locale, ExperiencesCopy> = {
       description:
         "Our experiences take place outside conventional environments, creating opportunities for deep reflection, meaningful connection, and transformative learning.",
       ctaLabel: "Get in touch",
+      image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600&h=600&fit=crop",
     },
     statusLabels: {
       upcoming: "Upcoming Journeys & Experiences",
@@ -739,25 +781,31 @@ export const experiencesCopyByLocale: Record<Locale, ExperiencesCopy> = {
             title: "Nepal · Inner & Outer Journey",
             description:
               "A transformative journey through the Himalayas that combines trekking, meditation, and cultural immersion. Experience the profound beauty of Nepal while exploring your inner landscape through guided reflection and connection with local communities.",
-            image: "/images/nepal-journey.jpg",
+            image: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=900&h=600&fit=crop",
             imageAlt: "Nepal Inner & Outer Journey",
             isUpcoming: false,
+            ctaLabel: "",
+            ctaUrl: "",
           },
           {
             title: "Valencia · Spanish Language & Cultural Immersion",
             description:
               "Immerse yourself in Spanish language and culture through an intensive program in Valencia. Combine language learning with cultural experiences, local connections, and authentic immersion in Spanish life and traditions.",
-            image: "/images/valencia-immersion.jpg",
+            image: "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=900&h=600&fit=crop",
             imageAlt: "Valencia Spanish Language & Cultural Immersion",
             isUpcoming: false,
+            ctaLabel: "Learn more",
+            ctaUrl: "https://www.verbal.sk/valencia",
           },
           {
             title: "Slovakia · From West to East",
             description:
               "Discover the cultural and natural diversity of Slovakia through a journey from west to east. Experience the country's rich history, diverse landscapes, and warm hospitality while reflecting on themes of transition, identity, and belonging.",
-            image: "/images/slovakia-journey.jpg",
+            image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=900&h=600&fit=crop",
             imageAlt: "Slovakia From West to East",
             isUpcoming: false,
+            ctaLabel: "",
+            ctaUrl: "",
           },
         ],
       },
@@ -771,25 +819,31 @@ export const experiencesCopyByLocale: Record<Locale, ExperiencesCopy> = {
             title: "Beyond Limits - Nepal Team Expedition",
             description:
               "A challenging team expedition in the Himalayas designed to push boundaries and build resilience. Through trekking, team challenges, and facilitated reflection, teams discover new levels of collaboration, trust, and shared purpose.",
-            image: "/images/nepal-team-expedition.jpg",
+            image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=900&h=600&fit=crop",
             imageAlt: "Beyond Limits Nepal Team Expedition",
             isUpcoming: false,
+            ctaLabel: "",
+            ctaUrl: "",
           },
           {
             title: "Roots & Routes - Slovakia Team Experience",
             description:
               "A team experience that combines cultural exploration with strategic work sessions. Teams explore Slovakia's diverse regions while engaging in facilitated workshops on purpose, strategy, and team dynamics in inspiring natural settings.",
-            image: "/images/slovakia-team-experience.jpg",
+            image: "https://images.unsplash.com/photo-1551632811-561732d1e306?w=900&h=600&fit=crop",
             imageAlt: "Roots & Routes Slovakia Team Experience",
             isUpcoming: false,
+            ctaLabel: "",
+            ctaUrl: "",
           },
           {
             title: "Upcoming Journeys & Experiences",
             description:
               "We are continuously developing new journeys and experiences. Join our community to be the first to know about upcoming programs, early-bird opportunities, and exclusive experiences designed for personal transformation.",
-            image: "/images/upcoming-journeys.jpg",
+            image: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=900&h=600&fit=crop",
             imageAlt: "Upcoming Journeys & Experiences",
             isUpcoming: true,
+            ctaLabel: "",
+            ctaUrl: "",
           },
         ],
       },
@@ -803,17 +857,21 @@ export const experiencesCopyByLocale: Record<Locale, ExperiencesCopy> = {
             title: "Valencia Innovation Mission",
             description:
               "An immersive mission to Valencia's innovation ecosystem, connecting participants with local startups, investors, institutions, and innovation hubs. Experience the city's vibrant tech scene while building meaningful cross-border connections and exploring collaboration opportunities.",
-            image: "/images/valencia-innovation-mission.jpg",
+            image: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&h=600&fit=crop",
             imageAlt: "Valencia Innovation Mission",
             isUpcoming: false,
+            ctaLabel: "",
+            ctaUrl: "",
           },
           {
             title: "Tailored & Bespoke Formats",
             description:
               "We design custom team experiences tailored to your organization's specific needs, goals, and context. Whether it's a leadership retreat, strategic offsite, or team building program, we create unique experiences that deliver meaningful outcomes.",
-            image: "/images/bespoke-formats.jpg",
+            image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&h=600&fit=crop",
             imageAlt: "Tailored & Bespoke Formats",
             isUpcoming: false,
+            ctaLabel: "",
+            ctaUrl: "",
           },
         ],
       },
@@ -827,6 +885,7 @@ export const experiencesCopyByLocale: Record<Locale, ExperiencesCopy> = {
       description:
         "Nuestras experiencias tienen lugar fuera de entornos convencionales, creando oportunidades para la reflexión profunda, la conexión significativa y el aprendizaje transformador.",
       ctaLabel: "Contacto",
+      image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600&h=600&fit=crop",
     },
     statusLabels: {
       upcoming: "Próximos viajes y experiencias",
@@ -843,25 +902,31 @@ export const experiencesCopyByLocale: Record<Locale, ExperiencesCopy> = {
             title: "Nepal · Viaje interior y exterior",
             description:
               "Un viaje transformador por el Himalaya que combina trekking, meditación e inmersión cultural. Experimenta la profunda belleza de Nepal mientras exploras tu paisaje interior a través de la reflexión guiada y la conexión con las comunidades locales.",
-            image: "/images/nepal-journey.jpg",
+            image: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=900&h=600&fit=crop",
             imageAlt: "Nepal Viaje interior y exterior",
             isUpcoming: false,
+            ctaLabel: "",
+            ctaUrl: "",
           },
           {
             title: "Valencia · Inmersión lingüística y cultural",
             description:
               "Sumérgete en el idioma y la cultura española a través de un programa intensivo en Valencia. Combina el aprendizaje del idioma con experiencias culturales, conexiones locales e inmersión auténtica en la vida y las tradiciones españolas.",
-            image: "/images/valencia-immersion.jpg",
+            image: "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=900&h=600&fit=crop",
             imageAlt: "Valencia Inmersión lingüística y cultural",
             isUpcoming: false,
+            ctaLabel: "Saber más",
+            ctaUrl: "https://www.verbal.sk/valencia",
           },
           {
             title: "Eslovaquia · De oeste a este",
             description:
               "Descubre la diversidad cultural y natural de Eslovaquia a través de un viaje de oeste a este. Experimenta la rica historia del país, sus diversos paisajes y su cálida hospitalidad mientras reflexionas sobre temas de transición, identidad y pertenencia.",
-            image: "/images/slovakia-journey.jpg",
+            image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=900&h=600&fit=crop",
             imageAlt: "Eslovaquia De oeste a este",
             isUpcoming: false,
+            ctaLabel: "",
+            ctaUrl: "",
           },
         ],
       },
@@ -875,25 +940,31 @@ export const experiencesCopyByLocale: Record<Locale, ExperiencesCopy> = {
             title: "Más allá de los límites - Expedición de equipo en Nepal",
             description:
               "Una expedición de equipo desafiante en el Himalaya diseñada para superar límites y construir resiliencia. A través del trekking, desafíos de equipo y reflexión facilitada, los equipos descubren nuevos niveles de colaboración, confianza y propósito compartido.",
-            image: "/images/nepal-team-expedition.jpg",
+            image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=900&h=600&fit=crop",
             imageAlt: "Más allá de los límites Expedición Nepal",
             isUpcoming: false,
+            ctaLabel: "",
+            ctaUrl: "",
           },
           {
             title: "Raíces y rutas - Experiencia de equipo en Eslovaquia",
             description:
               "Una experiencia de equipo que combina la exploración cultural con sesiones de trabajo estratégico. Los equipos exploran las diversas regiones de Eslovaquia mientras participan en talleres facilitados sobre propósito, estrategia y dinámica de equipo.",
-            image: "/images/slovakia-team-experience.jpg",
+            image: "https://images.unsplash.com/photo-1551632811-561732d1e306?w=900&h=600&fit=crop",
             imageAlt: "Raíces y rutas Experiencia Eslovaquia",
             isUpcoming: false,
+            ctaLabel: "",
+            ctaUrl: "",
           },
           {
             title: "Próximos viajes y experiencias",
             description:
               "Estamos desarrollando continuamente nuevos viajes y experiencias. Únete a nuestra comunidad para ser el primero en conocer los próximos programas y oportunidades exclusivas.",
-            image: "/images/upcoming-journeys.jpg",
+            image: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=900&h=600&fit=crop",
             imageAlt: "Próximos viajes y experiencias",
             isUpcoming: true,
+            ctaLabel: "",
+            ctaUrl: "",
           },
         ],
       },
@@ -907,17 +978,21 @@ export const experiencesCopyByLocale: Record<Locale, ExperiencesCopy> = {
             title: "Misión de innovación en Valencia",
             description:
               "Una misión inmersiva al ecosistema de innovación de Valencia, conectando participantes con startups locales, inversores, instituciones y hubs de innovación. Experimenta la vibrante escena tecnológica de la ciudad mientras construyes conexiones transfronterizas significativas.",
-            image: "/images/valencia-innovation-mission.jpg",
+            image: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&h=600&fit=crop",
             imageAlt: "Misión de innovación en Valencia",
             isUpcoming: false,
+            ctaLabel: "",
+            ctaUrl: "",
           },
           {
             title: "Formatos a medida",
             description:
               "Diseñamos experiencias de equipo a medida adaptadas a las necesidades específicas de tu organización. Ya sea un retiro de liderazgo, un offsite estratégico o un programa de team building, creamos experiencias únicas con resultados significativos.",
-            image: "/images/bespoke-formats.jpg",
+            image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&h=600&fit=crop",
             imageAlt: "Formatos a medida",
             isUpcoming: false,
+            ctaLabel: "",
+            ctaUrl: "",
           },
         ],
       },
@@ -931,6 +1006,7 @@ export const experiencesCopyByLocale: Record<Locale, ExperiencesCopy> = {
       description:
         "Naše skúsenosti sa odohrávajú mimo konvenčných prostredí a vytvárajú príležitosti na hlbokú reflexiu, zmysluplné spojenie a transformačné učenie.",
       ctaLabel: "Kontakt",
+      image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600&h=600&fit=crop",
     },
     statusLabels: {
       upcoming: "Nadchádzajúce cesty a skúsenosti",
@@ -947,25 +1023,31 @@ export const experiencesCopyByLocale: Record<Locale, ExperiencesCopy> = {
             title: "Nepál · Vnútorná a vonkajšia cesta",
             description:
               "Transformačná cesta cez Himaláje, ktorá kombinuje trekking, meditáciu a kultúrne ponorenie. Zažite hlbokú krásu Nepálu pri skúmaní svojho vnútorného sveta cez riadenú reflexiu a spojenie s miestnymi komunitami.",
-            image: "/images/nepal-journey.jpg",
+            image: "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=900&h=600&fit=crop",
             imageAlt: "Nepál Vnútorná a vonkajšia cesta",
             isUpcoming: false,
+            ctaLabel: "",
+            ctaUrl: "",
           },
           {
             title: "Valencia · Jazyková a kultúrna ponorenie",
             description:
               "Ponorte sa do španielskeho jazyka a kultúry cez intenzívny program vo Valencii. Spojte jazykové vzdelávanie s kultúrnymi skúsenosťami, miestnymi kontaktmi a autentickým ponorením do španielskeho života a tradícií.",
-            image: "/images/valencia-immersion.jpg",
+            image: "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=900&h=600&fit=crop",
             imageAlt: "Valencia Jazyková a kultúrna ponorenie",
             isUpcoming: false,
+            ctaLabel: "Zistiť viac",
+            ctaUrl: "https://www.verbal.sk/valencia",
           },
           {
             title: "Slovensko · Zo západu na východ",
             description:
               "Objavte kultúrnu a prírodnú rozmanitosť Slovenska na ceste zo západu na východ. Zažite bohatú históriu krajiny, rozmanité krajiny a srdečnú pohostinnosť pri reflexii o témach prechodu, identity a príslušnosti.",
-            image: "/images/slovakia-journey.jpg",
+            image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=900&h=600&fit=crop",
             imageAlt: "Slovensko Zo západu na východ",
             isUpcoming: false,
+            ctaLabel: "",
+            ctaUrl: "",
           },
         ],
       },
@@ -979,25 +1061,31 @@ export const experiencesCopyByLocale: Record<Locale, ExperiencesCopy> = {
             title: "Za hranice – Tímová expedícia v Nepáli",
             description:
               "Náročná tímová expedícia v Himalájach navrhnutá na prekonávanie hraníc a budovanie odolnosti. Cez trekking, tímové výzvy a facilitovanú reflexiu tímy objavujú nové úrovne spolupráce, dôvery a spoločného zmyslu.",
-            image: "/images/nepal-team-expedition.jpg",
+            image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=900&h=600&fit=crop",
             imageAlt: "Za hranice Tímová expedícia Nepál",
             isUpcoming: false,
+            ctaLabel: "",
+            ctaUrl: "",
           },
           {
             title: "Korene a cesty – Tímová skúsenosť na Slovensku",
             description:
               "Tímová skúsenosť, ktorá kombinuje kultúrne objavovanie so strategickými pracovnými stretnutiami. Tímy objavujú rozmanité regióny Slovenska pri facilitovaných workshopoch o zmysle, stratégii a tímovej dynamike.",
-            image: "/images/slovakia-team-experience.jpg",
+            image: "https://images.unsplash.com/photo-1551632811-561732d1e306?w=900&h=600&fit=crop",
             imageAlt: "Korene a cesty Tímová skúsenosť Slovensko",
             isUpcoming: false,
+            ctaLabel: "",
+            ctaUrl: "",
           },
           {
             title: "Nadchádzajúce cesty a skúsenosti",
             description:
               "Neustále vyvíjame nové cesty a skúsenosti. Pridajte sa k našej komunite a buďte prví, kto sa dozvie o nadchádzajúcich programoch a exkluzívnych príležitostiach.",
-            image: "/images/upcoming-journeys.jpg",
+            image: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=900&h=600&fit=crop",
             imageAlt: "Nadchádzajúce cesty a skúsenosti",
             isUpcoming: true,
+            ctaLabel: "",
+            ctaUrl: "",
           },
         ],
       },
@@ -1011,17 +1099,21 @@ export const experiencesCopyByLocale: Record<Locale, ExperiencesCopy> = {
             title: "Inovačná misia vo Valencii",
             description:
               "Ponorná misia do inovačného ekosystému Valencie, ktorá spája účastníkov s miestnymi startupmi, investormi, inštitúciami a inovačnými hubmi. Zažite živú technologickú scénu mesta pri budovaní zmysluplných cezhraničných kontaktov.",
-            image: "/images/valencia-innovation-mission.jpg",
+            image: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&h=600&fit=crop",
             imageAlt: "Inovačná misia vo Valencii",
             isUpcoming: false,
+            ctaLabel: "",
+            ctaUrl: "",
           },
           {
             title: "Formáty na mieru",
             description:
               "Navrhujeme tímové skúsenosti na mieru prispôsobené špecifickým potrebám vašej organizácie. Či už ide o líderský retreat, strategický offsite alebo program tímového budovania, vytvárame jedinečné skúsenosti s významnými výsledkami.",
-            image: "/images/bespoke-formats.jpg",
+            image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&h=600&fit=crop",
             imageAlt: "Formáty na mieru",
             isUpcoming: false,
+            ctaLabel: "",
+            ctaUrl: "",
           },
         ],
       },
@@ -1032,6 +1124,17 @@ export const experiencesCopyByLocale: Record<Locale, ExperiencesCopy> = {
 export function getDefaultExperiencesCopy(locale: Locale): ExperiencesCopy {
   return experiencesCopyByLocale[locale];
 }
+
+// Keyed by the Notion item Name field. Used as fallback when Notion columns
+// EN_CtaLabel / CtaUrl are not yet filled in.
+export const experienceCtaOverrides: Record<string, { en: string; es: string; sk: string; url: string }> = {
+  Valencia: {
+    en: "Learn more",
+    es: "Saber más",
+    sk: "Zistiť viac",
+    url: "https://www.verbal.sk/valencia",
+  },
+};
 
 // ── What We Do Page ──
 
@@ -1046,7 +1149,9 @@ export type WhatWeDoCopy = {
     leadText: string;
     secondaryText: string;
     ctaLabel: string;
+    image: string;
   };
+  sectionImages: string[];
   areas: WhatWeDoArea[];
 };
 
@@ -1059,7 +1164,14 @@ export const whatWeDoCopyByLocale: Record<Locale, WhatWeDoCopy> = {
       secondaryText:
         "Our work takes different forms, but all of them are rooted in the same philosophy: creating the right conditions to think clearly, act with intention and grow with purpose.",
       ctaLabel: "Get in touch",
+      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&h=600&fit=crop",
     },
+    sectionImages: [
+      "https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&h=500&fit=crop",
+    ],
     areas: [
       {
         title: "Venture & Innovation Advisory",
@@ -1099,7 +1211,14 @@ export const whatWeDoCopyByLocale: Record<Locale, WhatWeDoCopy> = {
       secondaryText:
         "Nuestro trabajo toma diferentes formas, pero todas están enraizadas en la misma filosofía: crear las condiciones adecuadas para pensar con claridad, actuar con intención y crecer con propósito.",
       ctaLabel: "Contacto",
+      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&h=600&fit=crop",
     },
+    sectionImages: [
+      "https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&h=500&fit=crop",
+    ],
     areas: [
       {
         title: "Asesoría en innovación y ventures",
@@ -1139,7 +1258,14 @@ export const whatWeDoCopyByLocale: Record<Locale, WhatWeDoCopy> = {
       secondaryText:
         "Naša práca má rôzne formy, ale všetky sú zakorenené v rovnakej filozofii: vytvárať správne podmienky na jasné myslenie, zámerné konanie a rast so zmyslom.",
       ctaLabel: "Kontakt",
+      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&h=600&fit=crop",
     },
+    sectionImages: [
+      "https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&h=500&fit=crop",
+      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&h=500&fit=crop",
+    ],
     areas: [
       {
         title: "Poradenstvo pre inovácie a ventures",

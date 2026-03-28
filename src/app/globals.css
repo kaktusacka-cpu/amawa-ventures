@@ -121,6 +121,31 @@ html {
   }
 }
 
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fade-in-slow {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in-hero {
+  from { opacity: 0; transform: translateY(32px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scale-in-soft {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+
 :root {
   --radius: 0.8rem;
   --font-jakarta: "NeueHaasDisplay", "Avenir Next", "Segoe UI", sans-serif;
@@ -162,6 +187,31 @@ html {
   --surface-alt-hover: #E9E7E2;
 }
 
+.dark {
+  --background: #0b0f14;
+  --foreground: #f1f5f9;
+  --card: #131a22;
+  --card-foreground: #f1f5f9;
+  --popover: #131a22;
+  --popover-foreground: #f1f5f9;
+  --primary: #34d399;
+  --primary-foreground: #052e16;
+  --secondary: #1e2a36;
+  --secondary-foreground: #cbd5e1;
+  --muted: #1a2230;
+  --muted-foreground: #94a3b8;
+  --accent: #163d32;
+  --accent-foreground: #6ee7b7;
+  --destructive: #f87171;
+  --border: #1e2d3d;
+  --input: #1e2d3d;
+  --ring: #34d399;
+  --surface: #0b0f14;
+  --surface-hover: #131a22;
+  --surface-alt: #131a22;
+  --surface-alt-hover: #1a2230;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -184,6 +234,10 @@ html {
     transition-timing-function: ease-out;
   }
 
+  .font-rm {
+    font-weight: 450;
+  }
+
   .font-display {
     font-family: var(--font-canela), serif;
     font-weight: 600;
@@ -193,6 +247,26 @@ html {
 
   .page-appear {
     animation: page-appear 420ms ease-out both;
+  }
+
+  .reveal-fade-in {
+    animation: fade-in 600ms ease-out both;
+  }
+
+  .reveal-fade-in-slow {
+    animation: fade-in-slow 900ms ease-out both;
+  }
+
+  .reveal-fade-in-up {
+    animation: fade-in-up 450ms ease-out both;
+  }
+
+  .reveal-hero-up {
+    animation: fade-in-hero 1100ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .reveal-scale-in {
+    animation: scale-in-soft 350ms ease-out both;
   }
 
   /* Hide Next.js development portal element */

@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Divider } from "@/components/ui/divider";
 import { ScrollToHash } from "@/components/scroll-to-hash";
+import { Reveal } from "@/components/reveal";
 import { isLocale, type Locale } from "@/lib/i18n";
 import { getExperiencesContent } from "@/lib/notion/get-content";
 
@@ -43,32 +44,40 @@ export default async function ExperiencesPage({
         <div className="grid w-full max-w-[1200px] gap-4 lg:grid-cols-2 lg:gap-16">
           {/* Content */}
           <div className="order-2 flex flex-col justify-center space-y-2 sm:space-y-6 lg:order-1">
-            <h1 className="font-display text-3xl md:text-5xl lg:text-6xl text-slate-900">
-              {heroContent.title}
-            </h1>
-            <p className="text-lg leading-7 text-slate-800">
-              {heroContent.tagline}
-            </p>
-            <p className="text-base leading-7 text-slate-700">
-              {heroContent.description}
-            </p>
-            <div className="pt-2">
-              <Button asChild className="h-10 rounded-full px-6 text-base font-normal">
-                <Link href={`/${locale}/collaborate`}>{heroContent.ctaLabel}</Link>
-              </Button>
-            </div>
+            <Reveal animation="fade-in-up">
+              <h1 className="font-display text-3xl md:text-5xl lg:text-6xl text-slate-900">
+                {heroContent.title}
+              </h1>
+            </Reveal>
+            <Reveal animation="fade-in-up" delay={80}>
+              <p className="text-lg leading-7 text-slate-800">
+                {heroContent.tagline}
+              </p>
+            </Reveal>
+            <Reveal animation="fade-in-up" delay={160}>
+              <p className="text-base leading-7 text-slate-700">
+                {heroContent.description}
+              </p>
+            </Reveal>
+            <Reveal animation="fade-in-up" delay={240}>
+              <div className="pt-2">
+                <Button asChild className="h-10 rounded-full px-6 text-base font-normal">
+                  <Link href={`/${locale}/collaborate`}>{heroContent.ctaLabel}</Link>
+                </Button>
+              </div>
+            </Reveal>
           </div>
 
           {/* Image */}
-          <div className="order-1 relative w-full aspect-[4/3] max-h-[400px] overflow-hidden rounded-lg border border-[#d8d8ea] lg:order-2">
+          <Reveal animation="fade-in-slow" delay={200} className="order-1 relative w-full aspect-[4/3] max-h-[400px] overflow-hidden rounded-lg border border-[#d8d8ea] lg:order-2">
             <Image
-              src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&h=600&fit=crop"
+              src={heroContent.image}
               alt="Outdoor adventure experiences"
               fill
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -76,7 +85,7 @@ export default async function ExperiencesPage({
       {categories.map((category, categoryIndex) => {
         const isIndividualsCategory = categoryIndex === 0;
         const isTeamsCategory = categoryIndex === 1;
-        
+
         // For "FOR TEAMS & COMPANIES" category, extract it from the wrapper structure
         if (isTeamsCategory) {
           return (
@@ -84,15 +93,21 @@ export default async function ExperiencesPage({
               {/* Category Header */}
               <section className={`w-full px-4 py-4 sm:py-[44px] sm:px-6 lg:px-8 flex flex-col justify-center items-center bg-surface`}>
                 <div className="w-full max-w-[1000px] flex flex-col justify-center items-center text-center">
-                  <p className="text-base uppercase tracking-[0.24em] text-emerald-700 sm:text-base">
-                    {category.label}
-                  </p>
-                  <h2 className="font-display mt-4 text-[32px] sm:text-5xl text-slate-900">
-                    {category.title}
-                  </h2>
-                  <p className="mt-6 max-w-3xl text-base leading-7 text-slate-800 text-center">
-                    {category.description}
-                  </p>
+                  <Reveal animation="fade-in-up">
+                    <p className="text-base uppercase tracking-[0.24em] text-emerald-700 sm:text-base">
+                      {category.label}
+                    </p>
+                  </Reveal>
+                  <Reveal animation="fade-in-up" delay={80}>
+                    <h2 className="font-display mt-4 text-[32px] sm:text-5xl text-slate-900">
+                      {category.title}
+                    </h2>
+                  </Reveal>
+                  <Reveal animation="fade-in-up" delay={160}>
+                    <p className="mt-6 max-w-3xl text-base leading-7 text-slate-800 text-center">
+                      {category.description}
+                    </p>
+                  </Reveal>
                 </div>
               </section>
 
@@ -106,14 +121,13 @@ export default async function ExperiencesPage({
                 return (
                   <div key={experience.title} className="w-full">
                     <section
-                     
-                      className={`w-full px-4 py-4 sm:py-[44px] sm:px-6 lg:px-8 flex flex-col justify-center items-center ${
+                      className={`w-full px-4 py-10 sm:py-[60px] sm:px-6 lg:px-8 flex flex-col justify-center items-center ${
                         shouldHaveBackground ? "bg-surface" : ""
                       }`}
                     >
-                      <div className="grid w-full max-w-[1000px] gap-4 pt-4 pb-4 md:grid-cols-2 md:gap-16 md:pt-0 md:pb-0">
+                      <div className="grid w-full max-w-[1000px] gap-8 md:grid-cols-2 md:gap-16">
                         {/* Image */}
-                        <div className="relative w-full h-[200px] md:h-auto md:aspect-[4/3] max-h-[280px] overflow-hidden rounded-lg border border-[#d8d8ea] md:order-1">
+                        <Reveal animation="fade-in-slow" className="relative w-full h-[200px] md:h-auto md:aspect-[4/3] max-h-[280px] overflow-hidden rounded-lg border border-[#d8d8ea] md:order-2">
                           {experience.image ? (
                             <Image
                               src={experience.image}
@@ -131,17 +145,32 @@ export default async function ExperiencesPage({
                               sizes="(max-width: 768px) 100vw, 50vw"
                             />
                           )}
-                        </div>
+                        </Reveal>
 
                         {/* Content */}
-                        <div className="flex flex-col justify-center space-y-4 md:order-2">
-                          <h3 className="font-display text-[24px] sm:text-4xl text-slate-900">{experience.title}</h3>
-                          <p className="text-base leading-7 text-slate-700">
-                            {experience.description}
-                          </p>
-                          <span className={`inline-flex w-fit rounded-full border px-3 py-1 text-[11px] font-medium uppercase tracking-[0.08em] ${status.className}`}>
-                            {status.label}
-                          </span>
+                        <div className="flex flex-col justify-between gap-6 md:order-1">
+                          <div className="flex flex-col gap-4">
+                            <Reveal animation="fade-in-up">
+                              <span className={`inline-flex w-fit rounded-full border px-3 py-1 text-[11px] font-medium uppercase tracking-[0.08em] ${status.className}`}>
+                                {status.label}
+                              </span>
+                            </Reveal>
+                            <Reveal animation="fade-in-up" delay={80}>
+                              <h3 className="font-display text-[24px] sm:text-4xl text-slate-900">{experience.title}</h3>
+                            </Reveal>
+                            <Reveal animation="fade-in-up" delay={160}>
+                              <p className="text-base leading-7 text-slate-700">
+                                {experience.description}
+                              </p>
+                            </Reveal>
+                          </div>
+                          {experience.ctaUrl && experience.ctaLabel && (
+                            <Reveal animation="fade-in-up" delay={240}>
+                              <Button asChild className="h-10 w-fit rounded-full px-6 text-base font-normal">
+                                <Link href={experience.ctaUrl}>{experience.ctaLabel}</Link>
+                              </Button>
+                            </Reveal>
+                          )}
                         </div>
                       </div>
                     </section>
@@ -159,7 +188,7 @@ export default async function ExperiencesPage({
             </div>
           );
         }
-        
+
         return (
           <div key={category.title} className="w-full">
             {isIndividualsCategory ? (
@@ -167,15 +196,21 @@ export default async function ExperiencesPage({
                 {/* Category Header */}
                 <section className={`w-full px-4 py-4 sm:py-[44px] sm:px-6 lg:px-8 flex flex-col justify-center items-center bg-surface-alt`}>
                   <div className="w-full max-w-[1000px] flex flex-col justify-center items-center text-center">
-                    <p className="text-base uppercase tracking-[0.24em] text-emerald-700 sm:text-base">
-                      {category.label}
-                    </p>
-                    <h2 className="font-display mt-4 text-[32px] sm:text-5xl text-slate-900">
-                      {category.title}
-                    </h2>
-                    <p className="mt-6 max-w-3xl text-base leading-7 text-slate-800 text-center">
-                      {category.description}
-                    </p>
+                    <Reveal animation="fade-in-up">
+                      <p className="text-base uppercase tracking-[0.24em] text-emerald-700 sm:text-base">
+                        {category.label}
+                      </p>
+                    </Reveal>
+                    <Reveal animation="fade-in-up" delay={80}>
+                      <h2 className="font-display mt-4 text-[32px] sm:text-5xl text-slate-900">
+                        {category.title}
+                      </h2>
+                    </Reveal>
+                    <Reveal animation="fade-in-up" delay={160}>
+                      <p className="mt-6 max-w-3xl text-base leading-7 text-slate-800 text-center">
+                        {category.description}
+                      </p>
+                    </Reveal>
                   </div>
                 </section>
 
@@ -187,16 +222,13 @@ export default async function ExperiencesPage({
                   return (
                     <div key={experience.title} className="w-full">
                       <section
-                       
-                        className={`w-full px-4 py-4 sm:py-[44px] sm:px-6 lg:px-8 flex flex-col justify-center items-center ${
+                        className={`w-full px-4 py-10 sm:py-[60px] sm:px-6 lg:px-8 flex flex-col justify-center items-center ${
                           shouldHaveBackground ? "bg-surface-alt" : ""
                         }`}
                       >
-                        <div className="grid w-full max-w-[1000px] gap-4 pt-4 pb-4 md:grid-cols-2 md:gap-16 md:pt-0 md:pb-0">
+                        <div className="grid w-full max-w-[1000px] gap-8 md:grid-cols-2 md:gap-16">
                           {/* Image */}
-                          <div
-                            className="relative w-full h-[200px] md:h-auto md:aspect-[4/3] max-h-[280px] overflow-hidden rounded-lg border border-[#d8d8ea] md:order-2"
-                          >
+                          <Reveal animation="fade-in-slow" className="relative w-full h-[200px] md:h-auto md:aspect-[4/3] max-h-[280px] overflow-hidden rounded-lg border border-[#d8d8ea] md:order-2">
                             <Image
                               src={experience.image || "https://images.unsplash.com/photo-1528127269322-539801943592?w=600&h=400&fit=crop"}
                               alt={experience.imageAlt}
@@ -204,17 +236,32 @@ export default async function ExperiencesPage({
                               className="object-cover"
                               sizes="(max-width: 768px) 100vw, 50vw"
                             />
-                          </div>
+                          </Reveal>
 
                           {/* Content */}
-                          <div className="flex flex-col justify-center space-y-4 md:order-1">
-                            <h3 className="font-display text-[24px] sm:text-4xl text-slate-900">{experience.title}</h3>
-                            <p className="text-base leading-7 text-slate-700">
-                              {experience.description}
-                            </p>
-                            <span className={`inline-flex w-fit rounded-full border px-3 py-1 text-[11px] font-medium uppercase tracking-[0.08em] ${status.className}`}>
-                              {status.label}
-                            </span>
+                          <div className="flex flex-col justify-between gap-6 md:order-1">
+                            <div className="flex flex-col gap-4">
+                              <Reveal animation="fade-in-up">
+                                <span className={`inline-flex w-fit rounded-full border px-3 py-1 text-[11px] font-medium uppercase tracking-[0.08em] ${status.className}`}>
+                                  {status.label}
+                                </span>
+                              </Reveal>
+                              <Reveal animation="fade-in-up" delay={80}>
+                                <h3 className="font-display text-[24px] sm:text-4xl text-slate-900">{experience.title}</h3>
+                              </Reveal>
+                              <Reveal animation="fade-in-up" delay={160}>
+                                <p className="text-base leading-7 text-slate-700">
+                                  {experience.description}
+                                </p>
+                              </Reveal>
+                            </div>
+                            {experience.ctaUrl && experience.ctaLabel && (
+                              <Reveal animation="fade-in-up" delay={240}>
+                                <Button asChild className="h-10 w-fit rounded-full px-6 text-base font-normal">
+                                  <Link href={experience.ctaUrl}>{experience.ctaLabel}</Link>
+                                </Button>
+                              </Reveal>
+                            )}
                           </div>
                         </div>
                       </section>
@@ -234,15 +281,21 @@ export default async function ExperiencesPage({
                 {/* Category Header */}
                 <section className={`w-full px-4 py-4 sm:py-[44px] sm:px-6 lg:px-8 flex flex-col justify-center items-center bg-surface-alt`}>
                   <div className="w-full max-w-[1000px] flex flex-col justify-center items-center text-center">
-                    <p className="text-base uppercase tracking-[0.24em] text-emerald-700 sm:text-base text-center">
-                      {category.label}
-                    </p>
-                    <h2 className="font-display mt-4 text-[32px] sm:text-5xl text-slate-900 text-center">
-                      {category.title}
-                    </h2>
-                    <p className="mt-6 max-w-3xl text-base leading-7 text-slate-800 text-center">
-                      {category.description}
-                    </p>
+                    <Reveal animation="fade-in-up">
+                      <p className="text-base uppercase tracking-[0.24em] text-emerald-700 sm:text-base text-center">
+                        {category.label}
+                      </p>
+                    </Reveal>
+                    <Reveal animation="fade-in-up" delay={80}>
+                      <h2 className="font-display mt-4 text-[32px] sm:text-5xl text-slate-900 text-center">
+                        {category.title}
+                      </h2>
+                    </Reveal>
+                    <Reveal animation="fade-in-up" delay={160}>
+                      <p className="mt-6 max-w-3xl text-base leading-7 text-slate-800 text-center">
+                        {category.description}
+                      </p>
+                    </Reveal>
                   </div>
                 </section>
 
@@ -252,14 +305,11 @@ export default async function ExperiencesPage({
                   return (
                     <div key={experience.title} className="w-full">
                       <section
-                       
-                        className="w-full px-4 py-4 sm:py-[44px] sm:px-6 lg:px-8 flex flex-col justify-center items-center bg-surface-alt"
+                        className="w-full px-4 py-10 sm:py-[60px] sm:px-6 lg:px-8 flex flex-col justify-center items-center bg-surface-alt"
                       >
-                        <div className="grid w-full max-w-[1000px] gap-4 pt-4 pb-4 md:grid-cols-2 md:gap-16 md:pt-0 md:pb-0">
+                        <div className="grid w-full max-w-[1000px] gap-8 md:grid-cols-2 md:gap-16">
                           {/* Image */}
-                          <div
-                            className="relative w-full h-[200px] md:h-auto md:aspect-[4/3] max-h-[280px] overflow-hidden rounded-lg border border-[#d8d8ea] md:order-2"
-                          >
+                          <Reveal animation="fade-in-slow" className="relative w-full h-[200px] md:h-auto md:aspect-[4/3] max-h-[280px] overflow-hidden rounded-lg border border-[#d8d8ea] md:order-2">
                             <Image
                               src={experience.image || "https://images.unsplash.com/photo-1528127269322-539801943592?w=600&h=400&fit=crop"}
                               alt={experience.imageAlt}
@@ -267,17 +317,32 @@ export default async function ExperiencesPage({
                               className="object-cover"
                               sizes="(max-width: 768px) 100vw, 50vw"
                             />
-                          </div>
+                          </Reveal>
 
                           {/* Content */}
-                          <div className="flex flex-col justify-center space-y-4 md:order-1">
-                            <h3 className="font-display text-[24px] sm:text-4xl text-slate-900">{experience.title}</h3>
-                            <p className="text-base leading-7 text-slate-700">
-                              {experience.description}
-                            </p>
-                            <span className={`inline-flex w-fit rounded-full border px-3 py-1 text-[11px] font-medium uppercase tracking-[0.08em] ${status.className}`}>
-                              {status.label}
-                            </span>
+                          <div className="flex flex-col justify-between gap-6 md:order-1">
+                            <div className="flex flex-col gap-4">
+                              <Reveal animation="fade-in-up">
+                                <span className={`inline-flex w-fit rounded-full border px-3 py-1 text-[11px] font-medium uppercase tracking-[0.08em] ${status.className}`}>
+                                  {status.label}
+                                </span>
+                              </Reveal>
+                              <Reveal animation="fade-in-up" delay={80}>
+                                <h3 className="font-display text-[24px] sm:text-4xl text-slate-900">{experience.title}</h3>
+                              </Reveal>
+                              <Reveal animation="fade-in-up" delay={160}>
+                                <p className="text-base leading-7 text-slate-700">
+                                  {experience.description}
+                                </p>
+                              </Reveal>
+                            </div>
+                            {experience.ctaUrl && experience.ctaLabel && (
+                              <Reveal animation="fade-in-up" delay={240}>
+                                <Button asChild className="h-10 w-fit rounded-full px-6 text-base font-normal">
+                                  <Link href={experience.ctaUrl}>{experience.ctaLabel}</Link>
+                                </Button>
+                              </Reveal>
+                            )}
                           </div>
                         </div>
                       </section>

@@ -7,6 +7,7 @@ type Testimonial = {
   quote: string;
   author: string;
   role: string;
+  logo?: string;
 };
 
 type TestimonialsSliderProps = {
@@ -90,8 +91,13 @@ export function TestimonialsSlider({ items }: TestimonialsSliderProps) {
           />
         </div>
       </div>
-      <p className="mt-7 text-base font-medium">{active.author}</p>
-      <p className="text-sm text-muted-foreground">{active.role}</p>
+      {active.logo && (
+        <div className="mt-8 flex justify-center">
+          <img src={active.logo} alt="" className="h-8 w-auto" />
+        </div>
+      )}
+      <p className={`${active.logo ? "mt-2" : "mt-7"} text-base font-medium`}>{active.author}</p>
+      <p className="mt-1 text-sm text-muted-foreground">{active.role}</p>
 
       <div className="mt-5 flex items-center justify-center gap-4">
         <button

@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# design experiments
+src/app/\[locale\]/experiences-v7
+src/app/\[locale\]/experiences-v7-light
+src/app/\[locale\]/layout-variants

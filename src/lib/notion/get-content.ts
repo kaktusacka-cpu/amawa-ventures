@@ -4,6 +4,7 @@ import {
   getDefaultCopy,
   getDefaultExperiencesCopy,
   getDefaultWhatWeDoCopy,
+  experienceCtaOverrides,
   type HomeCopy,
   type ExperiencesCopy,
   type ExperienceCategory,
@@ -32,13 +33,19 @@ function t(rows: NotionRow[], field: string, locale: string): string {
 function itemToExperience(item: ExperienceItemRow, locale: string) {
   const titleMap: Record<string, string> = { en: item.enTitle, es: item.esTitle, sk: item.skTitle };
   const descMap: Record<string, string> = { en: item.enDescription, es: item.esDescription, sk: item.skDescription };
+  const ctaMap: Record<string, string> = { en: item.enCtaLabel, es: item.esCtaLabel, sk: item.skCtaLabel };
   const title = titleMap[locale] || item.enTitle;
+  const override = experienceCtaOverrides[item.name];
+  const ctaUrl = item.ctaUrl || override?.url || "";
+  const ctaLabel = ctaMap[locale] || item.enCtaLabel || override?.[locale as "en" | "es" | "sk"] || override?.en || "";
   return {
     title,
     description: descMap[locale] || item.enDescription,
     image: item.image || "",
     imageAlt: title,
     isUpcoming: item.isUpcoming,
+    ctaLabel,
+    ctaUrl,
   };
 }
 
@@ -50,6 +57,7 @@ function cardItemToCard(item: CardItemRow, locale: string) {
     title: titleMap[locale] || item.enTitle,
     description: descMap[locale] || item.enDescription,
     cta: ctaMap[locale] || item.enCta,
+    image: item.image || "",
   };
 }
 
@@ -96,7 +104,10 @@ export const getHomePageContent = cache(
         DB_IDS.contactItems ? fetchContactItems(DB_IDS.contactItems) : [],
       ]);
 
-      const pathCards = pathCardItems.map((item) => cardItemToCard(item, locale));
+      const pathCards = pathCardItems.map((item, i) => {
+        const card = cardItemToCard(item, locale);
+        return { ...card, image: card.image || fallback.paths.cards[i]?.image || "" };
+      });
       const coreCards = coreCardItems.map((item) => cardItemToCard(item, locale));
       const metrics = metricItems.map((item) => metricItemToMetric(item, locale));
       const connectItems = contactItemRows.map((item) => contactItemToLabel(item, locale));
@@ -114,6 +125,7 @@ export const getHomePageContent = cache(
           title: t(hero, "title", locale) || fallback.hero.title,
           lead: t(hero, "lead", locale) || fallback.hero.lead,
           thinkWord: t(hero, "thinkWord", locale) || fallback.hero.thinkWord,
+          connectText: t(hero, "connectText", locale) || fallback.hero.connectText,
           growWord: t(hero, "growWord", locale) || fallback.hero.growWord,
           subLead: t(hero, "subLead", locale) || fallback.hero.subLead,
           primaryCta: t(hero, "primaryCta", locale) || fallback.hero.primaryCta,
@@ -164,6 +176,9 @@ export const getHomePageContent = cache(
           connectTitle: t(contact, "connectTitle", locale) || fallback.contact.connectTitle,
           connectDescription: t(contact, "connectDescription", locale) || fallback.contact.connectDescription,
           connectItems: connectItems.length > 0 ? connectItems : fallback.contact.connectItems,
+          emailUrl: t(contact, "emailUrl", locale) || fallback.contact.emailUrl,
+          linkedinUrl: t(contact, "linkedinUrl", locale) || fallback.contact.linkedinUrl,
+          instagramUrl: t(contact, "instagramUrl", locale) || fallback.contact.instagramUrl,
         },
         footer: {
           brand: t(footer, "brand", locale) || fallback.footer.brand,
@@ -219,6 +234,9 @@ export const getHomePageContent = cache(
           ecosystemTitle: t(aboutPage, "ecosystemTitle", locale) || fallback.aboutPage.ecosystemTitle,
           ecosystemDescription:
             t(aboutPage, "ecosystemDescription", locale) || fallback.aboutPage.ecosystemDescription,
+          heroImage: t(aboutPage, "heroImage", locale) || fallback.aboutPage.heroImage,
+          boundaryImage1: t(aboutPage, "boundaryImage1", locale) || fallback.aboutPage.boundaryImage1,
+          boundaryImage2: t(aboutPage, "boundaryImage2", locale) || fallback.aboutPage.boundaryImage2,
         },
       };
     } catch {
@@ -239,12 +257,10 @@ export const getExperiencesContent = cache(
       const hero = getRows(allRows, "hero");
       const statusLabels = getRows(allRows, "statusLabels");
 
-      // Fetch dynamic experience items from separate database
-      const items = DB_IDS.experienceItems
-        ? await fetchExperienceItems(DB_IDS.experienceItems)
-        : [];
+      // Experience items live in the same database — use experienceItems ID if set, else fall back to experiences ID
+      const itemsDbId = DB_IDS.experienceItems || DB_IDS.experiences;
+      const items = itemsDbId ? await fetchExperienceItems(itemsDbId) : [];
 
-      // Category mapping: section key -> Notion category select value
       const categoryMap = [
         { sectionNum: 1, categoryKey: "individuals" },
         { sectionNum: 2, categoryKey: "teams" },
@@ -256,7 +272,6 @@ export const getExperiencesContent = cache(
         const catRows = getRows(allRows, `cat.${sectionNum}`);
         if (catRows.length === 0) break;
 
-        // Get items for this category from the items database
         const categoryItems = items.filter((item) => item.category === categoryKey);
         const experiences = categoryItems.map((item) => itemToExperience(item, locale));
 
@@ -264,7 +279,7 @@ export const getExperiencesContent = cache(
           label: t(catRows, "label", locale),
           title: t(catRows, "title", locale),
           description: t(catRows, "description", locale),
-          experiences,
+          experiences: experiences.length > 0 ? experiences : (fallback.categories[sectionNum - 1]?.experiences ?? []),
         });
       }
 
@@ -274,6 +289,7 @@ export const getExperiencesContent = cache(
           tagline: t(hero, "tagline", locale) || fallback.hero.tagline,
           description: t(hero, "description", locale) || fallback.hero.description,
           ctaLabel: t(hero, "ctaLabel", locale) || fallback.hero.ctaLabel,
+          image: t(hero, "image", locale) || fallback.hero.image,
         },
         statusLabels: {
           upcoming: t(statusLabels, "upcoming", locale) || fallback.statusLabels.upcoming,
@@ -321,7 +337,9 @@ export const getWhatWeDoContent = cache(
           leadText: t(hero, "leadText", locale) || fallback.hero.leadText,
           secondaryText: t(hero, "secondaryText", locale) || fallback.hero.secondaryText,
           ctaLabel: t(hero, "ctaLabel", locale) || fallback.hero.ctaLabel,
+          image: t(hero, "image", locale) || fallback.hero.image,
         },
+        sectionImages: fallback.sectionImages,
         areas: areas.length > 0 ? areas : fallback.areas,
       };
     } catch {

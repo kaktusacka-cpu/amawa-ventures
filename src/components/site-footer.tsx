@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 type SiteFooterProps = {
@@ -18,10 +19,70 @@ export function SiteFooter({ brand, copyright }: SiteFooterProps) {
       : "bg-surface";
 
   return (
-    <footer className={`border-t border-black/8 ${footerBgClass}`}>
-      <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-4 text-[10px] text-slate-500 sm:px-6 lg:px-8">
-        <span className="text-slate-700 text-[14px]">{brand}</span>
-        <span className="text-[14px]">© 2026 <a href="https://bydomi.design" target="_blank" rel="noopener noreferrer" className="underline hover:text-slate-700">bydomi.design</a></span>
+    <footer className={`border-t border-black/8 px-4 sm:px-6 lg:px-8 ${footerBgClass}`}>
+      <div className="mx-auto w-full max-w-[1000px]">
+        {/* Logo */}
+        <div className="pt-12 pb-12">
+          <Image
+            src="/logo-amawa-full.svg"
+            alt={brand}
+            width={160}
+            height={24}
+            className="h-6 w-auto"
+          />
+        </div>
+
+        {/* 4 columns */}
+        <div className="flex flex-wrap justify-between pb-16">
+          <div className="flex flex-col gap-3">
+            <p className="text-xs uppercase tracking-[0.24em] text-muted-foreground">Contact</p>
+            <div className="flex flex-col gap-1">
+              <p className="text-sm text-foreground">example@gmail.com</p>
+              <p className="text-sm text-foreground">+421 918 444 444</p>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-3">
+            <p className="text-xs uppercase tracking-[0.24em] text-muted-foreground">Address</p>
+            <div className="flex flex-col gap-1">
+              <p className="text-sm text-foreground">Hemerkova 1320/12</p>
+              <p className="text-sm text-foreground">040 23 Košice</p>
+              <p className="text-sm text-foreground">Slovakia</p>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-3">
+            <p className="text-xs uppercase tracking-[0.24em] text-muted-foreground">Legal</p>
+            <div className="flex flex-col gap-1">
+              <p className="text-sm text-foreground">Amawa Ventures s. r. o.</p>
+              <p className="text-sm text-foreground">IČO: 57142467</p>
+              <p className="text-sm text-foreground">DIČ: 2122582550</p>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-3">
+            <p className="text-xs uppercase tracking-[0.24em] text-muted-foreground">Documents</p>
+            <div className="flex flex-col gap-1">
+              <p className="text-sm text-foreground">GDPR - Privacy Policy</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom bar */}
+        <div className="border-t border-black/8 py-8 text-center text-sm text-muted-foreground">
+          <p>© 2026 Amawa Ventures.</p>
+          <p>
+            Design by{" "}
+            <a
+              href="https://bydomi.design"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-slate-700"
+            >
+              BYDOMI.DESIGN
+            </a>
+          </p>
+        </div>
       </div>
     </footer>
   );

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { Reveal } from "@/components/reveal";
 
 type ContentCardProps = {
   title: string;
@@ -15,15 +16,15 @@ export function ContentCard({ title, description, cta, image, imageAlt, href }: 
   const cardContent = (
     <>
       {image && (
-        <div className="relative h-[180px]">
+        <Reveal animation="fade-in-slow" className="relative h-[180px] overflow-hidden">
           <Image
             src={image}
             alt={imageAlt ?? title}
             fill
-            className="object-cover"
+            className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, 33vw"
           />
-        </div>
+        </Reveal>
       )}
       <div className="flex flex-col gap-4 px-6 pt-6 pb-6">
         <div className="space-y-2">
@@ -31,7 +32,7 @@ export function ContentCard({ title, description, cta, image, imageAlt, href }: 
           <div className="text-muted-foreground text-base leading-5 font-normal">{description}</div>
         </div>
         {href ? (
-          <span className="text-base font-medium text-[#cd6f3f] self-start cursor-pointer inline-flex items-center gap-2">
+          <span className="text-base font-medium text-[#E17100] self-start cursor-pointer inline-flex items-center gap-2">
             {cta}
             <span
               aria-hidden="true"
@@ -39,7 +40,7 @@ export function ContentCard({ title, description, cta, image, imageAlt, href }: 
             />
           </span>
         ) : (
-          <Button variant="link" className="group h-auto p-0 text-base font-medium text-[#cd6f3f] self-start inline-flex items-center gap-2">
+          <Button variant="link" className="group h-auto p-0 text-base font-medium text-[#E17100] self-start inline-flex items-center gap-2">
             {cta}
             <span
               aria-hidden="true"
@@ -55,7 +56,7 @@ export function ContentCard({ title, description, cta, image, imageAlt, href }: 
     return (
       <Link
         href={href}
-        className={`group block overflow-hidden rounded-xl border border-[#e4e6e8] shadow-none cursor-pointer transition-colors ${image ? "bg-surface-alt hover:bg-surface-alt-hover" : "bg-white hover:bg-surface-hover"}`}
+        className={`group block overflow-hidden rounded-xl border border-[#e4e6e8] shadow-none cursor-pointer transition-colors ${image ? "bg-surface-alt hover:bg-surface-alt-hover" : "bg-surface hover:bg-surface-hover"}`}
       >
         {cardContent}
       </Link>
@@ -63,7 +64,7 @@ export function ContentCard({ title, description, cta, image, imageAlt, href }: 
   }
 
   return (
-    <div className={`overflow-hidden rounded-xl border border-[#e4e6e8] shadow-none ${image ? "bg-surface-alt" : "bg-white"}`}>
+    <div className={`overflow-hidden rounded-xl border border-[#e4e6e8] shadow-none ${image ? "bg-surface-alt" : "bg-surface"}`}>
       {cardContent}
     </div>
   );
