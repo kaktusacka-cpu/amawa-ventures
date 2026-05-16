@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const gaId = process.env.NEXT_PUBLIC_GA_ID;
@@ -43,6 +44,7 @@ export default function RootLayout({
           src="https://mcp.figma.com/mcp/html-to-design/capture.js"
           strategy="afterInteractive"
         />
+        <Analytics />
       </body>
     </html>
   );
