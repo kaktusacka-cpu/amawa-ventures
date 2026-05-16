@@ -1,6 +1,8 @@
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { BoundaryImage } from "@/components/boundary-image";
 import { PageHero } from "@/components/page-hero";
+import { Reveal } from "@/components/reveal";
 import { SectionHeading } from "@/components/section-heading";
 import { isLocale, type Locale } from "@/lib/i18n";
 import { getHomePageContent } from "@/lib/notion/get-content";
@@ -17,7 +19,7 @@ export default async function AboutPage({
   const aboutPage = content.aboutPage;
 
   return (
-    <main className="bg-surface text-slate-900 flex flex-col justify-center items-center">
+    <main className="bg-surface text-foreground flex flex-col justify-center items-center">
       <PageHero
         title={content.pages.aboutTitle}
         description={aboutPage.heroIntro}
@@ -29,7 +31,7 @@ export default async function AboutPage({
       />
 
       {/* Who We Are — bg-surface-alt, extra bottom padding for image overlap */}
-      <section className="w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center bg-surface-alt pt-[120px] pb-[276px]">
+      <section className="w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center bg-surface-alt pt-[60px] pb-[140px] md:pt-[120px] md:pb-[276px]">
         <SectionHeading
           title={aboutPage.whoWeAreTitle}
           body={[
@@ -46,7 +48,7 @@ export default async function AboutPage({
       <BoundaryImage src={aboutPage.boundaryImage1} alt="Mountain landscape" />
 
       {/* Why Amawa Ventures — bg-surface, extra padding on both sides for images */}
-      <section className="w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center bg-surface pt-[276px] pb-[276px]">
+      <section className="w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center bg-surface pt-[140px] pb-[140px] md:pt-[276px] md:pb-[276px]">
         <SectionHeading
           title={aboutPage.whyTitle}
           body={
@@ -64,7 +66,7 @@ export default async function AboutPage({
       <BoundaryImage src={aboutPage.boundaryImage2} alt="Mountain landscape" />
 
       {/* Our Philosophy — bg-surface-alt, extra top padding for image overlap */}
-      <section className="w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center bg-surface-alt pt-[276px] pb-[120px]">
+      <section className="w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center bg-surface-alt pt-[140px] pb-[60px] md:pt-[276px] md:pb-[120px]">
         <SectionHeading
           title={aboutPage.philosophyTitle}
           body={[
@@ -75,6 +77,18 @@ export default async function AboutPage({
             aboutPage.philosophyOutro,
           ]}
         />
+        <Reveal
+          animation="fade-in-slow"
+          className="relative mt-10 h-[180px] w-full max-w-[1000px] overflow-hidden rounded-2xl md:mt-16 md:h-[312px]"
+        >
+          <Image
+            src={aboutPage.philosophyImage}
+            alt="Calm forest path"
+            fill
+            className="object-cover"
+            sizes="(max-width: 1000px) 100vw, 1000px"
+          />
+        </Reveal>
       </section>
     </main>
   );

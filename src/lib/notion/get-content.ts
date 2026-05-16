@@ -230,6 +230,7 @@ export const getHomePageContent = cache(
           heroImage: t(aboutPage, "heroImage", locale) || fallback.aboutPage.heroImage,
           boundaryImage1: t(aboutPage, "boundaryImage1", locale) || fallback.aboutPage.boundaryImage1,
           boundaryImage2: t(aboutPage, "boundaryImage2", locale) || fallback.aboutPage.boundaryImage2,
+          philosophyImage: t(aboutPage, "philosophyImage", locale) || fallback.aboutPage.philosophyImage,
         },
       };
     } catch {

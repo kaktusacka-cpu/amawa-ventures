@@ -41,24 +41,24 @@ export function ExperienceRow({
           className="object-cover"
           sizes="(max-width: 768px) 100vw, 50vw"
         />
+        <div className="absolute right-3 top-3 z-10">
+          <StatusBadge label={statusLabel} variant={statusVariant} />
+        </div>
       </Reveal>
 
-      <div className="flex flex-col justify-between gap-6 md:order-1">
+      <div className="flex flex-col justify-center gap-6 md:order-1">
         <div className="flex flex-col gap-4">
           <Reveal animation="fade-in-up">
-            <StatusBadge label={statusLabel} variant={statusVariant} />
-          </Reveal>
-          <Reveal animation="fade-in-up" delay={80}>
-            <h3 className="font-display text-[24px] sm:text-4xl text-slate-900">
+            <h3 className="font-display text-[24px] sm:text-4xl text-foreground">
               {title}
             </h3>
           </Reveal>
-          <Reveal animation="fade-in-up" delay={160}>
-            <p className="text-base leading-7 text-slate-700">{description}</p>
+          <Reveal animation="fade-in-up" delay={80}>
+            <p className="text-base leading-7 text-foreground-body">{description}</p>
           </Reveal>
         </div>
         {ctaUrl && ctaLabel && (
-          <Reveal animation="fade-in-up" delay={240}>
+          <Reveal animation="fade-in-up" delay={160}>
             <Button asChild size="pill" className="w-fit">
               <Link href={ctaUrl}>{ctaLabel}</Link>
             </Button>

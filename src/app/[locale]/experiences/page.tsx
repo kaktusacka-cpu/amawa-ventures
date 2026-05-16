@@ -52,7 +52,7 @@ export default async function ExperiencesPage({
   };
 
   return (
-    <main className="bg-surface text-slate-900 flex flex-col justify-center items-center">
+    <main className="bg-surface text-foreground flex flex-col justify-center items-center">
       <ScrollToHash />
 
       <PageHero

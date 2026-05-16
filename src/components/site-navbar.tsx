@@ -64,8 +64,17 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
   ];
 
   const isActive = (href: string) => {
-    if (href === `/${locale}`) {
-      return pathname === href;
+    const homeHref = `/${locale}`;
+    if (href === homeHref) {
+      if (pathname === homeHref) return true;
+      // Home stays active for any route that isn't another main nav item
+      // (e.g., /privacy, /docs, /404 — supplementary pages not in the navbar).
+      const otherNavHrefs = navLinks
+        .filter((link) => link.href !== homeHref)
+        .map((link) => link.href);
+      return !otherNavHrefs.some(
+        (other) => pathname === other || pathname.startsWith(`${other}/`),
+      );
     }
     return pathname === href || pathname.startsWith(`${href}/`);
   };
@@ -86,6 +95,16 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
     setLanguageOpen(false);
     setMobileLanguageOpen(false);
   }, [pathname]);
+
+  // Lock body scroll while the mobile menu is open.
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [mobileOpen]);
 
   useEffect(() => {
     if (!languageOpen) return;
@@ -108,13 +127,14 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
   }, [languageOpen]);
 
   return (
+    <>
     <header
-      className={`sticky top-0 z-40 border-b border-white/40 bg-surface/35 backdrop-blur-xl backdrop-saturate-150 relative ${isScrolled ? "shadow-[0_8px_24px_rgba(15,23,42,0.06)]" : ""}`}
+      className={`sticky top-0 z-40 border-b border-border-glass bg-surface/35 backdrop-blur-xl backdrop-saturate-150 relative ${isScrolled ? "shadow-[0_8px_24px_rgba(15,23,42,0.06)]" : ""}`}
     >
       <div className="relative mx-auto flex w-full max-w-[1800px] items-center justify-between px-4 py-4 sm:px-6 lg:h-16 lg:py-0 lg:px-8">
         <Link
           href={`/${locale}`}
-          className="inline-flex items-center text-xs font-semibold tracking-wide text-slate-900"
+          className="inline-flex items-center text-xs font-semibold tracking-wide text-foreground"
         >
           <Image
             src="/logo-amawa-mark.svg"
@@ -152,7 +172,7 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
               className={`inline-flex px-2 py-2 text-base font-normal transition-colors ${
                 isActive(link.href)
                   ? "text-primary underline underline-offset-8 decoration-2 decoration-primary"
-                  : "text-slate-700 hover:text-slate-900"
+                  : "text-foreground-body hover:text-foreground"
               }`}
             >
               {link.label}
@@ -163,7 +183,7 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
         <div ref={languageMenuRef} className="relative hidden lg:block">
           <button
             type="button"
-            className="inline-flex items-center gap-1 rounded-md px-2 py-2 text-base font-normal text-slate-700 hover:bg-black/5"
+            className="inline-flex items-center gap-1 rounded-md px-2 py-2 text-base font-normal text-foreground-body hover:bg-surface-hover"
             onClick={() => setLanguageOpen((prev) => !prev)}
             aria-expanded={languageOpen}
             aria-haspopup="menu"
@@ -176,7 +196,7 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
           {languageOpen ? (
             <div
               role="menu"
-              className="absolute right-0 top-full mt-2 min-w-36 rounded-md border border-black/10 bg-surface p-1 shadow-md"
+              className="absolute right-0 top-full mt-2 min-w-36 rounded-md border border-border bg-surface p-1 shadow-md"
             >
               {locales
                 .filter((item) => item !== locale)
@@ -187,8 +207,8 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
                       key={item}
                       href={localizedPath}
                       role="menuitem"
-                      className={`block rounded px-2 py-1.5 text-sm text-slate-700 hover:bg-black/5 hover:text-slate-900 ${
-                        index < arr.length - 1 ? "border-b border-black/10" : ""
+                      className={`block rounded px-2 py-1.5 text-sm text-foreground-body hover:bg-surface-hover hover:text-foreground ${
+                        index < arr.length - 1 ? "border-b border-border" : ""
                       }`}
                     >
                       {localeLabel[item]}
@@ -199,18 +219,19 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
           ) : null}
         </div>
       </div>
+    </header>
 
-      {mobileOpen ? (
-        <div className="absolute left-0 right-0 top-full z-50 border-t border-black/10 bg-surface-alt lg:hidden reveal-scale-in">
-          <nav className="mx-auto flex w-full max-w-[1800px] flex-col items-center gap-1 px-4 py-4 sm:px-6">
+    {mobileOpen ? (
+      <div className="fixed inset-x-0 bottom-0 top-[60px] z-50 overflow-y-auto border-t border-border bg-surface-alt lg:hidden reveal-scale-in">
+          <nav className="mx-auto flex w-full max-w-[1800px] flex-col items-center gap-1 px-4 py-8 sm:px-6">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`w-full max-w-sm rounded-md px-3 py-3 text-center text-base font-normal transition-colors hover:bg-black/5 hover:text-slate-900 ${
+                className={`w-full max-w-sm rounded-md px-3 py-3 text-center text-base font-normal transition-colors hover:bg-surface-hover hover:text-foreground ${
                   isActive(link.href)
                     ? "bg-primary/10 font-semibold text-primary"
-                    : "text-slate-700"
+                    : "text-foreground-body"
                 }`}
               >
                 {link.label}
@@ -221,7 +242,7 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
               <div className="w-full">
                 <button
                   type="button"
-                  className="inline-flex w-full items-center justify-center gap-1 rounded-md px-3 py-3 text-base font-normal text-slate-700 hover:bg-black/5"
+                  className="inline-flex w-full items-center justify-center gap-1 rounded-md px-3 py-3 text-base font-normal text-foreground-body hover:bg-surface-hover"
                   onClick={() => setMobileLanguageOpen((prev) => !prev)}
                   aria-expanded={mobileLanguageOpen}
                   aria-haspopup="menu"
@@ -232,7 +253,7 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
                 </button>
 
                 {mobileLanguageOpen ? (
-                  <div role="menu" className="mt-1 w-full rounded-md border border-black/10 bg-surface p-1">
+                  <div role="menu" className="mt-1 w-full rounded-md border border-border bg-surface p-1">
                     {locales
                       .filter((item) => item !== locale)
                       .map((item, index, arr) => {
@@ -242,8 +263,8 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
                             key={item}
                             href={localizedPath}
                             role="menuitem"
-                            className={`block w-full rounded px-2 py-2 text-center text-sm text-slate-700 hover:bg-black/5 hover:text-slate-900 ${
-                              index < arr.length - 1 ? "border-b border-black/10" : ""
+                            className={`block w-full rounded px-2 py-2 text-center text-sm text-foreground-body hover:bg-surface-hover hover:text-foreground ${
+                              index < arr.length - 1 ? "border-b border-border" : ""
                             }`}
                           >
                             {localeLabel[item]}
@@ -257,6 +278,6 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
           </nav>
         </div>
       ) : null}
-    </header>
+    </>
   );
 }

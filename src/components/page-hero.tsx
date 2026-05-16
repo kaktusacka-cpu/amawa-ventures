@@ -29,18 +29,18 @@ export function PageHero({
       <div className="grid w-full max-w-[1200px] gap-6 lg:grid-cols-2 lg:gap-16">
         <div className="order-2 flex flex-col justify-center space-y-4 sm:space-y-6 lg:order-1">
           <Reveal animation="fade-in-up">
-            <h1 className="font-display text-[32px] md:text-5xl lg:text-6xl text-slate-900">
+            <h1 className="font-display text-[32px] md:text-5xl lg:text-6xl text-foreground">
               {title}
             </h1>
           </Reveal>
           {tagline && (
             <Reveal animation="fade-in-up" delay={80}>
-              <p className="text-lg leading-7 text-slate-800">{tagline}</p>
+              <p className="text-lg leading-7 text-foreground">{tagline}</p>
             </Reveal>
           )}
           {description && (
             <Reveal animation="fade-in-up" delay={tagline ? 160 : 80}>
-              <p className="text-base leading-7 text-slate-700">{description}</p>
+              <p className="text-base leading-7 text-foreground-body">{description}</p>
             </Reveal>
           )}
           {ctaLabel && ctaHref && (

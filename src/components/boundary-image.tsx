@@ -8,10 +8,10 @@ type BoundaryImageProps = {
 
 export function BoundaryImage({ src, alt }: BoundaryImageProps) {
   return (
-    <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8 -mt-[156px] -mb-[156px]">
+    <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8 -mt-[80px] -mb-[80px] md:-mt-[156px] md:-mb-[156px]">
       <Reveal
         animation="fade-in-slow"
-        className="relative h-[312px] max-w-[1000px] mx-auto rounded-2xl overflow-hidden"
+        className="relative h-[180px] md:h-[312px] max-w-[1000px] mx-auto rounded-2xl overflow-hidden"
       >
         <Image
           src={src}

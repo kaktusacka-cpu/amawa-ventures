@@ -28,7 +28,7 @@ export default async function WhatWeDoPage({
   const sectionBgs = ["bg-surface-alt", "bg-surface", "bg-surface-alt", "bg-surface"];
 
   return (
-    <main className="bg-surface text-slate-900 flex flex-col justify-center items-center">
+    <main className="bg-surface text-foreground flex flex-col justify-center items-center">
       <ScrollToHash />
 
       <PageHero
@@ -44,8 +44,8 @@ export default async function WhatWeDoPage({
       {/* Area Sections with images at boundaries */}
       {sectionOrder.map((areaIndex, i) => {
         const isLast = i === sectionOrder.length - 1;
-        const ptClass = i === 0 ? "pt-[120px]" : "pt-[276px]";
-        const pbClass = isLast ? "pb-[120px]" : "pb-[276px]";
+        const ptClass = i === 0 ? "pt-[60px] md:pt-[120px]" : "pt-[140px] md:pt-[276px]";
+        const pbClass = isLast ? "pb-[60px] md:pb-[120px]" : "pb-[140px] md:pb-[276px]";
 
         return (
           <div key={sectionIds[i]} className="w-full">

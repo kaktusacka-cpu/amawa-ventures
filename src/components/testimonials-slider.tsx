@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { Pause, Play } from "lucide-react";
 
 type Testimonial = {
   quote: string;
@@ -34,13 +33,12 @@ function usePrefersReducedMotion() {
 export function TestimonialsSlider({ items }: TestimonialsSliderProps) {
   const reducedMotion = usePrefersReducedMotion();
   const [activeIndex, setActiveIndex] = useState(0);
-  const [autoplay, setAutoplay] = useState(true);
   const [isHovering, setIsHovering] = useState(false);
   const [hasFocus, setHasFocus] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const active = items[activeIndex] ?? items[0];
 
-  const isPlaying = autoplay && !reducedMotion && !isHovering && !hasFocus;
+  const isPlaying = !reducedMotion && !isHovering && !hasFocus;
 
   useEffect(() => {
     if (items.length <= 1 || !isPlaying) {
@@ -80,10 +78,10 @@ export function TestimonialsSlider({ items }: TestimonialsSliderProps) {
         }
       }}
       aria-roledescription="carousel"
-      aria-live={autoplay && !reducedMotion ? "off" : "polite"}
+      aria-live={reducedMotion ? "polite" : "off"}
       style={{ height: "fit-content" }}
     >
-      <div className="mx-auto mt-8 flex max-w-2xl text-lg leading-8 text-slate-800">
+      <div className="mx-auto mt-8 flex max-w-2xl text-lg leading-8 text-foreground">
         <div className="flex items-start gap-2" style={{ height: "140px" }}>
           <Image
             src="/socials/quote.svg"
@@ -124,7 +122,7 @@ export function TestimonialsSlider({ items }: TestimonialsSliderProps) {
               type="button"
               onClick={() => goTo(index)}
               className={`h-2.5 w-2.5 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface-alt ${
-                index === activeIndex ? "bg-primary" : "bg-slate-300 hover:bg-slate-400"
+                index === activeIndex ? "bg-primary" : "bg-border hover:bg-muted-foreground"
               }`}
               aria-label={`Go to testimonial ${index + 1}`}
               aria-current={index === activeIndex}
@@ -140,18 +138,6 @@ export function TestimonialsSlider({ items }: TestimonialsSliderProps) {
         >
           <Image src="/go-right.svg" alt="" width={20} height={20} aria-hidden="true" />
         </button>
-
-        {!reducedMotion && items.length > 1 && (
-          <button
-            type="button"
-            onClick={() => setAutoplay((prev) => !prev)}
-            className="ml-1 inline-flex h-8 w-8 items-center justify-center rounded-full text-slate-700 transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-            aria-label={autoplay ? "Pause testimonials" : "Play testimonials"}
-            aria-pressed={!autoplay}
-          >
-            {autoplay ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
-          </button>
-        )}
       </div>
     </div>
   );

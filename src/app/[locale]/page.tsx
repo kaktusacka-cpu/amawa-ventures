@@ -39,7 +39,7 @@ export default async function HomePage({
   ];
 
   return (
-    <main className="bg-surface text-slate-900">
+    <main className="bg-surface text-foreground">
       <section className="w-full px-4 pt-[80px] sm:px-6 md:pt-[60px] lg:pt-[160px] lg:px-8 flex flex-col justify-center items-center">
         <div className="w-full max-w-[1000px] text-center">
           <Reveal animation="hero-up" delay={100}>
@@ -51,8 +51,8 @@ export default async function HomePage({
             <h1 className="font-display mt-4 text-4xl sm:text-6xl">{content.hero.title}</h1>
           </Reveal>
           <Reveal animation="hero-up" delay={500}>
-            <p className="mx-auto mt-5 max-w-3xl text-balance text-lg leading-8 text-slate-800">
-              {content.hero.lead} <span className="text-amber-700 font-medium">{content.hero.thinkWord}</span>, {content.hero.connectText} <span className="text-eyebrow font-medium">{content.hero.growWord}</span>.
+            <p className="mx-auto mt-5 max-w-3xl text-balance text-lg leading-8 text-foreground">
+              {content.hero.lead} <span className="text-accent-warm font-medium">{content.hero.thinkWord}</span>, {content.hero.connectText} <span className="text-eyebrow font-medium">{content.hero.growWord}</span>.
             </p>
           </Reveal>
           <Reveal animation="hero-up" delay={650}>
@@ -275,10 +275,10 @@ export default async function HomePage({
             </p>
           </Reveal>
           <Reveal animation="fade-in-up" delay={80}>
-            <h2 className="font-display mt-4 text-[60px]">{content.contact.title}</h2>
+            <h2 className="font-display mt-4 text-4xl sm:text-6xl">{content.contact.title}</h2>
           </Reveal>
           <Reveal animation="fade-in-up" delay={160}>
-            <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-slate-700">
+            <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-foreground-body">
               {content.contact.callDescription}
             </p>
           </Reveal>

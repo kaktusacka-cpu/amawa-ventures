@@ -18,10 +18,10 @@ export function SectionHeading({
   const containerClass = centered
     ? "w-full max-w-[1000px] flex flex-col justify-center items-center text-center"
     : "w-full max-w-[1000px] flex flex-col space-y-5";
-  const titleClass = centered ? "font-display mt-4 text-[32px] sm:text-5xl text-slate-900" : "font-display text-[32px] sm:text-5xl text-slate-900";
+  const titleClass = centered ? "font-display mt-4 text-[32px] sm:text-5xl text-foreground" : "font-display text-[32px] sm:text-5xl text-foreground";
   const paragraphClass = centered
-    ? "mt-6 max-w-3xl text-base leading-7 text-slate-800 text-center"
-    : "text-base leading-7 text-slate-700";
+    ? "mt-6 max-w-3xl text-base leading-7 text-foreground text-center"
+    : "text-base leading-7 text-foreground-body";
 
   const titleDelay = eyebrow ? 80 : 0;
   const paragraphDelay = (i: number) => titleDelay + 80 * (i + 1);

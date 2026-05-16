@@ -55,6 +55,7 @@ html {
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-foreground-body: var(--foreground-body);
   --font-sans: var(--font-jakarta);
   --font-mono: var(--font-jakarta);
   --color-ring: var(--ring);
@@ -69,6 +70,11 @@ html {
   --color-secondary: var(--secondary);
   --color-primary-foreground: var(--primary-foreground);
   --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-accent-warm-hover: var(--accent-warm-hover);
+  --color-white-hover: var(--white-hover);
+  --color-surface-raised: var(--surface-raised);
+  --color-border-glass: var(--border-glass);
   --color-popover-foreground: var(--popover-foreground);
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
@@ -83,7 +89,6 @@ html {
   --color-surface: var(--surface);
   --color-surface-hover: var(--surface-hover);
   --color-surface-alt: var(--surface-alt);
-  --color-surface-alt-hover: var(--surface-alt-hover);
   --color-accent-warm: var(--accent-warm);
   --color-accent-warm-foreground: var(--accent-warm-foreground);
   --color-eyebrow: var(--eyebrow);
@@ -146,13 +151,15 @@ html {
   --font-jakarta: "NeueHaasDisplay", "Avenir Next", "Segoe UI", sans-serif;
   --font-canela: "Canela", "Iowan Old Style", "Times New Roman", serif;
   --background: #faf8f5;
-  --foreground: #111827;
+  --foreground: #0f172a;
+  --foreground-body: #334155;
   --card: #faf8f5;
-  --card-foreground: #111827;
+  --card-foreground: #0f172a;
   --popover: #faf8f5;
-  --popover-foreground: #111827;
+  --popover-foreground: #0f172a;
   --primary: #17695c;
   --primary-foreground: #ffffff;
+  --primary-hover: color-mix(in oklab, var(--primary), var(--foreground) 10%);
   --secondary: #edf2f7;
   --secondary-foreground: #111827;
   --muted: #f2f3ef;
@@ -164,11 +171,14 @@ html {
   --input: #d8dde3;
   --ring: #17695c;
   --surface: #FAF8F5;
-  --surface-hover: #F0EDE8;
+  --surface-hover: color-mix(in oklab, var(--foreground) 5%, transparent);
+  --white-hover: color-mix(in oklab, white, black 5%);
+  --surface-raised: #ffffff;
+  --border-glass: rgba(255, 255, 255, 0.4);
   --surface-alt: #F3F1ED;
-  --surface-alt-hover: #E9E7E2;
   --accent-warm: #E17100;
   --accent-warm-foreground: #ffffff;
+  --accent-warm-hover: color-mix(in oklab, var(--accent-warm), var(--foreground) 12%);
   --eyebrow: #047857;
   --badge-upcoming-bg: #fff2e8;
   --badge-upcoming-fg: #9a5a32;
@@ -181,12 +191,14 @@ html {
 .dark {
   --background: #0b0f14;
   --foreground: #f1f5f9;
+  --foreground-body: #cbd5e1;
   --card: #131a22;
   --card-foreground: #f1f5f9;
   --popover: #131a22;
   --popover-foreground: #f1f5f9;
   --primary: #34d399;
   --primary-foreground: #052e16;
+  --primary-hover: color-mix(in oklab, var(--primary), var(--foreground) 10%);
   --secondary: #1e2a36;
   --secondary-foreground: #cbd5e1;
   --muted: #1a2230;
@@ -198,11 +210,14 @@ html {
   --input: #1e2d3d;
   --ring: #34d399;
   --surface: #0b0f14;
-  --surface-hover: #131a22;
+  --surface-hover: color-mix(in oklab, var(--foreground) 5%, transparent);
+  --white-hover: color-mix(in oklab, white, black 5%);
+  --surface-raised: #1e2a36;
+  --border-glass: rgba(255, 255, 255, 0.1);
   --surface-alt: #131a22;
-  --surface-alt-hover: #1a2230;
   --accent-warm: #f0944a;
   --accent-warm-foreground: #1a0f06;
+  --accent-warm-hover: color-mix(in oklab, var(--accent-warm), var(--foreground) 12%);
   --eyebrow: #34d399;
   --badge-upcoming-bg: #2a1f17;
   --badge-upcoming-fg: #f0944a;
@@ -250,6 +265,24 @@ html {
     text-transform: uppercase;
     letter-spacing: 0.24em;
     color: var(--eyebrow);
+  }
+
+  .link {
+    color: var(--primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    transition: color 200ms ease-out;
+  }
+
+  .link:hover {
+    color: var(--primary-hover);
+  }
+
+  .link:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+    border-radius: 2px;
   }
 
   .page-appear {

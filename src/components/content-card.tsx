@@ -32,19 +32,19 @@ export function ContentCard({ title, description, cta, image, imageAlt, href }: 
           <div className="text-muted-foreground text-base leading-5 font-normal">{description}</div>
         </div>
         {href ? (
-          <span className="text-base font-medium text-accent-warm self-start cursor-pointer inline-flex items-center gap-2">
+          <span className="text-base font-medium text-accent-warm self-start cursor-pointer inline-flex items-center gap-1 transition-colors group-hover:text-accent-warm-hover">
             {cta}
             <span
               aria-hidden="true"
-              className="inline-block h-[1em] w-[1em] bg-current transition-transform duration-200 ease-out group-hover:translate-x-0.5 [mask:url('/forward.svg')_center/contain_no-repeat] [-webkit-mask:url('/forward.svg')_center/contain_no-repeat]"
+              className="inline-block h-[1em] w-[1em] bg-current transition-transform duration-200 ease-out group-hover:translate-x-1 [mask:url('/go-right.svg')_center/contain_no-repeat] [-webkit-mask:url('/go-right.svg')_center/contain_no-repeat]"
             />
           </span>
         ) : (
-          <Button variant="link" className="group h-auto p-0 text-base font-medium text-accent-warm self-start inline-flex items-center gap-2">
+          <Button variant="link" className="group h-auto p-0 text-base font-medium text-accent-warm self-start inline-flex items-center gap-1 hover:text-accent-warm-hover">
             {cta}
             <span
               aria-hidden="true"
-              className="inline-block h-[1em] w-[1em] bg-current transition-transform duration-200 ease-out group-hover:translate-x-0.5 [mask:url('/forward.svg')_center/contain_no-repeat] [-webkit-mask:url('/forward.svg')_center/contain_no-repeat]"
+              className="inline-block h-[1em] w-[1em] bg-current transition-transform duration-200 ease-out group-hover:translate-x-1 [mask:url('/go-right.svg')_center/contain_no-repeat] [-webkit-mask:url('/go-right.svg')_center/contain_no-repeat]"
             />
           </Button>
         )}
@@ -52,11 +52,13 @@ export function ContentCard({ title, description, cta, image, imageAlt, href }: 
     </>
   );
 
+  const baseBg = image ? "bg-surface-alt" : "bg-surface";
+
   if (href) {
     return (
       <Link
         href={href}
-        className={`group block overflow-hidden rounded-xl border border-border shadow-none cursor-pointer transition-colors ${image ? "bg-surface-alt hover:bg-surface-alt-hover" : "bg-surface hover:bg-surface-hover"}`}
+        className={`group block overflow-hidden rounded-xl border border-border shadow-none cursor-pointer transition-colors ${baseBg} hover:bg-surface-hover`}
       >
         {cardContent}
       </Link>
@@ -64,7 +66,7 @@ export function ContentCard({ title, description, cta, image, imageAlt, href }: 
   }
 
   return (
-    <div className={`overflow-hidden rounded-xl border border-border shadow-none ${image ? "bg-surface-alt" : "bg-surface"}`}>
+    <div className={`overflow-hidden rounded-xl border border-border shadow-none ${baseBg}`}>
       {cardContent}
     </div>
   );

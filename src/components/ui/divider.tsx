@@ -6,7 +6,7 @@ function Divider({ className, ...props }: React.ComponentProps<"hr">) {
   return (
     <hr
       data-slot="divider"
-      className={cn("h-px w-full border-0 bg-black/10", className)}
+      className={cn("h-px w-full border-0 bg-border", className)}
       {...props}
     />
   )
