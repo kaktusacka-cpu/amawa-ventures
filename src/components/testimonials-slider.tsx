@@ -2,74 +2,85 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import { Pause, Play } from "lucide-react";
 
 type Testimonial = {
   quote: string;
   author: string;
   role: string;
-  logo?: string;
 };
 
 type TestimonialsSliderProps = {
   items: Testimonial[];
 };
 
+const AUTOPLAY_MS = 9000;
+
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.matchMedia) return;
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setReduced(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  return reduced;
+}
+
 export function TestimonialsSlider({ items }: TestimonialsSliderProps) {
+  const reducedMotion = usePrefersReducedMotion();
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
+  const [autoplay, setAutoplay] = useState(true);
+  const [isHovering, setIsHovering] = useState(false);
+  const [hasFocus, setHasFocus] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const active = items[activeIndex] ?? items[0];
 
-  useEffect(() => {
-    if (items.length <= 1) return;
+  const isPlaying = autoplay && !reducedMotion && !isHovering && !hasFocus;
 
-    const startInterval = () => {
+  useEffect(() => {
+    if (items.length <= 1 || !isPlaying) {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
+        intervalRef.current = null;
       }
-      intervalRef.current = setInterval(() => {
-        if (!isPaused) {
-          setActiveIndex((prev) => (prev + 1) % items.length);
-        }
-      }, 5000);
-    };
+      return;
+    }
 
-    startInterval();
+    intervalRef.current = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % items.length);
+    }, AUTOPLAY_MS);
 
     return () => {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
+        intervalRef.current = null;
       }
     };
-  }, [items.length, isPaused]);
+  }, [items.length, isPlaying]);
 
-  const handleDotClick = (index: number) => {
-    setActiveIndex(index);
-    // Reset the interval when user manually navigates
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-    }
-    intervalRef.current = setInterval(() => {
-      if (!isPaused) {
-        setActiveIndex((prev) => (prev + 1) % items.length);
-      }
-    }, 5000);
-  };
-
-  const handlePrev = () => {
-    handleDotClick((activeIndex - 1 + items.length) % items.length);
-  };
-
-  const handleNext = () => {
-    handleDotClick((activeIndex + 1) % items.length);
+  const goTo = (index: number) => {
+    setActiveIndex(((index % items.length) + items.length) % items.length);
   };
 
   if (!active) return null;
 
   return (
     <div
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
+      onFocus={() => setHasFocus(true)}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget as Node)) {
+          setHasFocus(false);
+        }
+      }}
+      aria-roledescription="carousel"
+      aria-live={autoplay && !reducedMotion ? "off" : "polite"}
       style={{ height: "fit-content" }}
     >
       <div className="mx-auto mt-8 flex max-w-2xl text-lg leading-8 text-slate-800">
@@ -81,7 +92,9 @@ export function TestimonialsSlider({ items }: TestimonialsSliderProps) {
             height={32}
             className="shrink-0"
           />
-          <blockquote className="flex-1 pt-2 pb-2" style={{ height: "100%" }}>{active.quote}</blockquote>
+          <blockquote className="flex-1 pt-2 pb-2" style={{ height: "100%" }}>
+            {active.quote}
+          </blockquote>
           <Image
             src="/socials/quote.svg"
             alt=""
@@ -91,19 +104,14 @@ export function TestimonialsSlider({ items }: TestimonialsSliderProps) {
           />
         </div>
       </div>
-      {active.logo && (
-        <div className="mt-8 flex justify-center">
-          <img src={active.logo} alt="" className="h-8 w-auto" />
-        </div>
-      )}
-      <p className={`${active.logo ? "mt-2" : "mt-7"} text-base font-medium`}>{active.author}</p>
+      <p className="mt-7 text-base font-medium">{active.author}</p>
       <p className="mt-1 text-sm text-muted-foreground">{active.role}</p>
 
       <div className="mt-5 flex items-center justify-center gap-4">
         <button
           type="button"
-          onClick={handlePrev}
-          className="inline-flex h-8 w-8 items-center justify-center rounded-full transition-opacity hover:opacity-80"
+          onClick={() => goTo(activeIndex - 1)}
+          className="inline-flex h-8 w-8 items-center justify-center rounded-full transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           aria-label="Previous testimonial"
         >
           <Image src="/go-left.svg" alt="" width={20} height={20} aria-hidden="true" />
@@ -114,11 +122,10 @@ export function TestimonialsSlider({ items }: TestimonialsSliderProps) {
             <button
               key={`${item.author}-${index}`}
               type="button"
-              onClick={() => handleDotClick(index)}
-              className={`h-2.5 w-2.5 rounded-full transition-colors ${
+              onClick={() => goTo(index)}
+              className={`h-2.5 w-2.5 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface-alt ${
                 index === activeIndex ? "bg-primary" : "bg-slate-300 hover:bg-slate-400"
               }`}
-              style={{ color: "rgba(15, 23, 43, 1)" }}
               aria-label={`Go to testimonial ${index + 1}`}
               aria-current={index === activeIndex}
             />
@@ -127,12 +134,24 @@ export function TestimonialsSlider({ items }: TestimonialsSliderProps) {
 
         <button
           type="button"
-          onClick={handleNext}
-          className="inline-flex h-8 w-8 items-center justify-center rounded-full transition-opacity hover:opacity-80"
+          onClick={() => goTo(activeIndex + 1)}
+          className="inline-flex h-8 w-8 items-center justify-center rounded-full transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           aria-label="Next testimonial"
         >
           <Image src="/go-right.svg" alt="" width={20} height={20} aria-hidden="true" />
         </button>
+
+        {!reducedMotion && items.length > 1 && (
+          <button
+            type="button"
+            onClick={() => setAutoplay((prev) => !prev)}
+            className="ml-1 inline-flex h-8 w-8 items-center justify-center rounded-full text-slate-700 transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            aria-label={autoplay ? "Pause testimonials" : "Play testimonials"}
+            aria-pressed={!autoplay}
+          >
+            {autoplay ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+          </button>
+        )}
       </div>
     </div>
   );

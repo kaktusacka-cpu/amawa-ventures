@@ -60,7 +60,7 @@ function AnimatedMetricItem({
   }, [start, target]);
 
   return (
-    <div className="flex flex-col items-center justify-center rounded-2xl border border-[#e4e6e8] bg-surface p-4 text-center">
+    <div className="flex flex-col items-center justify-center rounded-2xl border border-border bg-surface p-4 text-center">
       <p className="font-display text-5xl sm:text-[56px] leading-none">
         {prefix}
         {displayValue}

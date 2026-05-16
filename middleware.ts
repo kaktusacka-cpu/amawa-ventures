@@ -4,6 +4,12 @@ import type { NextRequest } from "next/server";
 const PUBLIC_FILE = /\.(.*)$/;
 const locales = ["en", "es", "sk"] as const;
 
+function nextWithPathname(request: NextRequest) {
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set("x-pathname", request.nextUrl.pathname);
+  return NextResponse.next({ request: { headers: requestHeaders } });
+}
+
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -20,7 +26,7 @@ export function middleware(request: NextRequest) {
   );
 
   if (hasLocale) {
-    return NextResponse.next();
+    return nextWithPathname(request);
   }
 
   const url = request.nextUrl.clone();

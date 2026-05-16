@@ -32,7 +32,7 @@ export function ContentCard({ title, description, cta, image, imageAlt, href }: 
           <div className="text-muted-foreground text-base leading-5 font-normal">{description}</div>
         </div>
         {href ? (
-          <span className="text-base font-medium text-[#E17100] self-start cursor-pointer inline-flex items-center gap-2">
+          <span className="text-base font-medium text-accent-warm self-start cursor-pointer inline-flex items-center gap-2">
             {cta}
             <span
               aria-hidden="true"
@@ -40,7 +40,7 @@ export function ContentCard({ title, description, cta, image, imageAlt, href }: 
             />
           </span>
         ) : (
-          <Button variant="link" className="group h-auto p-0 text-base font-medium text-[#E17100] self-start inline-flex items-center gap-2">
+          <Button variant="link" className="group h-auto p-0 text-base font-medium text-accent-warm self-start inline-flex items-center gap-2">
             {cta}
             <span
               aria-hidden="true"
@@ -56,7 +56,7 @@ export function ContentCard({ title, description, cta, image, imageAlt, href }: 
     return (
       <Link
         href={href}
-        className={`group block overflow-hidden rounded-xl border border-[#e4e6e8] shadow-none cursor-pointer transition-colors ${image ? "bg-surface-alt hover:bg-surface-alt-hover" : "bg-surface hover:bg-surface-hover"}`}
+        className={`group block overflow-hidden rounded-xl border border-border shadow-none cursor-pointer transition-colors ${image ? "bg-surface-alt hover:bg-surface-alt-hover" : "bg-surface hover:bg-surface-hover"}`}
       >
         {cardContent}
       </Link>
@@ -64,7 +64,7 @@ export function ContentCard({ title, description, cta, image, imageAlt, href }: 
   }
 
   return (
-    <div className={`overflow-hidden rounded-xl border border-[#e4e6e8] shadow-none ${image ? "bg-surface-alt" : "bg-surface"}`}>
+    <div className={`overflow-hidden rounded-xl border border-border shadow-none ${image ? "bg-surface-alt" : "bg-surface"}`}>
       {cardContent}
     </div>
   );

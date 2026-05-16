@@ -182,16 +182,9 @@ export const getHomePageContent = cache(
         },
         footer: {
           brand: t(footer, "brand", locale) || fallback.footer.brand,
-          copyright: t(footer, "copyright", locale) || fallback.footer.copyright,
         },
         pages: {
           aboutTitle: t(pages, "aboutTitle", locale) || fallback.pages.aboutTitle,
-          aboutBody: t(pages, "aboutBody", locale) || fallback.pages.aboutBody,
-          experiencesTitle: t(pages, "experiencesTitle", locale) || fallback.pages.experiencesTitle,
-          experiencesBody: t(pages, "experiencesBody", locale) || fallback.pages.experiencesBody,
-          whatWeDoTitle: t(pages, "whatWeDoTitle", locale) || fallback.pages.whatWeDoTitle,
-          whatWeDoBody: t(pages, "whatWeDoBody", locale) || fallback.pages.whatWeDoBody,
-          collaborateTitle: t(pages, "collaborateTitle", locale) || fallback.pages.collaborateTitle,
           collaborateBody: t(pages, "collaborateBody", locale) || fallback.pages.collaborateBody,
         },
         aboutPage: {

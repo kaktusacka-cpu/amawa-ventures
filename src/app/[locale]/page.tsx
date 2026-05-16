@@ -25,19 +25,16 @@ export default async function HomePage({
       quote: content.testimonials.quote,
       author: content.testimonials.author,
       role: content.testimonials.role,
-      logo: "/collaborations/logo-Container.svg",
     },
     {
       quote: content.approach.description,
       author: content.testimonials.author,
       role: content.testimonials.role,
-      logo: "/collaborations/logo-Container-1.svg",
     },
     {
       quote: content.about.description,
       author: content.testimonials.author,
       role: content.testimonials.role,
-      logo: "/collaborations/logo-Container-2.svg",
     },
   ];
 
@@ -46,7 +43,7 @@ export default async function HomePage({
       <section className="w-full px-4 pt-[80px] sm:px-6 md:pt-[60px] lg:pt-[160px] lg:px-8 flex flex-col justify-center items-center">
         <div className="w-full max-w-[1000px] text-center">
           <Reveal animation="hero-up" delay={100}>
-            <p className="text-base uppercase tracking-[0.24em] text-emerald-700 sm:text-base">
+            <p className="text-base uppercase tracking-[0.24em] text-eyebrow sm:text-base">
               {content.hero.eyebrow}
             </p>
           </Reveal>
@@ -55,7 +52,7 @@ export default async function HomePage({
           </Reveal>
           <Reveal animation="hero-up" delay={500}>
             <p className="mx-auto mt-5 max-w-3xl text-balance text-lg leading-8 text-slate-800">
-              {content.hero.lead} <span className="text-amber-600 font-medium">{content.hero.thinkWord}</span>, {content.hero.connectText} <span className="text-emerald-700 font-medium">{content.hero.growWord}</span>.
+              {content.hero.lead} <span className="text-amber-700 font-medium">{content.hero.thinkWord}</span>, {content.hero.connectText} <span className="text-eyebrow font-medium">{content.hero.growWord}</span>.
             </p>
           </Reveal>
           <Reveal animation="hero-up" delay={650}>
@@ -65,10 +62,10 @@ export default async function HomePage({
           </Reveal>
           <Reveal animation="hero-up" delay={800}>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Button asChild className="h-10 rounded-full px-6 text-base font-normal">
+              <Button asChild size="pill">
                 <Link href={`/${locale}/experiences`}>{content.hero.primaryCta}</Link>
               </Button>
-              <Button asChild variant="outline" className="h-10 rounded-full px-6 text-base bg-white cursor-pointer shadow-none hover:bg-[#E17100]/10 hover:border-[#E17100]/50">
+              <Button asChild variant="outline-warm" size="pill">
                 <Link href={`/${locale}/about`}>{content.hero.secondaryCta}</Link>
               </Button>
             </div>
@@ -78,8 +75,17 @@ export default async function HomePage({
 
       <div className="h-[80px] sm:h-[160px]" />
 
-      <Reveal animation="fade-in" delay={200} className="relative z-10 mx-auto flex aspect-[1920/1080] w-[calc(100%-2rem)] max-w-5xl items-center justify-center rounded-2xl border border-[#d8d8ea] bg-surface">
-        <span className="text-xs text-[#6559dd]">{content.hero.videoPlaceholder}</span>
+      <Reveal animation="fade-in" delay={200} className="relative z-10 mx-auto aspect-[1920/1080] w-[calc(100%-2rem)] max-w-5xl overflow-hidden rounded-2xl border border-border bg-surface">
+        <video
+          className="h-full w-full object-cover"
+          src="/placeholder-video.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-label={content.hero.videoPlaceholder}
+        />
       </Reveal>
 
       <section className="relative -mt-[96px] bg-surface-alt pb-[80px] pt-[176px] sm:-mt-[288px] sm:pb-[160px] sm:pt-[448px]">
@@ -126,7 +132,7 @@ export default async function HomePage({
       <section className="bg-surface-alt py-[80px] md:py-[60px] lg:py-[160px]">
         <div className="mx-auto max-w-[1000px] px-4 sm:px-6">
           <Reveal animation="fade-in-up">
-            <p className="text-center text-base uppercase tracking-[0.24em] text-emerald-700 sm:text-base">
+            <p className="text-center text-base uppercase tracking-[0.24em] text-eyebrow sm:text-base">
               {content.coreWork.eyebrow}
             </p>
           </Reveal>
@@ -152,7 +158,7 @@ export default async function HomePage({
 
       <section className="mx-auto max-w-3xl px-4 py-[80px] text-center sm:px-6 md:py-[60px] lg:py-[160px]">
         <Reveal animation="fade-in-up">
-          <p className="text-base uppercase tracking-[0.24em] text-emerald-700 sm:text-base">
+          <p className="text-base uppercase tracking-[0.24em] text-eyebrow sm:text-base">
             {content.approach.eyebrow}
           </p>
         </Reveal>
@@ -169,7 +175,7 @@ export default async function HomePage({
       <section className="bg-surface-alt py-[80px] md:py-[60px] lg:py-[160px]">
         <div className="mx-auto max-w-[1000px] px-4 text-center sm:px-6">
           <Reveal animation="fade-in-up">
-            <p className="text-base uppercase tracking-[0.24em] text-emerald-700 sm:text-base">
+            <p className="text-base uppercase tracking-[0.24em] text-eyebrow sm:text-base">
               {content.impact.eyebrow}
             </p>
           </Reveal>
@@ -183,12 +189,8 @@ export default async function HomePage({
           </Reveal>
           <Reveal animation="fade-in" delay={280}>
             <AnimatedMetrics
-              metrics={[
-                { value: "200+", label: "startups supported" },
-                { value: "6", label: "deep-tech ventures launched" },
-                { value: "€3M+", label: "designed public-private investment structures" },
-              ]}
-              className="mt-8 grid w-full grid-cols-1 gap-6 sm:grid-cols-3"
+              metrics={content.impact.metrics}
+              className="mt-8 grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4"
             />
           </Reveal>
           <Reveal animation="fade-in-up" delay={360}>
@@ -202,7 +204,7 @@ export default async function HomePage({
       <section className="bg-surface py-[80px] md:py-[60px] lg:py-[160px]">
         <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
           <Reveal animation="fade-in-up">
-            <p className="text-center text-base uppercase tracking-[0.24em] text-emerald-700 sm:text-base">
+            <p className="text-center text-base uppercase tracking-[0.24em] text-eyebrow sm:text-base">
               {content.aboutPage.ecosystemTitle.split("&")[0].trim()}
             </p>
           </Reveal>
@@ -216,22 +218,32 @@ export default async function HomePage({
               {content.aboutPage.ecosystemDescription}
             </p>
           </Reveal>
-          <div className="mt-10 grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-5 sm:mt-14">
+          <div
+            className="mt-10 grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-5 sm:mt-14"
+            role="list"
+            aria-label={content.aboutPage.ecosystemTitle}
+          >
             {[
-              "/collaborations/Container.svg",
-              "/collaborations/Container-1.svg",
-              "/collaborations/Container-2.svg",
-              "/collaborations/Container-3.svg",
-              "/collaborations/Container-4.svg",
-              "/collaborations/Container-5.svg",
-              "/collaborations/Container-6.svg",
-              "/collaborations/Container-7.svg",
-              "/collaborations/Container-8.svg",
-              "/collaborations/Container-9.svg",
-            ].map((src, i) => (
+              { src: "/collaborations/Container.svg", name: "AIMPLAS — Plastics Technology Centre" },
+              { src: "/collaborations/Container-1.svg", name: "REDIT Ventures" },
+              { src: "/collaborations/Container-2.svg", name: "IDEAS UPV" },
+              { src: "/collaborations/Container-3.svg", name: "Universitat de València" },
+              { src: "/collaborations/Container-4.svg", name: "IGKK" },
+              { src: "/collaborations/Container-5.svg", name: "UVP TECHNICOM" },
+              { src: "/collaborations/Container-6.svg", name: "Startup Valencia" },
+              { src: "/collaborations/Container-7.svg", name: "Oceanica — Fundación para la Conservación" },
+              { src: "/collaborations/Container-8.svg", name: "Access Nepal Tour & Trekking" },
+              { src: "/collaborations/Container-9.svg", name: "Universidad Politécnica de Valencia" },
+            ].map(({ src, name }, i) => (
               <Reveal key={src} animation="fade-in" delay={i * 50}>
-                <div className="overflow-hidden rounded-[10px]">
-                  <img src={src} alt="" className="w-full h-auto" />
+                <div role="listitem" className="overflow-hidden rounded-[10px]">
+                  <Image
+                    src={src}
+                    alt={name}
+                    width={240}
+                    height={120}
+                    className="w-full h-auto"
+                  />
                 </div>
               </Reveal>
             ))}
@@ -242,7 +254,7 @@ export default async function HomePage({
       <section className="bg-surface-alt py-[80px] md:py-[60px] lg:py-[160px]" style={{ height: "fit-content" }}>
         <div className="mx-auto max-w-4xl px-4 text-center sm:px-6">
           <Reveal animation="fade-in-up">
-            <p className="text-base uppercase tracking-[0.24em] text-emerald-700 sm:text-base">
+            <p className="text-base uppercase tracking-[0.24em] text-eyebrow sm:text-base">
               {content.testimonials.eyebrow}
             </p>
           </Reveal>
@@ -258,7 +270,7 @@ export default async function HomePage({
       <section className="bg-surface py-[80px] md:py-[60px] lg:py-[160px]">
         <div className="mx-auto max-w-[1000px] px-4 sm:px-6 flex flex-col items-center text-center">
           <Reveal animation="fade-in-up">
-            <p className="text-base uppercase tracking-[0.24em] text-emerald-700 sm:text-base">
+            <p className="text-base uppercase tracking-[0.24em] text-eyebrow sm:text-base">
               {content.contact.eyebrow}
             </p>
           </Reveal>
@@ -274,7 +286,7 @@ export default async function HomePage({
           <div className="mt-10 grid w-full gap-6 sm:mt-14 md:grid-cols-2">
             <Reveal animation="fade-in-up" delay={100} className="h-full">
               <ContactCard title={content.contact.callTitle} description={content.contact.callDescription}>
-                <Button variant="outline" className="h-10 rounded-full px-6 text-base bg-white cursor-pointer shadow-none hover:bg-[#E17100]/10 hover:border-[#E17100]/50">
+                <Button variant="outline-warm" size="pill">
                   {content.contact.callCta}
                 </Button>
               </ContactCard>
@@ -288,9 +300,9 @@ export default async function HomePage({
                     { icon: "/socials/social-2.svg", label: content.contact.connectItems[2] ?? "LinkedIn", href: content.contact.linkedinUrl },
                     { icon: "/socials/social-1.svg", label: content.contact.connectItems[1] ?? "Instagram", href: content.contact.instagramUrl },
                   ].map((social) => (
-                    <Button key={social.icon} asChild variant="outline" size="icon" className="h-12 w-12 rounded-full bg-white cursor-pointer shadow-none hover:bg-[#E17100]/10 hover:border-[#E17100]/50">
+                    <Button key={social.icon} asChild variant="outline-warm" size="icon-pill">
                       <a href={social.href} aria-label={social.label} target="_blank" rel="noopener noreferrer">
-                        <Image src={social.icon} alt={social.label} width={20} height={20} />
+                        <Image src={social.icon} alt="" width={20} height={20} />
                       </a>
                     </Button>
                   ))}

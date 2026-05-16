@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState, type MouseEvent } from "react";
-import { ChevronDown } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import { locales, type Locale } from "@/lib/i18n";
 
 type NavLabels = {
@@ -17,6 +18,20 @@ type NavLabels = {
 type SiteNavbarProps = {
   locale: Locale;
   labels: NavLabels;
+};
+
+type LocaleString = Record<Locale, string>;
+
+const a11yLabels: Record<"openMenu" | "closeMenu" | "changeLanguage", LocaleString> = {
+  openMenu: { en: "Open menu", es: "Abrir menú", sk: "Otvoriť menu" },
+  closeMenu: { en: "Close menu", es: "Cerrar menú", sk: "Zavrieť menu" },
+  changeLanguage: { en: "Change language", es: "Cambiar idioma", sk: "Zmeniť jazyk" },
+};
+
+const localeLabel: LocaleString = {
+  en: "English",
+  es: "Español",
+  sk: "Slovensky",
 };
 
 function getLocalizedPath(pathname: string, locale: Locale): string {
@@ -34,17 +49,11 @@ function getLocalizedPath(pathname: string, locale: Locale): string {
 
 export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
   const pathname = usePathname();
-  const hasMounted = useRef(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [languageOpen, setLanguageOpen] = useState(false);
   const [mobileLanguageOpen, setMobileLanguageOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-
-  const localeLabel: Record<Locale, string> = {
-    en: "English",
-    es: "Español",
-    sk: "Slovensky",
-  };
+  const languageMenuRef = useRef<HTMLDivElement>(null);
 
   const navLinks = [
     { href: `/${locale}`, label: labels.home ?? "Home" },
@@ -68,49 +77,43 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Close any open menus when the route changes. State reset driven by an
+  // external signal (pathname) is the canonical pattern for closing UI on
+  // navigation.
   useEffect(() => {
-    if (!hasMounted.current) {
-      hasMounted.current = true;
-      return;
-    }
-
-    if (window.location.hash) return;
-
-    // Force route changes to start at top immediately.
-    window.scrollTo(0, 0);
-  }, [pathname]);
-
-  const handleNavRouteClick = () => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMobileOpen(false);
     setLanguageOpen(false);
     setMobileLanguageOpen(false);
-  };
+  }, [pathname]);
 
-  const handleHardNavigate = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
-    if (
-      event.defaultPrevented ||
-      event.button !== 0 ||
-      event.metaKey ||
-      event.ctrlKey ||
-      event.shiftKey ||
-      event.altKey
-    ) {
-      return;
-    }
+  useEffect(() => {
+    if (!languageOpen) return;
 
-    event.preventDefault();
-    handleNavRouteClick();
-    window.location.href = href;
-  };
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setLanguageOpen(false);
+    };
+    const onClick = (event: MouseEvent) => {
+      if (!languageMenuRef.current?.contains(event.target as Node)) {
+        setLanguageOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("mousedown", onClick);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("mousedown", onClick);
+    };
+  }, [languageOpen]);
 
   return (
     <header
       className={`sticky top-0 z-40 border-b border-white/40 bg-surface/35 backdrop-blur-xl backdrop-saturate-150 relative ${isScrolled ? "shadow-[0_8px_24px_rgba(15,23,42,0.06)]" : ""}`}
     >
       <div className="relative mx-auto flex w-full max-w-[1800px] items-center justify-between px-4 py-4 sm:px-6 lg:h-16 lg:py-0 lg:px-8">
-        <a
+        <Link
           href={`/${locale}`}
-          onClick={(event) => handleHardNavigate(event, `/${locale}`)}
           className="inline-flex items-center text-xs font-semibold tracking-wide text-slate-900"
         >
           <Image
@@ -129,28 +132,23 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
             className="hidden h-4 w-auto lg:block"
             priority
           />
-        </a>
+        </Link>
 
         <button
           type="button"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-md text-primary lg:hidden"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-md text-primary lg:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           onClick={() => setMobileOpen((prev) => !prev)}
-          aria-label={mobileOpen ? "Close menu" : "Open menu"}
+          aria-label={mobileOpen ? a11yLabels.closeMenu[locale] : a11yLabels.openMenu[locale]}
           aria-expanded={mobileOpen}
         >
-          {mobileOpen ? (
-            <span className="text-2xl leading-none">✕</span>
-          ) : (
-            <span className="text-3xl leading-none">☰</span>
-          )}
+          {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-7 w-7" />}
         </button>
 
         <nav className="hidden lg:absolute lg:left-1/2 lg:flex lg:-translate-x-1/2 lg:items-center lg:gap-5">
           {navLinks.map((link) => (
-            <a
+            <Link
               key={link.href}
               href={link.href}
-              onClick={(event) => handleHardNavigate(event, link.href)}
               className={`inline-flex px-2 py-2 text-base font-normal transition-colors ${
                 isActive(link.href)
                   ? "text-primary underline underline-offset-8 decoration-2 decoration-primary"
@@ -158,43 +156,47 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
               }`}
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
-        <div className="relative hidden lg:block">
-            <button
-              type="button"
-              className="inline-flex items-center gap-1 rounded-md px-2 py-2 text-base font-normal text-slate-700 hover:bg-black/5"
-              onClick={() => setLanguageOpen((prev) => !prev)}
-              aria-expanded={languageOpen}
-              aria-haspopup="menu"
-            >
-              <span>{localeLabel[locale]}</span>
-              <ChevronDown className="h-3.5 w-3.5" />
-            </button>
+        <div ref={languageMenuRef} className="relative hidden lg:block">
+          <button
+            type="button"
+            className="inline-flex items-center gap-1 rounded-md px-2 py-2 text-base font-normal text-slate-700 hover:bg-black/5"
+            onClick={() => setLanguageOpen((prev) => !prev)}
+            aria-expanded={languageOpen}
+            aria-haspopup="menu"
+            aria-label={a11yLabels.changeLanguage[locale]}
+          >
+            <span>{localeLabel[locale]}</span>
+            <ChevronDown className="h-3.5 w-3.5" />
+          </button>
 
-            {languageOpen ? (
-              <div className="absolute right-0 top-full mt-2 min-w-36 rounded-md border border-black/10 bg-surface p-1 shadow-md">
-                {locales
-                  .filter((item) => item !== locale)
-                  .map((item, index, arr) => {
-                    const localizedPath = getLocalizedPath(pathname, item);
-                    return (
-                    <a
+          {languageOpen ? (
+            <div
+              role="menu"
+              className="absolute right-0 top-full mt-2 min-w-36 rounded-md border border-black/10 bg-surface p-1 shadow-md"
+            >
+              {locales
+                .filter((item) => item !== locale)
+                .map((item, index, arr) => {
+                  const localizedPath = getLocalizedPath(pathname, item);
+                  return (
+                    <Link
                       key={item}
                       href={localizedPath}
+                      role="menuitem"
                       className={`block rounded px-2 py-1.5 text-sm text-slate-700 hover:bg-black/5 hover:text-slate-900 ${
                         index < arr.length - 1 ? "border-b border-black/10" : ""
                       }`}
-                      onClick={(event) => handleHardNavigate(event, localizedPath)}
                     >
                       {localeLabel[item]}
-                    </a>
-                    );
-                  })}
-              </div>
-            ) : null}
+                    </Link>
+                  );
+                })}
+            </div>
+          ) : null}
         </div>
       </div>
 
@@ -202,7 +204,7 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
         <div className="absolute left-0 right-0 top-full z-50 border-t border-black/10 bg-surface-alt lg:hidden reveal-scale-in">
           <nav className="mx-auto flex w-full max-w-[1800px] flex-col items-center gap-1 px-4 py-4 sm:px-6">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.href}
                 href={link.href}
                 className={`w-full max-w-sm rounded-md px-3 py-3 text-center text-base font-normal transition-colors hover:bg-black/5 hover:text-slate-900 ${
@@ -210,10 +212,9 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
                     ? "bg-primary/10 font-semibold text-primary"
                     : "text-slate-700"
                 }`}
-                onClick={(event) => handleHardNavigate(event, link.href)}
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
 
             <div className="mt-2 flex w-full max-w-sm items-center justify-center px-2">
@@ -224,28 +225,29 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
                   onClick={() => setMobileLanguageOpen((prev) => !prev)}
                   aria-expanded={mobileLanguageOpen}
                   aria-haspopup="menu"
+                  aria-label={a11yLabels.changeLanguage[locale]}
                 >
                   <span>{localeLabel[locale]}</span>
                   <ChevronDown className="h-4 w-4" />
                 </button>
 
                 {mobileLanguageOpen ? (
-                  <div className="mt-1 w-full rounded-md border border-black/10 bg-surface p-1">
+                  <div role="menu" className="mt-1 w-full rounded-md border border-black/10 bg-surface p-1">
                     {locales
                       .filter((item) => item !== locale)
                       .map((item, index, arr) => {
                         const localizedPath = getLocalizedPath(pathname, item);
                         return (
-                        <a
-                          key={item}
-                          href={localizedPath}
-                          className={`block w-full rounded px-2 py-2 text-center text-sm text-slate-700 hover:bg-black/5 hover:text-slate-900 ${
-                            index < arr.length - 1 ? "border-b border-black/10" : ""
-                          }`}
-                          onClick={(event) => handleHardNavigate(event, localizedPath)}
-                        >
-                          {localeLabel[item]}
-                        </a>
+                          <Link
+                            key={item}
+                            href={localizedPath}
+                            role="menuitem"
+                            className={`block w-full rounded px-2 py-2 text-center text-sm text-slate-700 hover:bg-black/5 hover:text-slate-900 ${
+                              index < arr.length - 1 ? "border-b border-black/10" : ""
+                            }`}
+                          >
+                            {localeLabel[item]}
+                          </Link>
                         );
                       })}
                   </div>

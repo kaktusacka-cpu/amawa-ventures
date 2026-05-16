@@ -84,16 +84,9 @@ export type HomeCopy = {
   };
   footer: {
     brand: string;
-    copyright: string;
   };
   pages: {
     aboutTitle: string;
-    aboutBody: string;
-    experiencesTitle: string;
-    experiencesBody: string;
-    whatWeDoTitle: string;
-    whatWeDoBody: string;
-    collaborateTitle: string;
     collaborateBody: string;
   };
   aboutPage: {
@@ -261,19 +254,9 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
     },
     footer: {
       brand: "Amawa Ventures",
-      copyright: "© 2026 bydomi.design",
     },
     pages: {
       aboutTitle: "About Amawa",
-      aboutBody:
-        "Amawa Ventures is a platform built on more than 15 years of experience in innovation, venture building and ecosystem development across Europe. We have worked with startups, universities, corporations and public institutions, designing acceleration programs, technology transfer initiatives and applied learning experiences connected to real-world challenges. Amawa is shaped by two complementary forces: strategic depth and lived experience. On one hand, a strong foundation in innovation strategy, venture building and ecosystem design. On the other, a deep connection to nature, exploration and movement. We collaborate with experienced outdoor professionals, from mountain environments to the sea, and with people who have led pioneering expeditions and designed complex experiences in demanding natural settings. This balance between structure and wildness, strategy and presence, defines how we work.",
-      experiencesTitle: "Experiences",
-      experiencesBody:
-        "Signature learning experiences for teams, founders, and ecosystems.",
-      whatWeDoTitle: "What We Do",
-      whatWeDoBody:
-        "We design programs, advisory projects, and collaboration formats that connect purpose with execution.",
-      collaborateTitle: "Collaborate with Us",
       collaborateBody:
         "Looking for a partner in innovation and learning? Let's build something meaningful together.",
     },
@@ -454,19 +437,9 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
     },
     footer: {
       brand: "Amawa Ventures",
-      copyright: "© 2026 bydomi.design",
     },
     pages: {
       aboutTitle: "Sobre Amawa",
-      aboutBody:
-        "Ayudamos a personas y organizaciones a construir prácticas de innovación con propósito.",
-      experiencesTitle: "Experiencias",
-      experiencesBody:
-        "Experiencias de aprendizaje para equipos, fundadores y ecosistemas.",
-      whatWeDoTitle: "Qué hacemos",
-      whatWeDoBody:
-        "Diseñamos programas, proyectos de asesoría y formatos de colaboración.",
-      collaborateTitle: "Colabora con nosotros",
       collaborateBody:
         "¿Buscas un aliado en innovación y aprendizaje? Construyamos algo valioso.",
     },
@@ -644,19 +617,9 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
     },
     footer: {
       brand: "Amawa Ventures",
-      copyright: "© 2026 bydomi.design",
     },
     pages: {
       aboutTitle: "O Amawa",
-      aboutBody:
-        "Pomáhame ľuďom a organizáciám budovať inovačné prístupy so zmyslom.",
-      experiencesTitle: "Skúsenosti",
-      experiencesBody:
-        "Vzdelávacie skúsenosti pre tímy, zakladateľov a ekosystémy.",
-      whatWeDoTitle: "Čo robíme",
-      whatWeDoBody:
-        "Navrhujeme programy, poradenské projekty a formáty spolupráce.",
-      collaborateTitle: "Spolupracujte s nami",
       collaborateBody:
         "Hľadáte partnera pre inovácie a učenie? Poďme niečo vytvoriť spolu.",
     },

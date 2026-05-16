@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 
 type RevealProps = {
   children: ReactNode;
@@ -18,6 +18,29 @@ const animClass: Record<NonNullable<RevealProps["animation"]>, string> = {
   "hero-up": "reveal-hero-up",
 };
 
+function subscribeReducedMotion(callback: () => void) {
+  if (typeof window === "undefined" || !window.matchMedia) return () => {};
+  const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+  media.addEventListener("change", callback);
+  return () => media.removeEventListener("change", callback);
+}
+
+function getReducedMotionSnapshot() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+function getReducedMotionServerSnapshot() {
+  return false;
+}
+
+function useReducedMotion(): boolean {
+  return useSyncExternalStore(
+    subscribeReducedMotion,
+    getReducedMotionSnapshot,
+    getReducedMotionServerSnapshot,
+  );
+}
+
 export function Reveal({
   children,
   animation = "fade-in-up",
@@ -26,9 +49,12 @@ export function Reveal({
   threshold = 0.1,
 }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const reducedMotion = useReducedMotion();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
+    if (reducedMotion) return;
+
     const node = ref.current;
     if (!node) return;
     const observer = new IntersectionObserver(
@@ -42,15 +68,18 @@ export function Reveal({
     );
     observer.observe(node);
     return () => observer.disconnect();
-  }, [threshold]);
+  }, [threshold, reducedMotion]);
+
+  const showAnimated = visible && !reducedMotion;
+  const isShown = showAnimated || reducedMotion;
 
   return (
     <div
       ref={ref}
-      className={`${visible ? animClass[animation] : ""} ${className}`}
+      className={`${showAnimated ? animClass[animation] : ""} ${className}`}
       style={{
-        opacity: visible ? undefined : 0,
-        animationDelay: visible && delay ? `${delay}ms` : undefined,
+        opacity: isShown ? undefined : 0,
+        animationDelay: showAnimated && delay ? `${delay}ms` : undefined,
       }}
     >
       {children}

@@ -34,7 +34,7 @@ export default async function CollaboratePage({
           <div className="mt-16 grid gap-6 md:grid-cols-2 text-left">
             <Reveal animation="fade-in-up" delay={160}>
               <ContactCard title={content.contact.callTitle} description={content.contact.callDescription}>
-                <Button variant="outline" className="h-10 rounded-full px-6 text-base bg-white cursor-pointer shadow-none hover:bg-[#E17100]/10 hover:border-[#E17100]/50">
+                <Button variant="outline-warm" size="pill">
                   {content.contact.callCta}
                 </Button>
               </ContactCard>
@@ -51,12 +51,11 @@ export default async function CollaboratePage({
                     <Button
                       key={social.icon}
                       asChild
-                      variant="outline"
-                      size="icon"
-                      className="h-12 w-12 rounded-full bg-white cursor-pointer shadow-none hover:bg-[#E17100]/10 hover:border-[#E17100]/50"
+                      variant="outline-warm"
+                      size="icon-pill"
                     >
                       <a href={social.href} aria-label={social.label} target="_blank" rel="noopener noreferrer">
-                        <Image src={social.icon} alt={social.label} width={20} height={20} />
+                        <Image src={social.icon} alt="" width={20} height={20} />
                       </a>
                     </Button>
                   ))}

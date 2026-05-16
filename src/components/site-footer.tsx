@@ -1,16 +1,17 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 type SiteFooterProps = {
   brand: string;
-  copyright: string;
 };
 
-export function SiteFooter({ brand, copyright }: SiteFooterProps) {
+export function SiteFooter({ brand }: SiteFooterProps) {
   const pathname = usePathname();
   const segments = pathname.split("/").filter(Boolean);
+  const locale = segments[0] ?? "en";
   const page = segments[1] ?? "";
   const isHomePage = segments.length === 1;
   const footerBgClass =
@@ -37,8 +38,18 @@ export function SiteFooter({ brand, copyright }: SiteFooterProps) {
           <div className="flex flex-col gap-3">
             <p className="text-xs uppercase tracking-[0.24em] text-muted-foreground">Contact</p>
             <div className="flex flex-col gap-1">
-              <p className="text-sm text-foreground">example@gmail.com</p>
-              <p className="text-sm text-foreground">+421 918 444 444</p>
+              <a
+                href="mailto:info@amawaventures.com"
+                className="text-sm text-foreground hover:text-primary"
+              >
+                info@amawaventures.com
+              </a>
+              <a
+                href="tel:+421918444444"
+                className="text-sm text-foreground hover:text-primary"
+              >
+                +421 918 444 444
+              </a>
             </div>
           </div>
 
@@ -63,7 +74,12 @@ export function SiteFooter({ brand, copyright }: SiteFooterProps) {
           <div className="flex flex-col gap-3">
             <p className="text-xs uppercase tracking-[0.24em] text-muted-foreground">Documents</p>
             <div className="flex flex-col gap-1">
-              <p className="text-sm text-foreground">GDPR - Privacy Policy</p>
+              <Link
+                href={`/${locale}/privacy`}
+                className="text-sm text-foreground hover:text-primary"
+              >
+                GDPR - Privacy Policy
+              </Link>
             </div>
           </div>
         </div>
