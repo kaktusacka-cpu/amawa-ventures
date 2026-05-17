@@ -5,6 +5,7 @@ import {
   getDefaultExperiencesCopy,
   getDefaultWhatWeDoCopy,
   experienceCtaOverrides,
+  DEFAULT_SECTION_ORDER,
   type HomeCopy,
   type HomeSectionKey,
   type ExperiencesCopy,
@@ -18,6 +19,7 @@ import {
   fetchCardItems,
   fetchMetricItems,
   fetchContactItems,
+  fetchCollaborations,
   getRows,
   getText,
   getTextByOccurrence,
@@ -100,6 +102,7 @@ export const getHomePageContent = cache(
         coreCardItems,
         metricItems,
         contactItemRows,
+        collaborationItems,
       ] = await Promise.all([
         DB_IDS.nav ? fetchRows(DB_IDS.nav) : [],
         DB_IDS.footer ? fetchRows(DB_IDS.footer) : [],
@@ -110,6 +113,7 @@ export const getHomePageContent = cache(
         DB_IDS.coreWorkCards ? fetchCardItems(DB_IDS.coreWorkCards) : [],
         DB_IDS.impactMetrics ? fetchMetricItems(DB_IDS.impactMetrics) : [],
         DB_IDS.contactItems ? fetchContactItems(DB_IDS.contactItems) : [],
+        DB_IDS.collaborations ? fetchCollaborations(DB_IDS.collaborations) : [],
       ]);
 
       if (
@@ -153,15 +157,35 @@ export const getHomePageContent = cache(
         hero, about, paths: pathsSection, coreWork: coreWorkSection,
         approach, impact, ecosystem, testimonials, contact,
       };
+      const sectionKeys = Object.keys(sectionRows) as HomeSectionKey[];
       const visibleSections = Object.fromEntries(
-        (Object.keys(sectionRows) as HomeSectionKey[]).map((key) => {
+        sectionKeys.map((key) => {
           const raw = t(sectionRows[key], "visible", locale).trim().toLowerCase();
           return [key, raw !== "false"];
         }),
       ) as Record<HomeSectionKey, boolean>;
 
+      // Each section also has a 'pageOrder' row (numeric string in EN). Sort
+      // by ascending pageOrder; sections without a row keep their default
+      // position from DEFAULT_SECTION_ORDER.
+      const defaultIndex = (key: HomeSectionKey) => {
+        const idx = DEFAULT_SECTION_ORDER.indexOf(key);
+        return idx === -1 ? Number.MAX_SAFE_INTEGER : idx;
+      };
+      const sectionOrder = [...sectionKeys].sort((a, b) => {
+        const ao = Number(t(sectionRows[a], "pageOrder", locale));
+        const bo = Number(t(sectionRows[b], "pageOrder", locale));
+        const aValid = Number.isFinite(ao);
+        const bValid = Number.isFinite(bo);
+        if (aValid && bValid) return ao - bo;
+        if (aValid) return -1;
+        if (bValid) return 1;
+        return defaultIndex(a) - defaultIndex(b);
+      });
+
       return {
         visibleSections,
+        sectionOrder,
         nav: {
           home: t(nav, "home", locale) || fallback.nav.home,
           about: t(nav, "about", locale) || fallback.nav.about,
@@ -185,11 +209,16 @@ export const getHomePageContent = cache(
           primaryCta: t(hero, "primaryCTA", locale) || fallback.hero.primaryCta,
           secondaryCta: t(hero, "secondaryCTA", locale) || fallback.hero.secondaryCta,
           videoPlaceholder: t(hero, "videoPlaceholder", locale) || fallback.hero.videoPlaceholder,
+          videoUrl: t(hero, "videoUrl", locale) || fallback.hero.videoUrl,
         },
         about: {
           title: t(about, "title", locale) || fallback.about.title,
           description: t(about, "description", locale) || fallback.about.description,
+          markImage: t(about, "markImage", locale) || fallback.about.markImage,
         },
+        collaborations: collaborationItems.length > 0
+          ? collaborationItems.map((c) => ({ name: c.name, image: c.image }))
+          : fallback.collaborations,
         paths: {
           title: t(pathsSection, "title", locale) || fallback.paths.title,
           cards: pathCards.length > 0

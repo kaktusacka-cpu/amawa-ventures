@@ -16,6 +16,7 @@ export const DB_IDS = {
   coreWorkCards: process.env.NOTION_CORE_WORK_CARDS_DB_ID,
   impactMetrics: process.env.NOTION_IMPACT_METRICS_DB_ID,
   contactItems: process.env.NOTION_CONTACT_ITEMS_DB_ID,
+  collaborations: process.env.NOTION_COLLABORATIONS_DB_ID,
 } as const;
 
 export type NotionRow = {
@@ -198,6 +199,22 @@ function parseContactItem(page: any): ContactItemRow {
   };
 }
 
+export type CollaborationRow = {
+  name: string;
+  order: number;
+  image: string;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function parseCollaboration(page: any): CollaborationRow {
+  const p = page.properties;
+  return {
+    name: extractTitle(p.Name),
+    order: extractNumber(p.Order),
+    image: extractFiles(p.Image),
+  };
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const cache = new Map<string, { rows: any[]; time: number }>();
 const CACHE_TTL = 60_000; // 1 minute
@@ -262,6 +279,11 @@ export async function fetchMetricItems(dbId: string): Promise<MetricItemRow[]> {
 export async function fetchContactItems(dbId: string): Promise<ContactItemRow[]> {
   const pages = await queryDb(dbId);
   return pages.map(parseContactItem).sort((a, b) => a.order - b.order);
+}
+
+export async function fetchCollaborations(dbId: string): Promise<CollaborationRow[]> {
+  const pages = await queryDb(dbId);
+  return pages.map(parseCollaboration).sort((a, b) => a.order - b.order);
 }
 
 export function getRows(allRows: NotionRow[], section?: string): NotionRow[] {

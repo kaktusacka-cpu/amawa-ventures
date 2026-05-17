@@ -1,3 +1,4 @@
+import { Fragment, type ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -9,6 +10,7 @@ import { ContactCard } from "@/components/contact-card";
 import { Reveal } from "@/components/reveal";
 import { isLocale, type Locale } from "@/lib/i18n";
 import { getHomePageContent } from "@/lib/notion/get-content";
+import type { HomeSectionKey } from "@/lib/site-copy";
 
 export default async function HomePage({
   params,
@@ -38,66 +40,68 @@ export default async function HomePage({
     },
   ];
 
-  return (
-    <main className="bg-surface text-foreground">
-      {content.visibleSections.hero && (
-        <>
-      <section className="w-full px-4 pt-[80px] sm:px-6 md:pt-[60px] lg:pt-[160px] lg:px-8 flex flex-col justify-center items-center">
-        <div className="w-full max-w-[1000px] text-center">
-          <Reveal animation="hero-up" delay={100}>
-            <p className="text-base uppercase tracking-[0.24em] text-eyebrow sm:text-base">
-              {content.hero.eyebrow}
-            </p>
-          </Reveal>
-          <Reveal animation="hero-up" delay={300}>
-            <h1 className="font-display mt-4 text-4xl sm:text-6xl">{content.hero.title}</h1>
-          </Reveal>
-          <Reveal animation="hero-up" delay={500}>
-            <p className="mx-auto mt-5 max-w-3xl text-balance text-lg leading-8 text-foreground">
-              {content.hero.lead} <span className="text-accent-warm font-medium">{content.hero.thinkWord}</span>, {content.hero.connectText} <span className="text-eyebrow font-medium">{content.hero.growWord}</span>.
-            </p>
-          </Reveal>
-          <Reveal animation="hero-up" delay={650}>
-            <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-muted-foreground">
-              {content.hero.subLead}
-            </p>
-          </Reveal>
-          <Reveal animation="hero-up" delay={800}>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Button asChild size="pill">
-                <Link href={`/${locale}/experiences`}>{content.hero.primaryCta}</Link>
-              </Button>
-              <Button asChild variant="outline-warm" size="pill">
-                <Link href={`/${locale}/about`}>{content.hero.secondaryCta}</Link>
-              </Button>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+  // Each section is defined once as JSX. Order comes from content.sectionOrder
+  // (Notion pageOrder rows); visibility comes from content.visibleSections.
+  // Edit either in Notion to reorder or hide sections without code changes.
+  const sections: Record<HomeSectionKey, ReactNode> = {
+    hero: (
+      <>
+        <section className="w-full px-4 pt-[80px] sm:px-6 md:pt-[60px] lg:pt-[160px] lg:px-8 flex flex-col justify-center items-center">
+          <div className="w-full max-w-[1000px] text-center">
+            <Reveal animation="hero-up" delay={100}>
+              <p className="text-base uppercase tracking-[0.24em] text-eyebrow sm:text-base">
+                {content.hero.eyebrow}
+              </p>
+            </Reveal>
+            <Reveal animation="hero-up" delay={300}>
+              <h1 className="font-display mt-4 text-4xl sm:text-6xl">{content.hero.title}</h1>
+            </Reveal>
+            <Reveal animation="hero-up" delay={500}>
+              <p className="mx-auto mt-5 max-w-3xl text-balance text-lg leading-8 text-foreground">
+                {content.hero.lead} <span className="text-accent-warm font-medium">{content.hero.thinkWord}</span>, {content.hero.connectText} <span className="text-eyebrow font-medium">{content.hero.growWord}</span>.
+              </p>
+            </Reveal>
+            <Reveal animation="hero-up" delay={650}>
+              <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-muted-foreground">
+                {content.hero.subLead}
+              </p>
+            </Reveal>
+            <Reveal animation="hero-up" delay={800}>
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+                <Button asChild size="pill">
+                  <Link href={`/${locale}/experiences`}>{content.hero.primaryCta}</Link>
+                </Button>
+                <Button asChild variant="outline-warm" size="pill">
+                  <Link href={`/${locale}/about`}>{content.hero.secondaryCta}</Link>
+                </Button>
+              </div>
+            </Reveal>
+          </div>
+        </section>
 
-      <div className="h-[80px] sm:h-[160px]" />
+        <div className="h-[80px] sm:h-[160px]" />
 
-      <Reveal animation="fade-in" delay={200} className="relative z-10 mx-auto aspect-[1920/1080] w-[calc(100%-2rem)] max-w-5xl overflow-hidden rounded-2xl border border-border bg-surface">
-        <video
-          className="h-full w-full object-cover"
-          src="/placeholder-video.mp4"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          aria-label={content.hero.videoPlaceholder}
-        />
-      </Reveal>
-        </>
-      )}
+        <Reveal animation="fade-in" delay={200} className="relative z-10 mx-auto aspect-[1920/1080] w-[calc(100%-2rem)] max-w-5xl overflow-hidden rounded-2xl border border-border bg-surface">
+          <video
+            className="h-full w-full object-cover"
+            src={content.hero.videoUrl}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-label={content.hero.videoPlaceholder}
+          />
+        </Reveal>
+      </>
+    ),
 
-      {content.visibleSections.about && (
+    about: (
       <section className="relative -mt-[96px] bg-surface-alt pb-[80px] pt-[176px] sm:-mt-[288px] sm:pb-[160px] sm:pt-[448px]">
         <div className="mx-auto max-w-xl px-4 text-center sm:px-6">
           <Reveal animation="fade-in">
             <Image
-              src="/logo-amawa-mark.svg"
+              src={content.about.markImage}
               alt="Amawa mark"
               width={48}
               height={24}
@@ -112,9 +116,9 @@ export default async function HomePage({
           </Reveal>
         </div>
       </section>
-      )}
+    ),
 
-      {content.visibleSections.paths && (
+    paths: (
       <section className="mx-auto max-w-5xl px-4 py-[80px] sm:px-6 md:py-[60px] lg:py-[160px] flex flex-col justify-center items-center">
         <Reveal animation="fade-in-up">
           <h2 className="font-display text-center text-[32px] sm:text-5xl">{content.paths.title}</h2>
@@ -135,9 +139,9 @@ export default async function HomePage({
           })}
         </Reveal>
       </section>
-      )}
+    ),
 
-      {content.visibleSections.coreWork && (
+    coreWork: (
       <section className="bg-surface-alt py-[80px] md:py-[60px] lg:py-[160px]">
         <div className="mx-auto max-w-[1000px] px-4 sm:px-6">
           <Reveal animation="fade-in-up">
@@ -164,9 +168,9 @@ export default async function HomePage({
           </Reveal>
         </div>
       </section>
-      )}
+    ),
 
-      {content.visibleSections.approach && (
+    approach: (
       <section className="mx-auto max-w-3xl px-4 py-[80px] text-center sm:px-6 md:py-[60px] lg:py-[160px]">
         <Reveal animation="fade-in-up">
           <p className="text-base uppercase tracking-[0.24em] text-eyebrow sm:text-base">
@@ -182,9 +186,9 @@ export default async function HomePage({
           </p>
         </Reveal>
       </section>
-      )}
+    ),
 
-      {content.visibleSections.impact && (
+    impact: (
       <section className="bg-surface-alt py-[80px] md:py-[60px] lg:py-[160px]">
         <div className="mx-auto max-w-[1000px] px-4 text-center sm:px-6">
           <Reveal animation="fade-in-up">
@@ -213,9 +217,9 @@ export default async function HomePage({
           </Reveal>
         </div>
       </section>
-      )}
+    ),
 
-      {content.visibleSections.ecosystem && (
+    ecosystem: (
       <section className="bg-surface py-[80px] md:py-[60px] lg:py-[160px]">
         <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
           <Reveal animation="fade-in-up">
@@ -238,22 +242,11 @@ export default async function HomePage({
             role="list"
             aria-label={content.aboutPage.ecosystemTitle}
           >
-            {[
-              { src: "/collaborations/Container.svg", name: "AIMPLAS — Plastics Technology Centre" },
-              { src: "/collaborations/Container-1.svg", name: "REDIT Ventures" },
-              { src: "/collaborations/Container-2.svg", name: "IDEAS UPV" },
-              { src: "/collaborations/Container-3.svg", name: "Universitat de València" },
-              { src: "/collaborations/Container-4.svg", name: "IGKK" },
-              { src: "/collaborations/Container-5.svg", name: "UVP TECHNICOM" },
-              { src: "/collaborations/Container-6.svg", name: "Startup Valencia" },
-              { src: "/collaborations/Container-7.svg", name: "Oceanica — Fundación para la Conservación" },
-              { src: "/collaborations/Container-8.svg", name: "Access Nepal Tour & Trekking" },
-              { src: "/collaborations/Container-9.svg", name: "Universidad Politécnica de Valencia" },
-            ].map(({ src, name }, i) => (
-              <Reveal key={src} animation="fade-in" delay={i * 50}>
+            {content.collaborations.map(({ name, image }, i) => (
+              <Reveal key={`${name}-${i}`} animation="fade-in" delay={i * 50}>
                 <div role="listitem" className="overflow-hidden rounded-[10px]">
                   <Image
-                    src={src}
+                    src={image}
                     alt={name}
                     width={240}
                     height={120}
@@ -265,9 +258,9 @@ export default async function HomePage({
           </div>
         </div>
       </section>
-      )}
+    ),
 
-      {content.visibleSections.testimonials && (
+    testimonials: (
       <section className="bg-surface-alt py-[80px] md:py-[60px] lg:py-[160px]" style={{ height: "fit-content" }}>
         <div className="mx-auto max-w-4xl px-4 text-center sm:px-6">
           <Reveal animation="fade-in-up">
@@ -283,9 +276,9 @@ export default async function HomePage({
           </Reveal>
         </div>
       </section>
-      )}
+    ),
 
-      {content.visibleSections.contact && (
+    contact: (
       <section className="bg-surface py-[80px] md:py-[60px] lg:py-[160px]">
         <div className="mx-auto max-w-[1000px] px-4 sm:px-6 flex flex-col items-center text-center">
           <Reveal animation="fade-in-up">
@@ -331,6 +324,13 @@ export default async function HomePage({
           </div>
         </div>
       </section>
+    ),
+  };
+
+  return (
+    <main className="bg-surface text-foreground">
+      {content.sectionOrder.map((key) =>
+        content.visibleSections[key] ? <Fragment key={key}>{sections[key]}</Fragment> : null,
       )}
     </main>
   );

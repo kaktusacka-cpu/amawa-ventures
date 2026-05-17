@@ -18,6 +18,11 @@ export type HomeMetric = {
   label: string;
 };
 
+export type HomeCollaboration = {
+  name: string;
+  image: string;
+};
+
 // Per-section visibility for the home page. Editors flip "visible" rows in
 // Notion to hide a section without deleting its content. Defaults all true.
 export type HomeSectionKey =
@@ -31,8 +36,31 @@ export type HomeSectionKey =
   | "testimonials"
   | "contact";
 
+// Order of sections on the home page, driven by Notion's per-section
+// pageOrder rows. Editors change pageOrder to reorder sections.
+export const DEFAULT_SECTION_ORDER: HomeSectionKey[] = [
+  "hero", "about", "paths", "coreWork", "approach",
+  "impact", "ecosystem", "testimonials", "contact",
+];
+
+// Partner logos in the ecosystem section. Notion's Collaborations DB
+// overrides this — defaults are only used when Notion is unreachable.
+const DEFAULT_COLLABORATIONS: HomeCollaboration[] = [
+  { name: "AIMPLAS — Plastics Technology Centre",     image: "/collaborations/Container.svg" },
+  { name: "REDIT Ventures",                            image: "/collaborations/Container-1.svg" },
+  { name: "IDEAS UPV",                                 image: "/collaborations/Container-2.svg" },
+  { name: "Universitat de València",                   image: "/collaborations/Container-3.svg" },
+  { name: "IGKK",                                      image: "/collaborations/Container-4.svg" },
+  { name: "UVP TECHNICOM",                             image: "/collaborations/Container-5.svg" },
+  { name: "Startup Valencia",                          image: "/collaborations/Container-6.svg" },
+  { name: "Oceanica — Fundación para la Conservación", image: "/collaborations/Container-7.svg" },
+  { name: "Access Nepal Tour & Trekking",              image: "/collaborations/Container-8.svg" },
+  { name: "Universidad Politécnica de Valencia",       image: "/collaborations/Container-9.svg" },
+];
+
 export type HomeCopy = {
   visibleSections: Record<HomeSectionKey, boolean>;
+  sectionOrder: HomeSectionKey[];
   nav: {
     home: string;
     about: string;
@@ -52,11 +80,14 @@ export type HomeCopy = {
     primaryCta: string;
     secondaryCta: string;
     videoPlaceholder: string;
+    videoUrl: string;
   };
   about: {
     title: string;
     description: string;
+    markImage: string;
   };
+  collaborations: HomeCollaboration[];
   paths: {
     title: string;
     cards: HomePathCard[];
@@ -181,6 +212,8 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       testimonials: true,
       contact: true,
     },
+    sectionOrder: DEFAULT_SECTION_ORDER,
+    collaborations: DEFAULT_COLLABORATIONS,
     nav: {
       home: "Home",
       about: "About",
@@ -201,11 +234,13 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       primaryCta: "Explore our programs",
       secondaryCta: "Learn more about us",
       videoPlaceholder: "video preview",
+      videoUrl: "/placeholder-video.mp4",
     },
     about: {
       title: "What is Amawa?",
       description:
         "Amawa Ventures is a creative platform for innovation, learning and leadership that bridges signal and action, intellect and will, clarity, data, movement, immersion and connection with nature.",
+      markImage: "/logo-amawa-mark.svg",
     },
     paths: {
       title: "Choose your path",
@@ -398,6 +433,8 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       testimonials: true,
       contact: true,
     },
+    sectionOrder: DEFAULT_SECTION_ORDER,
+    collaborations: DEFAULT_COLLABORATIONS,
     nav: {
       home: "Inicio",
       about: "Nosotros",
@@ -419,11 +456,13 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       secondaryCta: "Conocer más",
       videoPlaceholder: "vista previa",
       connectText: "actúa con intención y",
+      videoUrl: "/placeholder-video.mp4",
     },
     about: {
       title: "¿Qué es Amawa?",
       description:
         "Amawa Ventures es una plataforma creativa de innovación, aprendizaje y liderazgo que conecta señal y acción, intelecto y voluntad, claridad, datos, movimiento e inmersión.",
+      markImage: "/logo-amawa-mark.svg",
     },
     paths: {
       title: "Elige tu camino",
@@ -615,6 +654,8 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       testimonials: true,
       contact: true,
     },
+    sectionOrder: DEFAULT_SECTION_ORDER,
+    collaborations: DEFAULT_COLLABORATIONS,
     nav: {
       home: "Domov",
       about: "O nás",
@@ -636,11 +677,13 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       secondaryCta: "Zistiť viac",
       videoPlaceholder: "ukážka videa",
       connectText: "konaj s úmyslom a",
+      videoUrl: "/placeholder-video.mp4",
     },
     about: {
       title: "Čo je Amawa?",
       description:
         "Amawa Ventures je kreatívna platforma pre inovácie, učenie a líderstvo, ktorá prepája signál a akciu, intelekt a vôľu, jasnosť, dáta, pohyb a ponorenie.",
+      markImage: "/logo-amawa-mark.svg",
     },
     paths: {
       title: "Vyberte si svoju cestu",
