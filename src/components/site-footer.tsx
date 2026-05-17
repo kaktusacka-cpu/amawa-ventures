@@ -34,7 +34,7 @@ export function SiteFooter({ brand }: SiteFooterProps) {
         </div>
 
         {/* 4 columns */}
-        <div className="mx-auto grid max-w-sm grid-cols-2 gap-x-12 gap-y-10 pb-16 md:max-w-none md:grid-cols-4">
+        <div className="mx-auto grid max-w-sm grid-cols-1 gap-x-12 gap-y-10 pb-16 min-[350px]:grid-cols-2 md:max-w-none md:grid-cols-4">
           <div className="flex flex-col gap-3">
             <p className="text-xs uppercase tracking-[0.24em] text-muted-foreground">Contact</p>
             <div className="flex flex-col gap-1">

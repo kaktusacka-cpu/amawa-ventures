@@ -79,30 +79,35 @@ export const getHomePageContent = cache(
     const fallback = getDefaultCopy(locale);
 
     try {
-      if (!DB_IDS.home) return fallback;
-      const allRows = await fetchRows(DB_IDS.home);
-      if (allRows.length === 0) return fallback;
-
-      const nav = getRows(allRows, "nav");
-      const hero = getRows(allRows, "hero");
-      const about = getRows(allRows, "about");
-      const pathsSection = getRows(allRows, "paths");
-      const coreWorkSection = getRows(allRows, "coreWork");
-      const approach = getRows(allRows, "approach");
-      const impact = getRows(allRows, "impact");
-      const testimonials = getRows(allRows, "testimonials");
-      const contact = getRows(allRows, "contact");
-      const footer = getRows(allRows, "footer");
-      const pages = getRows(allRows, "pages");
-      const aboutPage = getRows(allRows, "aboutPage");
-
-      // Fetch dynamic items from separate databases
-      const [pathCardItems, coreCardItems, metricItems, contactItemRows] = await Promise.all([
+      // Pull from the four content databases that this page composes:
+      //   - layout: shared nav, footer, page-level titles
+      //   - home: home-page sections (hero, paths header, core work header, etc.)
+      //   - about: about-page sections
+      //   - + the four structured item DBs
+      const [layoutRowsAll, homeRowsAll, aboutRowsAll, pathCardItems, coreCardItems, metricItems, contactItemRows] = await Promise.all([
+        DB_IDS.layout ? fetchRows(DB_IDS.layout) : [],
+        DB_IDS.home ? fetchRows(DB_IDS.home) : [],
+        DB_IDS.about ? fetchRows(DB_IDS.about) : [],
         DB_IDS.pathCards ? fetchCardItems(DB_IDS.pathCards) : [],
         DB_IDS.coreWorkCards ? fetchCardItems(DB_IDS.coreWorkCards) : [],
         DB_IDS.impactMetrics ? fetchMetricItems(DB_IDS.impactMetrics) : [],
         DB_IDS.contactItems ? fetchContactItems(DB_IDS.contactItems) : [],
       ]);
+
+      if (homeRowsAll.length === 0 && layoutRowsAll.length === 0 && aboutRowsAll.length === 0) return fallback;
+
+      const nav = getRows(layoutRowsAll, "nav");
+      const footer = getRows(layoutRowsAll, "footer");
+      const pages = getRows(layoutRowsAll, "pages");
+      const hero = getRows(homeRowsAll, "hero");
+      const about = getRows(homeRowsAll, "about");
+      const pathsSection = getRows(homeRowsAll, "paths");
+      const coreWorkSection = getRows(homeRowsAll, "coreWork");
+      const approach = getRows(homeRowsAll, "approach");
+      const impact = getRows(homeRowsAll, "impact");
+      const testimonials = getRows(homeRowsAll, "testimonials");
+      const contact = getRows(homeRowsAll, "contact");
+      const aboutPage = getRows(aboutRowsAll, "aboutPage");
 
       const pathCards = pathCardItems.map((item, i) => {
         const card = cardItemToCard(item, locale);

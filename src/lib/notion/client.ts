@@ -2,7 +2,9 @@ const API_KEY = process.env.NOTION_API_KEY;
 const NOTION_VERSION = "2022-06-28";
 
 export const DB_IDS = {
+  layout: process.env.NOTION_LAYOUT_DB_ID,
   home: process.env.NOTION_HOME_DB_ID,
+  about: process.env.NOTION_ABOUT_DB_ID,
   experiences: process.env.NOTION_EXPERIENCES_DB_ID,
   experienceItems: process.env.NOTION_EXPERIENCE_ITEMS_DB_ID,
   whatWeDo: process.env.NOTION_WHAT_WE_DO_DB_ID,
@@ -39,7 +41,10 @@ function extractUrl(prop: { url?: string | null }): string {
   return prop?.url ?? "";
 }
 
-function extractFiles(prop: { files?: { file?: { url: string }; external?: { url: string } }[] }): string {
+function extractFiles(prop: { files?: { file?: { url: string }; external?: { url: string } }[]; url?: string | null }): string {
+  // New schema: plain URL property (easier for editors — just paste a link).
+  if (prop?.url) return prop.url;
+  // Old schema: files property (upload or external link).
   const file = prop?.files?.[0];
   return file?.file?.url ?? file?.external?.url ?? "";
 }
