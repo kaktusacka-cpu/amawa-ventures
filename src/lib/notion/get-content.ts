@@ -459,15 +459,18 @@ export const getWhatWeDoContent = cache(
 
     try {
       if (!DB_IDS.whatWeDo) return fallback;
-      const allRows = await fetchRows(DB_IDS.whatWeDo);
+      const [allRows, wwdSectionRows] = await Promise.all([
+        fetchRows(DB_IDS.whatWeDo),
+        DB_IDS.whatWeDoSections ? fetchControlSections(DB_IDS.whatWeDoSections) : [],
+      ]);
       if (allRows.length === 0) return fallback;
 
       const hero = getRows(allRows, "hero");
 
       // Areas are discovered dynamically: any section that isn't 'hero' or
-      // 'sectionImages' is treated as an area. Sections are ordered by the
-      // smallest row Order they contain, so editors can use number-prefixed
-      // section names (01, 02, ...) for sidebar order.
+      // 'sectionImages' is treated as an area. The optional What We Do
+      // Sections control DB drives per-area visibility and order — its
+      // Section title matches the normalized section name in this DB.
       const RESERVED = new Set(["hero", "sectionImages"]);
       const sectionMinOrder = new Map<string, number>();
       for (const row of allRows) {
@@ -477,12 +480,25 @@ export const getWhatWeDoContent = cache(
           sectionMinOrder.set(row.section, row.order);
         }
       }
-      const orderedSections = [...sectionMinOrder.entries()]
-        .sort((a, b) => a[1] - b[1])
-        .map(([s]) => s);
+      const sectionMeta = new Map<string, ControlSectionRow>(
+        wwdSectionRows.map((r) => [r.section, r]),
+      );
+      // Default order is the section's min row Order (so number-prefixed
+      // section names still work if no control row exists).
+      const orderedSections = [...sectionMinOrder.keys()].sort((a, b) => {
+        const am = sectionMeta.get(a)?.pageOrder;
+        const bm = sectionMeta.get(b)?.pageOrder;
+        if (am != null && bm != null) return am - bm;
+        if (am != null) return -1;
+        if (bm != null) return 1;
+        return (sectionMinOrder.get(a) ?? 0) - (sectionMinOrder.get(b) ?? 0);
+      });
 
       const areas = [];
       for (const sectionName of orderedSections) {
+        const meta = sectionMeta.get(sectionName);
+        if (meta && !meta.visible) continue; // hidden by editor
+
         const areaRows = getRows(allRows, sectionName);
         const title = t(areaRows, "title", locale);
         if (!title) continue;

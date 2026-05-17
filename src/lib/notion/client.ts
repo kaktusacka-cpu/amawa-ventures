@@ -19,6 +19,7 @@ export const DB_IDS = {
   collaborations: process.env.NOTION_COLLABORATIONS_DB_ID,
   homeSections: process.env.NOTION_HOME_SECTIONS_DB_ID,
   experienceSections: process.env.NOTION_EXPERIENCE_SECTIONS_DB_ID,
+  whatWeDoSections: process.env.NOTION_WHAT_WE_DO_SECTIONS_DB_ID,
 } as const;
 
 export type NotionRow = {
