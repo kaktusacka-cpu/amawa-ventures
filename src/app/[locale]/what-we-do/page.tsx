@@ -1,7 +1,6 @@
-import Image from "next/image";
 import { notFound } from "next/navigation";
+import { BoundaryImage } from "@/components/boundary-image";
 import { PageHero } from "@/components/page-hero";
-import { Reveal } from "@/components/reveal";
 import { ScrollToHash } from "@/components/scroll-to-hash";
 import { SectionHeading } from "@/components/section-heading";
 import { isLocale, type Locale } from "@/lib/i18n";
@@ -62,21 +61,14 @@ export default async function WhatWeDoPage({
               className={`w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center ${bg} ${ptClass} ${pbClass}`}
             >
               <SectionHeading title={area.title} body={area.description} />
-              {area.image && (
-                <Reveal
-                  animation="fade-in-slow"
-                  className="relative mt-10 h-[220px] w-full max-w-[1000px] overflow-hidden rounded-2xl md:mt-14 md:h-[420px]"
-                >
-                  <Image
-                    src={area.image}
-                    alt={area.title}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 1200px) 100vw, 1000px"
-                  />
-                </Reveal>
-              )}
             </section>
+
+            {/* Decorative landscape between sections. Source = the area's
+                image set in Notion. Omitted after the last section so the
+                page doesn't end with a floating image strip. */}
+            {!isLast && area.image && (
+              <BoundaryImage src={area.image} alt={area.title} />
+            )}
           </div>
         );
       })}
