@@ -302,17 +302,22 @@ export default async function HomePage({
             <Reveal animation="fade-in-up" delay={200} className="h-full">
               <ContactCard title={content.contact.connectTitle} description={content.contact.connectDescription}>
                 <div className="flex gap-3">
-                  {[
-                    { icon: "/socials/social-3.svg", label: content.contact.connectItems[0] ?? "Email", href: content.contact.emailUrl },
-                    { icon: "/socials/social-2.svg", label: content.contact.connectItems[2] ?? "LinkedIn", href: content.contact.linkedinUrl },
-                    { icon: "/socials/social-1.svg", label: content.contact.connectItems[1] ?? "Instagram", href: content.contact.instagramUrl },
-                  ].map((social) => (
-                    <Button key={social.icon} asChild variant="outline-warm" size="icon-pill">
-                      <a href={social.href} aria-label={social.label} target="_blank" rel="noopener noreferrer">
-                        <Image src={social.icon} alt="" width={20} height={20} />
-                      </a>
-                    </Button>
-                  ))}
+                  {content.contact.connectItems.map((item, i) => {
+                    // Match icon to item by its label keyword (order-independent).
+                    const lower = item.label.toLowerCase();
+                    const icon = lower.includes("linkedin")
+                      ? "/socials/social-2.svg"
+                      : lower.includes("instagram")
+                        ? "/socials/social-1.svg"
+                        : "/socials/social-3.svg"; // default: email
+                    return (
+                      <Button key={item.label + i} asChild variant="outline-warm" size="icon-pill">
+                        <a href={item.url} aria-label={item.label} target="_blank" rel="noopener noreferrer">
+                          <Image src={icon} alt="" width={20} height={20} />
+                        </a>
+                      </Button>
+                    );
+                  })}
                 </div>
               </ContactCard>
             </Reveal>

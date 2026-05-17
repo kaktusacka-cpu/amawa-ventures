@@ -227,15 +227,17 @@ function footerRows(): KVRow[] {
   rows.push(trans("02 headings",   "addressHeading",    next(), "footer", "columns", "address"));
   rows.push(trans("02 headings",   "legalHeading",      next(), "footer", "columns", "legal"));
   rows.push(trans("02 headings",   "documentsHeading",  next(), "footer", "columns", "documents"));
-  rows.push(trans("03 contact",    "email",             next(), "footer", "contact", "email"));
-  rows.push(trans("03 contact",    "phone",             next(), "footer", "contact", "phone"));
+  rows.push({ ...trans("03 contact", "email", next(), "footer", "contact", "email"), value: copyByLocale.en.footer.contact.emailHref });
+  rows.push({ ...trans("03 contact", "phone", next(), "footer", "contact", "phone"), value: copyByLocale.en.footer.contact.phoneHref });
   rows.push(trans("04 address",    "addressLine1",      next(), "footer", "address", "line1"));
   rows.push(trans("04 address",    "addressLine2",      next(), "footer", "address", "line2"));
   rows.push(trans("04 address",    "addressLine3",      next(), "footer", "address", "line3"));
   rows.push(trans("05 legal",      "companyName",       next(), "footer", "legal", "companyName"));
   rows.push(trans("05 legal",      "ico",               next(), "footer", "legal", "ico"));
   rows.push(trans("05 legal",      "dic",               next(), "footer", "legal", "dic"));
-  rows.push(trans("06 documents",  "privacyLink",       next(), "footer", "privacyLink"));
+  // Note: the Documents column is now driven by the Documents DB
+  // (one row per footer document with optional dialog content). No
+  // privacyLink row needed in the footer DB anymore.
 
   return rows;
 }
@@ -316,9 +318,8 @@ function homeRows(): KVRow[] {
   rows.push(trans("09 contact", "callCta", next(), "contact", "callCta"));
   rows.push(trans("09 contact", "connectTitle", next(), "contact", "connectTitle"));
   rows.push(trans("09 contact", "connectDescription", next(), "contact", "connectDescription"));
-  rows.push({ section: "09 contact", field: "emailUrl", order: next(), value: copyByLocale.en.contact.emailUrl });
-  rows.push({ section: "09 contact", field: "linkedinUrl", order: next(), value: copyByLocale.en.contact.linkedinUrl });
-  rows.push({ section: "09 contact", field: "instagramUrl", order: next(), value: copyByLocale.en.contact.instagramUrl });
+  // Per-item URLs (email/instagram/linkedin) now live on each Contact Items
+  // row's Value column — see CONTACT_SCHEMA + contactRows().
 
   return rows;
 }
@@ -579,16 +580,24 @@ const CONTACT_SCHEMA: PropertySchema = {
   EN_Label: { rich_text: {} },
   ES_Label: { rich_text: {} },
   SK_Label: { rich_text: {} },
+  // URL the contact card links to (mailto:, tel:, or https://). Same value
+  // across locales — paste once.
+  Value: { rich_text: {} },
 };
 
 function contactRows(): Array<Record<string, unknown>> {
-  return copyByLocale.en.contact.connectItems.map((label, i) => ({
-    Name: { title: text(label) },
-    Order: { number: i + 1 },
-    EN_Label: { rich_text: text(label) },
-    ES_Label: { rich_text: text(copyByLocale.es.contact.connectItems[i] ?? label) },
-    SK_Label: { rich_text: text(copyByLocale.sk.contact.connectItems[i] ?? label) },
-  }));
+  return copyByLocale.en.contact.connectItems.map((item, i) => {
+    const esItem = copyByLocale.es.contact.connectItems[i];
+    const skItem = copyByLocale.sk.contact.connectItems[i];
+    return {
+      Name: { title: text(item.label) },
+      Order: { number: i + 1 },
+      EN_Label: { rich_text: text(item.label) },
+      ES_Label: { rich_text: text(esItem?.label ?? item.label) },
+      SK_Label: { rich_text: text(skItem?.label ?? item.label) },
+      Value: { rich_text: text(item.url) },
+    };
+  });
 }
 
 // ───────────────────────────────────────────────────────────

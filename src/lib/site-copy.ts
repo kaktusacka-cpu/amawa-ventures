@@ -123,10 +123,9 @@ export type HomeCopy = {
     callCta: string;
     connectTitle: string;
     connectDescription: string;
-    connectItems: string[];
-    emailUrl: string;
-    linkedinUrl: string;
-    instagramUrl: string;
+    // Each contact item carries its own URL (label + href). Editor controls
+    // both via the Contact Items DB in Notion.
+    connectItems: { label: string; url: string }[];
   };
   footer: {
     brand: string;
@@ -139,6 +138,10 @@ export type HomeCopy = {
     contact: {
       email: string;
       phone: string;
+      // Optional explicit hrefs (from Notion Value column). When empty,
+      // site-footer constructs mailto:/tel: from the display text.
+      emailHref: string;
+      phoneHref: string;
     };
     address: {
       line1: string;
@@ -150,7 +153,6 @@ export type HomeCopy = {
       ico: string;
       dic: string;
     };
-    privacyLink: string;
   };
   pages: {
     aboutTitle: string;
@@ -331,10 +333,11 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       connectTitle: "Connect with us",
       connectDescription:
         "Follow our journey or reach out directly — we'd love to hear from you.",
-      connectItems: ["Email", "Instagram", "LinkedIn"],
-      emailUrl: "mailto:martina.luckanicova@gmail.com",
-      linkedinUrl: "https://www.linkedin.com/in/martinaluckanic/",
-      instagramUrl: "https://www.instagram.com/solymar_marysol?igsh=cmIxMTJvczBjN3d0",
+      connectItems: [
+        { label: "Email",     url: "mailto:martina.luckanicova@gmail.com" },
+        { label: "Instagram", url: "https://www.instagram.com/solymar_marysol?igsh=cmIxMTJvczBjN3d0" },
+        { label: "LinkedIn",  url: "https://www.linkedin.com/in/martinaluckanic/" },
+      ],
     },
     footer: {
       brand: "Amawa Ventures",
@@ -347,6 +350,8 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       contact: {
         email: "info@amawaventures.com",
         phone: "+421 918 444 444",
+        emailHref: "mailto:info@amawaventures.com",
+        phoneHref: "tel:+421918444444",
       },
       address: {
         line1: "Hemerkova 1320/12",
@@ -358,7 +363,6 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
         ico: "IČO: 57142467",
         dic: "DIČ: 2122582550",
       },
-      privacyLink: "GDPR - Privacy Policy",
     },
     pages: {
       aboutTitle: "About Amawa",
@@ -552,10 +556,11 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       connectTitle: "Conecta con nosotros",
       connectDescription:
         "Sigue nuestro camino o escríbenos directamente — nos encantaría saber de ti.",
-      connectItems: ["Correo", "Instagram", "LinkedIn"],
-      emailUrl: "mailto:martina.luckanicova@gmail.com",
-      linkedinUrl: "https://www.linkedin.com/in/martinaluckanic/",
-      instagramUrl: "https://www.instagram.com/solymar_marysol?igsh=cmIxMTJvczBjN3d0",
+      connectItems: [
+        { label: "Correo",    url: "mailto:martina.luckanicova@gmail.com" },
+        { label: "Instagram", url: "https://www.instagram.com/solymar_marysol?igsh=cmIxMTJvczBjN3d0" },
+        { label: "LinkedIn",  url: "https://www.linkedin.com/in/martinaluckanic/" },
+      ],
     },
     footer: {
       brand: "Amawa Ventures",
@@ -568,6 +573,8 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       contact: {
         email: "info@amawaventures.com",
         phone: "+421 918 444 444",
+        emailHref: "mailto:info@amawaventures.com",
+        phoneHref: "tel:+421918444444",
       },
       address: {
         line1: "Hemerkova 1320/12",
@@ -579,7 +586,6 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
         ico: "IČO: 57142467",
         dic: "DIČ: 2122582550",
       },
-      privacyLink: "GDPR - Política de privacidad",
     },
     pages: {
       aboutTitle: "Sobre Amawa",
@@ -770,10 +776,11 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       connectTitle: "Spojte sa s nami",
       connectDescription:
         "Sledujte našu cestu alebo nás kontaktujte priamo — radi sa s vami spojíme.",
-      connectItems: ["Email", "Instagram", "LinkedIn"],
-      emailUrl: "mailto:martina.luckanicova@gmail.com",
-      linkedinUrl: "https://www.linkedin.com/in/martinaluckanic/",
-      instagramUrl: "https://www.instagram.com/solymar_marysol?igsh=cmIxMTJvczBjN3d0",
+      connectItems: [
+        { label: "Email",     url: "mailto:martina.luckanicova@gmail.com" },
+        { label: "Instagram", url: "https://www.instagram.com/solymar_marysol?igsh=cmIxMTJvczBjN3d0" },
+        { label: "LinkedIn",  url: "https://www.linkedin.com/in/martinaluckanic/" },
+      ],
     },
     footer: {
       brand: "Amawa Ventures",
@@ -786,6 +793,8 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       contact: {
         email: "info@amawaventures.com",
         phone: "+421 918 444 444",
+        emailHref: "mailto:info@amawaventures.com",
+        phoneHref: "tel:+421918444444",
       },
       address: {
         line1: "Hemerkova 1320/12",
@@ -797,7 +806,6 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
         ico: "IČO: 57142467",
         dic: "DIČ: 2122582550",
       },
-      privacyLink: "GDPR - Zásady ochrany osobných údajov",
     },
     pages: {
       aboutTitle: "O Amawa",

@@ -21,6 +21,7 @@ import {
   fetchCollaborations,
   fetchHomeSections,
   fetchControlSections,
+  fetchDocuments,
   getRows,
   getText,
   getImage,
@@ -40,6 +41,13 @@ function t(rows: NotionRow[], field: string, locale: string): string {
 
 function tn(rows: NotionRow[], field: string, occurrence: number, locale: string): string {
   return getTextByOccurrence(rows, field, occurrence, locale);
+}
+
+// Read a row's Value column directly (skips locale fallback). Used for fields
+// where the Value column carries metadata distinct from the display text —
+// e.g. a footer row where EN is the visible label and Value is the href.
+function getValueFor(rows: NotionRow[], field: string): string {
+  return rows.find((r) => r.field === field)?.value ?? "";
 }
 
 function itemToExperience(item: ExperienceItemRow, locale: string) {
@@ -83,9 +91,12 @@ function metricItemToMetric(item: MetricItemRow, locale: string) {
   };
 }
 
-function contactItemToLabel(item: ContactItemRow, locale: string) {
+function contactItemToConnect(item: ContactItemRow, locale: string) {
   const labelMap: Record<string, string> = { en: item.enLabel, es: item.esLabel, sk: item.skLabel };
-  return labelMap[locale] || item.enLabel;
+  return {
+    label: labelMap[locale] || item.enLabel,
+    url: item.url,
+  };
 }
 
 export const getHomePageContent = cache(
@@ -164,7 +175,7 @@ export const getHomePageContent = cache(
       });
       const coreCards = coreCardItems.map((item) => cardItemToCard(item, locale));
       const metrics = metricItems.map((item) => metricItemToMetric(item, locale));
-      const connectItems = contactItemRows.map((item) => contactItemToLabel(item, locale));
+      const connectItems = contactItemRows.map((item) => contactItemToConnect(item, locale));
 
       // visibleSections + sectionOrder come from the Home Sections DB, where
       // each row = one section with checkbox + number columns. Sections
@@ -268,9 +279,6 @@ export const getHomePageContent = cache(
           connectTitle: t(contact, "connectTitle", locale) || fallback.contact.connectTitle,
           connectDescription: t(contact, "connectDescription", locale) || fallback.contact.connectDescription,
           connectItems: connectItems.length > 0 ? connectItems : fallback.contact.connectItems,
-          emailUrl: t(contact, "emailUrl", locale) || fallback.contact.emailUrl,
-          linkedinUrl: t(contact, "linkedinUrl", locale) || fallback.contact.linkedinUrl,
-          instagramUrl: t(contact, "instagramUrl", locale) || fallback.contact.instagramUrl,
         },
         footer: {
           brand: t(footer, "brand", locale) || fallback.footer.brand,
@@ -283,6 +291,10 @@ export const getHomePageContent = cache(
           contact: {
             email: t(footer, "email", locale) || fallback.footer.contact.email,
             phone: t(footer, "phone", locale) || fallback.footer.contact.phone,
+            // Hrefs come from the Value column of the respective row. If
+            // empty, site-footer falls back to constructed mailto:/tel:.
+            emailHref: getValueFor(footer, "email"),
+            phoneHref: getValueFor(footer, "phone"),
           },
           address: {
             line1: t(footer, "addressLine1", locale) || fallback.footer.address.line1,
@@ -294,7 +306,6 @@ export const getHomePageContent = cache(
             ico: t(footer, "ico", locale) || fallback.footer.legal.ico,
             dic: t(footer, "dic", locale) || fallback.footer.legal.dic,
           },
-          privacyLink: t(footer, "privacyLink", locale) || fallback.footer.privacyLink,
         },
         pages: {
           aboutTitle: t(pages, "aboutTitle", locale) || fallback.pages.aboutTitle,
@@ -544,6 +555,99 @@ export const getWhatWeDoContent = cache(
       };
     } catch {
       return fallback;
+    }
+  },
+);
+
+// ────────────────────────────────────────────────────────────────
+// Footer documents (privacy policy, terms, etc.)
+// ────────────────────────────────────────────────────────────────
+
+export type DocumentContent = {
+  name: string;
+  label: string;
+  // If set, button is a plain external link. Other fields below are unused.
+  externalUrl?: string;
+  // Dialog content (used when externalUrl is empty).
+  title: string;
+  lastUpdated?: string;
+  intro?: string;
+  sections: { heading: string; body: string }[];
+  footerNote?: string;
+};
+
+export const getDocumentsContent = cache(
+  async (locale: Locale): Promise<DocumentContent[]> => {
+    try {
+      if (!DB_IDS.documents) return [];
+      const [docs, contentRows] = await Promise.all([
+        fetchDocuments(DB_IDS.documents),
+        DB_IDS.documentContent ? fetchRows(DB_IDS.documentContent) : [],
+      ]);
+
+      const labelMap = (d: { enLabel: string; esLabel: string; skLabel: string }) =>
+        locale === "es" ? d.esLabel : locale === "sk" ? d.skLabel : d.enLabel;
+
+      const out: DocumentContent[] = [];
+      for (const doc of docs) {
+        const label = labelMap(doc) || doc.enLabel;
+        if (!label) continue;
+
+        // External link — no dialog content needed.
+        if (doc.externalUrl) {
+          out.push({
+            name: doc.name,
+            label,
+            externalUrl: doc.externalUrl,
+            title: doc.name,
+            sections: [],
+          });
+          continue;
+        }
+
+        // Dialog content. The slug links Documents → Document Content via
+        // section prefix: `${slug}.meta` for top-level fields,
+        // `${slug}.section.<key>` for body sections (ordered by row.order).
+        const slug = doc.contentSlug;
+        if (!slug) {
+          out.push({ name: doc.name, label, title: label, sections: [] });
+          continue;
+        }
+
+        const metaRows = getRows(contentRows, `${slug}.meta`);
+        const sectionPrefix = `${slug}.section.`;
+        const sectionGroups = new Map<string, { order: number; rows: NotionRow[] }>();
+        for (const row of contentRows) {
+          if (!row.section.startsWith(sectionPrefix)) continue;
+          const existing = sectionGroups.get(row.section);
+          if (existing) {
+            existing.rows.push(row);
+            if (row.order < existing.order) existing.order = row.order;
+          } else {
+            sectionGroups.set(row.section, { order: row.order, rows: [row] });
+          }
+        }
+        const sections = [...sectionGroups.values()]
+          .sort((a, b) => a.order - b.order)
+          .map(({ rows }) => ({
+            heading: t(rows, "heading", locale),
+            body: t(rows, "body", locale),
+          }))
+          .filter((s) => s.heading || s.body);
+
+        out.push({
+          name: doc.name,
+          label,
+          title: t(metaRows, "title", locale) || label,
+          lastUpdated: t(metaRows, "lastUpdated", locale) || undefined,
+          intro: t(metaRows, "intro", locale) || undefined,
+          footerNote: t(metaRows, "footerNote", locale) || undefined,
+          sections,
+        });
+      }
+      return out;
+    } catch {
+      return [];
     }
   },
 );

@@ -20,6 +20,8 @@ export const DB_IDS = {
   homeSections: process.env.NOTION_HOME_SECTIONS_DB_ID,
   experienceSections: process.env.NOTION_EXPERIENCE_SECTIONS_DB_ID,
   whatWeDoSections: process.env.NOTION_WHAT_WE_DO_SECTIONS_DB_ID,
+  documents: process.env.NOTION_DOCUMENTS_DB_ID,
+  documentContent: process.env.NOTION_DOCUMENT_CONTENT_DB_ID,
 } as const;
 
 export type NotionRow = {
@@ -193,6 +195,8 @@ export type ContactItemRow = {
   enLabel: string;
   esLabel: string;
   skLabel: string;
+  // URL the editor pastes into the Value column (mailto:, tel:, or https://).
+  url: string;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -204,6 +208,7 @@ function parseContactItem(page: any): ContactItemRow {
     enLabel: extractText(p.EN_Label),
     esLabel: extractText(p.ES_Label),
     skLabel: extractText(p.SK_Label),
+    url: extractText(p.Value),
   };
 }
 
@@ -315,6 +320,38 @@ function parseControlSection(page: any): ControlSectionRow {
 export async function fetchControlSections(dbId: string): Promise<ControlSectionRow[]> {
   const pages = await queryDb(dbId);
   return pages.map(parseControlSection).sort((a, b) => a.pageOrder - b.pageOrder);
+}
+
+// One row per footer document. If ExternalUrl is set, the button opens an
+// external link; otherwise ContentSlug points to a section prefix in the
+// Document Content DB that holds the body.
+export type DocumentRow = {
+  name: string;
+  order: number;
+  enLabel: string;
+  esLabel: string;
+  skLabel: string;
+  externalUrl: string;
+  contentSlug: string;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function parseDocument(page: any): DocumentRow {
+  const p = page.properties;
+  return {
+    name: extractTitle(p.Name),
+    order: extractNumber(p.Order),
+    enLabel: extractText(p.EN_Label),
+    esLabel: extractText(p.ES_Label),
+    skLabel: extractText(p.SK_Label),
+    externalUrl: extractUrl(p.ExternalUrl),
+    contentSlug: extractText(p.ContentSlug),
+  };
+}
+
+export async function fetchDocuments(dbId: string): Promise<DocumentRow[]> {
+  const pages = await queryDb(dbId);
+  return pages.map(parseDocument).sort((a, b) => a.order - b.order);
 }
 
 // Aliases kept for the existing get-content.ts imports.
