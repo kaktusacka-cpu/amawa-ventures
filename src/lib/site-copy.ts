@@ -1277,6 +1277,8 @@ export function getDefaultExperiencesCopy(locale: Locale): ExperiencesCopy {
 export type WhatWeDoArea = {
   title: string;
   descriptions: string[];
+  // Optional image rendered below the area's text. Empty/omitted = no image.
+  image?: string;
 };
 
 export type WhatWeDoCopy = {

@@ -1,6 +1,8 @@
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { BoundaryImage } from "@/components/boundary-image";
 import { PageHero } from "@/components/page-hero";
+import { Reveal } from "@/components/reveal";
 import { ScrollToHash } from "@/components/scroll-to-hash";
 import { SectionHeading } from "@/components/section-heading";
 import { isLocale, type Locale } from "@/lib/i18n";
@@ -19,6 +21,7 @@ export default async function WhatWeDoPage({
   const areas = wwdContent.areas.map((area) => ({
     title: area.title,
     description: area.descriptions,
+    image: area.image,
   }));
 
   const sectionImages = wwdContent.sectionImages;
@@ -57,6 +60,20 @@ export default async function WhatWeDoPage({
                 title={areas[areaIndex].title}
                 body={areas[areaIndex].description}
               />
+              {areas[areaIndex].image && (
+                <Reveal
+                  animation="fade-in-slow"
+                  className="relative mt-10 h-[220px] w-full max-w-[1000px] overflow-hidden rounded-2xl md:mt-14 md:h-[420px]"
+                >
+                  <Image
+                    src={areas[areaIndex].image}
+                    alt={areas[areaIndex].title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1200px) 100vw, 1000px"
+                  />
+                </Reveal>
+              )}
             </section>
 
             {!isLast && (

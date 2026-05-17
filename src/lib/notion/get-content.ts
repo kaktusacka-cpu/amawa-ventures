@@ -474,9 +474,14 @@ export const getWhatWeDoContent = cache(
           if (desc) descriptions.push(desc);
         }
 
+        // Optional per-area image. Editor pastes a URL into the 'image' row's
+        // Value column (single-locale).
+        const image = t(areaRows, "image", locale);
+
         areas.push({
           title: t(areaRows, "title", locale),
           descriptions,
+          ...(image ? { image } : {}),
         });
       }
 

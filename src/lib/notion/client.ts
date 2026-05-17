@@ -330,7 +330,10 @@ export function getText(rows: NotionRow[], field: string, locale: string): strin
   const row = rows.find((r) => r.field === field);
   if (!row) return "";
   const localeMap: Record<string, string> = { en: row.en, es: row.es, sk: row.sk };
-  return localeMap[locale] || row.en || "";
+  // Final fallback to the Value column lets editors fill non-localized fields
+  // (image URLs, video URLs, phone numbers, etc.) just once instead of three
+  // times across EN/ES/SK.
+  return localeMap[locale] || row.en || row.value || "";
 }
 
 // For sections where the same field name appears multiple times (e.g. hero's
