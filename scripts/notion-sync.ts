@@ -381,11 +381,18 @@ function experiencesTextRows(): KVRow[] {
   rows.push({ section: "statusLabels", field: "upcoming", order: next(), en: en.statusLabels.upcoming, es: es.statusLabels.upcoming, sk: sk.statusLabels.upcoming });
   rows.push({ section: "statusLabels", field: "current", order: next(), en: en.statusLabels.current, es: es.statusLabels.current, sk: sk.statusLabels.current });
 
+  // Category Select option names in Experience Items DB, in order matching
+  // experiencesCopyByLocale.en.categories. Kept here so notion-sync seeds the
+  // 'key' rows that get-content.ts uses to filter items per category.
+  const categoryKeys = ["Individuals", "Teams", "Ecosystems"];
+
   en.categories.forEach((cat, i) => {
     const section = `category.${i + 1}`;
-    rows.push({ section, field: "label", order: next(), en: cat.label, es: es.categories[i].label, sk: sk.categories[i].label });
-    rows.push({ section, field: "title", order: next(), en: cat.title, es: es.categories[i].title, sk: sk.categories[i].title });
+    const key = categoryKeys[i] ?? "";
+    rows.push({ section, field: "label",       order: next(), en: cat.label, es: es.categories[i].label, sk: sk.categories[i].label });
+    rows.push({ section, field: "title",       order: next(), en: cat.title, es: es.categories[i].title, sk: sk.categories[i].title });
     rows.push({ section, field: "description", order: next(), en: cat.description, es: es.categories[i].description, sk: sk.categories[i].description });
+    rows.push({ section, field: "key",         order: next(), en: key, es: key, sk: key });
   });
 
   return rows;

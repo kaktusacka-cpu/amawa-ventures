@@ -6,6 +6,7 @@ import {
   getDefaultWhatWeDoCopy,
   experienceCtaOverrides,
   type HomeCopy,
+  type HomeSectionKey,
   type ExperiencesCopy,
   type ExperienceCategory,
   type WhatWeDoCopy,
@@ -146,7 +147,21 @@ export const getHomePageContent = cache(
       const metrics = metricItems.map((item) => metricItemToMetric(item, locale));
       const connectItems = contactItemRows.map((item) => contactItemToLabel(item, locale));
 
+      // Each home section has a 'visible' row whose EN value is "true"/"false".
+      // Missing rows or any non-"false" value default to visible.
+      const sectionRows: Record<HomeSectionKey, typeof hero> = {
+        hero, about, paths: pathsSection, coreWork: coreWorkSection,
+        approach, impact, ecosystem, testimonials, contact,
+      };
+      const visibleSections = Object.fromEntries(
+        (Object.keys(sectionRows) as HomeSectionKey[]).map((key) => {
+          const raw = t(sectionRows[key], "visible", locale).trim().toLowerCase();
+          return [key, raw !== "false"];
+        }),
+      ) as Record<HomeSectionKey, boolean>;
+
       return {
+        visibleSections,
         nav: {
           home: t(nav, "home", locale) || fallback.nav.home,
           about: t(nav, "about", locale) || fallback.nav.about,
@@ -318,18 +333,26 @@ export const getExperiencesContent = cache(
       const itemsDbId = DB_IDS.experienceItems || DB_IDS.experiences;
       const items = itemsDbId ? await fetchExperienceItems(itemsDbId) : [];
 
-      const categoryMap = [
-        { sectionNum: 1, categoryKey: "individuals" },
-        { sectionNum: 2, categoryKey: "teams" },
-        { sectionNum: 3, categoryKey: "ecosystems" },
-      ];
+      // Categories are driven entirely by Notion now. Find every "category.N"
+      // section that has rows, sort by N, and render each one. To add a new
+      // category, editors just add rows to a new section (e.g. category.4)
+      // with a 'key' field that matches an option in the Experience Items
+      // Category select — no code change needed.
+      const categorySectionNums = [...new Set(allRows.map((r) => r.section))]
+        .filter((s) => s.startsWith("category."))
+        .map((s) => Number(s.split(".")[1]))
+        .filter((n) => Number.isFinite(n))
+        .sort((a, b) => a - b);
 
       const categories: ExperienceCategory[] = [];
-      for (const { sectionNum, categoryKey } of categoryMap) {
+      for (const sectionNum of categorySectionNums) {
         const catRows = getRows(allRows, `category.${sectionNum}`);
-        if (catRows.length === 0) break;
+        if (catRows.length === 0) continue;
 
-        const categoryItems = items.filter((item) => item.category === categoryKey);
+        const categoryKey = t(catRows, "key", locale);
+        const categoryItems = categoryKey
+          ? items.filter((item) => item.category === categoryKey)
+          : [];
         const experiences = categoryItems.map((item) => itemToExperience(item, locale));
 
         categories.push({

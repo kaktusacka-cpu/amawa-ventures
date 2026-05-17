@@ -18,7 +18,21 @@ export type HomeMetric = {
   label: string;
 };
 
+// Per-section visibility for the home page. Editors flip "visible" rows in
+// Notion to hide a section without deleting its content. Defaults all true.
+export type HomeSectionKey =
+  | "hero"
+  | "about"
+  | "paths"
+  | "coreWork"
+  | "approach"
+  | "impact"
+  | "ecosystem"
+  | "testimonials"
+  | "contact";
+
 export type HomeCopy = {
+  visibleSections: Record<HomeSectionKey, boolean>;
   nav: {
     home: string;
     about: string;
@@ -156,6 +170,17 @@ export type HomeCopy = {
 
 export const copyByLocale: Record<Locale, HomeCopy> = {
   en: {
+    visibleSections: {
+      hero: true,
+      about: true,
+      paths: true,
+      coreWork: true,
+      approach: true,
+      impact: true,
+      ecosystem: true,
+      testimonials: true,
+      contact: true,
+    },
     nav: {
       home: "Home",
       about: "About",
@@ -362,6 +387,17 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
     },
   },
   es: {
+    visibleSections: {
+      hero: true,
+      about: true,
+      paths: true,
+      coreWork: true,
+      approach: true,
+      impact: true,
+      ecosystem: true,
+      testimonials: true,
+      contact: true,
+    },
     nav: {
       home: "Inicio",
       about: "Nosotros",
@@ -568,6 +604,17 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
     },
   },
   sk: {
+    visibleSections: {
+      hero: true,
+      about: true,
+      paths: true,
+      coreWork: true,
+      approach: true,
+      impact: true,
+      ecosystem: true,
+      testimonials: true,
+      contact: true,
+    },
     nav: {
       home: "Domov",
       about: "O nás",

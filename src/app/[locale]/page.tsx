@@ -40,6 +40,8 @@ export default async function HomePage({
 
   return (
     <main className="bg-surface text-foreground">
+      {content.visibleSections.hero && (
+        <>
       <section className="w-full px-4 pt-[80px] sm:px-6 md:pt-[60px] lg:pt-[160px] lg:px-8 flex flex-col justify-center items-center">
         <div className="w-full max-w-[1000px] text-center">
           <Reveal animation="hero-up" delay={100}>
@@ -87,7 +89,10 @@ export default async function HomePage({
           aria-label={content.hero.videoPlaceholder}
         />
       </Reveal>
+        </>
+      )}
 
+      {content.visibleSections.about && (
       <section className="relative -mt-[96px] bg-surface-alt pb-[80px] pt-[176px] sm:-mt-[288px] sm:pb-[160px] sm:pt-[448px]">
         <div className="mx-auto max-w-xl px-4 text-center sm:px-6">
           <Reveal animation="fade-in">
@@ -107,7 +112,9 @@ export default async function HomePage({
           </Reveal>
         </div>
       </section>
+      )}
 
+      {content.visibleSections.paths && (
       <section className="mx-auto max-w-5xl px-4 py-[80px] sm:px-6 md:py-[60px] lg:py-[160px] flex flex-col justify-center items-center">
         <Reveal animation="fade-in-up">
           <h2 className="font-display text-center text-[32px] sm:text-5xl">{content.paths.title}</h2>
@@ -128,7 +135,9 @@ export default async function HomePage({
           })}
         </Reveal>
       </section>
+      )}
 
+      {content.visibleSections.coreWork && (
       <section className="bg-surface-alt py-[80px] md:py-[60px] lg:py-[160px]">
         <div className="mx-auto max-w-[1000px] px-4 sm:px-6">
           <Reveal animation="fade-in-up">
@@ -155,7 +164,9 @@ export default async function HomePage({
           </Reveal>
         </div>
       </section>
+      )}
 
+      {content.visibleSections.approach && (
       <section className="mx-auto max-w-3xl px-4 py-[80px] text-center sm:px-6 md:py-[60px] lg:py-[160px]">
         <Reveal animation="fade-in-up">
           <p className="text-base uppercase tracking-[0.24em] text-eyebrow sm:text-base">
@@ -171,7 +182,9 @@ export default async function HomePage({
           </p>
         </Reveal>
       </section>
+      )}
 
+      {content.visibleSections.impact && (
       <section className="bg-surface-alt py-[80px] md:py-[60px] lg:py-[160px]">
         <div className="mx-auto max-w-[1000px] px-4 text-center sm:px-6">
           <Reveal animation="fade-in-up">
@@ -200,7 +213,9 @@ export default async function HomePage({
           </Reveal>
         </div>
       </section>
+      )}
 
+      {content.visibleSections.ecosystem && (
       <section className="bg-surface py-[80px] md:py-[60px] lg:py-[160px]">
         <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
           <Reveal animation="fade-in-up">
@@ -250,7 +265,9 @@ export default async function HomePage({
           </div>
         </div>
       </section>
+      )}
 
+      {content.visibleSections.testimonials && (
       <section className="bg-surface-alt py-[80px] md:py-[60px] lg:py-[160px]" style={{ height: "fit-content" }}>
         <div className="mx-auto max-w-4xl px-4 text-center sm:px-6">
           <Reveal animation="fade-in-up">
@@ -266,7 +283,9 @@ export default async function HomePage({
           </Reveal>
         </div>
       </section>
+      )}
 
+      {content.visibleSections.contact && (
       <section className="bg-surface py-[80px] md:py-[60px] lg:py-[160px]">
         <div className="mx-auto max-w-[1000px] px-4 sm:px-6 flex flex-col items-center text-center">
           <Reveal animation="fade-in-up">
@@ -312,6 +331,7 @@ export default async function HomePage({
           </div>
         </div>
       </section>
+      )}
     </main>
   );
 }
