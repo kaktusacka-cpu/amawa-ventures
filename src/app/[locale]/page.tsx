@@ -7,6 +7,7 @@ import { ContentCard } from "@/components/content-card";
 import { AnimatedMetrics } from "@/components/animated-metrics";
 import { TestimonialsSlider } from "@/components/testimonials-slider";
 import { ContactCard } from "@/components/contact-card";
+import { HeroVideo } from "@/components/hero-video";
 import { Reveal } from "@/components/reveal";
 import { isLocale, type Locale } from "@/lib/i18n";
 import { getHomePageContent } from "@/lib/notion/get-content";
@@ -82,15 +83,9 @@ export default async function HomePage({
         <div className="h-[80px] sm:h-[160px]" />
 
         <Reveal animation="fade-in" delay={200} className="relative z-10 mx-auto aspect-[1920/1080] w-[calc(100%-2rem)] max-w-5xl overflow-hidden rounded-2xl border border-border bg-surface">
-          <video
-            className="h-full w-full object-cover"
+          <HeroVideo
             src={content.hero.videoUrl}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            aria-label={content.hero.videoPlaceholder}
+            ariaLabel={content.hero.videoPlaceholder}
           />
         </Reveal>
       </>
