@@ -122,7 +122,7 @@ function parseExperienceItem(page: any): ExperienceItemRow {
     enCtaLabel: extractText(p.EN_CtaLabel),
     esCtaLabel: extractText(p.ES_CtaLabel),
     skCtaLabel: extractText(p.SK_CtaLabel),
-    ctaUrl: extractUrl(p.website) || extractUrl(p.Website) || extractText(p.CtaUrl),
+    ctaUrl: extractUrl(p.CtaUrl),
     isUpcoming: extractCheckbox(p.IsUpcoming),
     image: extractFiles(p.Image),
   };
