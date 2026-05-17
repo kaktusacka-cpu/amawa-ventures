@@ -23,6 +23,7 @@ import {
   fetchControlSections,
   getRows,
   getText,
+  getImage,
   getTextByOccurrence,
   type NotionRow,
   type ExperienceItemRow,
@@ -463,23 +464,52 @@ export const getWhatWeDoContent = cache(
 
       const hero = getRows(allRows, "hero");
 
-      const areas = [];
-      for (let i = 1; i <= 10; i++) {
-        const areaRows = getRows(allRows, `area.${i}`);
-        if (areaRows.length === 0) break;
+      // Areas are discovered dynamically: any section that isn't 'hero' or
+      // 'sectionImages' is treated as an area. Sections are ordered by the
+      // smallest row Order they contain, so editors can use number-prefixed
+      // section names (01, 02, ...) for sidebar order.
+      const RESERVED = new Set(["hero", "sectionImages"]);
+      const sectionMinOrder = new Map<string, number>();
+      for (const row of allRows) {
+        if (RESERVED.has(row.section)) continue;
+        const existing = sectionMinOrder.get(row.section);
+        if (existing === undefined || row.order < existing) {
+          sectionMinOrder.set(row.section, row.order);
+        }
+      }
+      const orderedSections = [...sectionMinOrder.entries()]
+        .sort((a, b) => a[1] - b[1])
+        .map(([s]) => s);
 
+      const areas = [];
+      for (const sectionName of orderedSections) {
+        const areaRows = getRows(allRows, sectionName);
+        const title = t(areaRows, "title", locale);
+        if (!title) continue;
+
+        // Two supported patterns for paragraph copy:
+        //   (a) multiple rows all named 'description' (in Order sequence)
+        //   (b) named rows 'description1' .. 'description5'
         const descriptions: string[] = [];
+        const descRows = areaRows
+          .filter((r) => r.field === "description")
+          .sort((a, b) => a.order - b.order);
+        for (const r of descRows) {
+          const localized = locale === "es" ? r.es : locale === "sk" ? r.sk : r.en;
+          const txt = localized || r.en || r.value;
+          if (txt) descriptions.push(txt);
+        }
         for (let d = 1; d <= 5; d++) {
           const desc = t(areaRows, `description${d}`, locale);
           if (desc) descriptions.push(desc);
         }
 
-        // Optional per-area image. Editor pastes a URL into the 'image' row's
-        // Value column (single-locale).
-        const image = t(areaRows, "image", locale);
+        // Image lives in the row's Image (url) column. parseRow already
+        // extracts this into row.image, so getImage finds it.
+        const image = getImage(areaRows, "image");
 
         areas.push({
-          title: t(areaRows, "title", locale),
+          title,
           descriptions,
           ...(image ? { image } : {}),
         });

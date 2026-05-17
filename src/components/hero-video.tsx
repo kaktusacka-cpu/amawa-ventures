@@ -22,10 +22,11 @@ export function HeroVideo({ src, ariaLabel }: HeroVideoProps) {
 
   const yt = youtubeId(src);
   if (yt) {
-    // YouTube needs playlist=ID for loop to work.
+    // Autoplay starts muted (browser policy); controls let visitors unmute.
+    // playlist=ID makes loop work on YouTube.
     const embedUrl =
       `https://www.youtube.com/embed/${yt}` +
-      `?autoplay=1&mute=1&loop=1&playlist=${yt}&controls=0&modestbranding=1&rel=0&playsinline=1`;
+      `?autoplay=1&mute=1&loop=1&playlist=${yt}&modestbranding=1&rel=0&playsinline=1`;
     return (
       <iframe
         className="h-full w-full"
@@ -39,8 +40,9 @@ export function HeroVideo({ src, ariaLabel }: HeroVideoProps) {
 
   const vm = vimeoId(src);
   if (vm) {
+    // background=0 to show Vimeo's controls; muted starts true for autoplay.
     const embedUrl =
-      `https://player.vimeo.com/video/${vm}?autoplay=1&muted=1&loop=1&background=1`;
+      `https://player.vimeo.com/video/${vm}?autoplay=1&muted=1&loop=1`;
     return (
       <iframe
         className="h-full w-full"
@@ -52,7 +54,7 @@ export function HeroVideo({ src, ariaLabel }: HeroVideoProps) {
     );
   }
 
-  // Direct media file (.mp4, .webm, etc.)
+  // Direct media file (.mp4, .webm, etc.) — controls let visitors unmute.
   return (
     <video
       className="h-full w-full object-cover"
@@ -61,6 +63,7 @@ export function HeroVideo({ src, ariaLabel }: HeroVideoProps) {
       muted
       loop
       playsInline
+      controls
       preload="metadata"
       aria-label={ariaLabel}
     />
