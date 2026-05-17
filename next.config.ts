@@ -3,19 +3,11 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactCompiler: true,
   images: {
+    // Editors paste image URLs from Notion into the CMS. Accepting any
+    // HTTPS host means a new partner/CDN/URL "just works" without a code
+    // change. HTTP is still blocked.
     remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "prod-files-secure.s3.us-west-2.amazonaws.com",
-      },
-      {
-        protocol: "https",
-        hostname: "*.notion.so",
-      },
-      {
-        protocol: "https",
-        hostname: "images.unsplash.com",
-      },
+      { protocol: "https", hostname: "**" },
     ],
   },
 };
