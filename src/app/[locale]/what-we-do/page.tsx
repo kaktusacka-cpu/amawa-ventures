@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { BoundaryImage } from "@/components/boundary-image";
 import { PageHero } from "@/components/page-hero";
 import { Reveal } from "@/components/reveal";
 import { ScrollToHash } from "@/components/scroll-to-hash";
@@ -23,8 +22,6 @@ export default async function WhatWeDoPage({
     description: area.descriptions,
     image: area.image,
   }));
-
-  const sectionImages = wwdContent.sectionImages;
 
   // Slugify a title for stable URL anchors (e.g. "Ecosystem & Cross-border
   // Missions" → "ecosystem-cross-border-missions"). Editors no longer need to
@@ -80,10 +77,6 @@ export default async function WhatWeDoPage({
                 </Reveal>
               )}
             </section>
-
-            {!isLast && (
-              <BoundaryImage src={sectionImages[i]} alt="Nature landscape" />
-            )}
           </div>
         );
       })}
