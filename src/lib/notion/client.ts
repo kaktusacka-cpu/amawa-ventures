@@ -119,9 +119,11 @@ function parseExperienceItem(page: any): ExperienceItemRow {
     enDescription: extractText(p.EN_Description),
     esDescription: extractText(p.ES_Description),
     skDescription: extractText(p.SK_Description),
-    enCtaLabel: extractText(p.EN_CtaLabel),
-    esCtaLabel: extractText(p.ES_CtaLabel),
-    skCtaLabel: extractText(p.SK_CtaLabel),
+    // Schema column names: EN_CTA / ES_CTA / SK_CTA (editor renamed from
+    // the original *_CtaLabel during workspace refinement).
+    enCtaLabel: extractText(p.EN_CTA),
+    esCtaLabel: extractText(p.ES_CTA),
+    skCtaLabel: extractText(p.SK_CTA),
     ctaUrl: extractUrl(p.CtaUrl),
     isUpcoming: extractCheckbox(p.IsUpcoming),
     image: extractFiles(p.Image),
