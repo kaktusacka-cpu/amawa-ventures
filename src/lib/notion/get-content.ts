@@ -19,6 +19,7 @@ import {
   fetchContactItems,
   getRows,
   getText,
+  getTextByOccurrence,
   type NotionRow,
   type ExperienceItemRow,
   type CardItemRow,
@@ -28,6 +29,10 @@ import {
 
 function t(rows: NotionRow[], field: string, locale: string): string {
   return getText(rows, field, locale);
+}
+
+function tn(rows: NotionRow[], field: string, occurrence: number, locale: string): string {
+  return getTextByOccurrence(rows, field, occurrence, locale);
 }
 
 function itemToExperience(item: ExperienceItemRow, locale: string) {
@@ -79,12 +84,24 @@ export const getHomePageContent = cache(
     const fallback = getDefaultCopy(locale);
 
     try {
-      // Pull from the four content databases that this page composes:
-      //   - layout: shared nav, footer, page-level titles
-      //   - home: home-page sections (hero, paths header, core work header, etc.)
-      //   - about: about-page sections
-      //   - + the four structured item DBs
-      const [layoutRowsAll, homeRowsAll, aboutRowsAll, pathCardItems, coreCardItems, metricItems, contactItemRows] = await Promise.all([
+      // The "general" layout was split into three sibling Notion DBs:
+      //   - nav:    site-wide navigation labels
+      //   - footer: all footer copy (brand, headings, contact, address, legal, docs)
+      //   - layout: keeps the leftover "other" rows (page-level shared titles)
+      // Plus per-page DBs (home/about) and the structured item DBs.
+      const [
+        navRowsAll,
+        footerRowsAll,
+        layoutRowsAll,
+        homeRowsAll,
+        aboutRowsAll,
+        pathCardItems,
+        coreCardItems,
+        metricItems,
+        contactItemRows,
+      ] = await Promise.all([
+        DB_IDS.nav ? fetchRows(DB_IDS.nav) : [],
+        DB_IDS.footer ? fetchRows(DB_IDS.footer) : [],
         DB_IDS.layout ? fetchRows(DB_IDS.layout) : [],
         DB_IDS.home ? fetchRows(DB_IDS.home) : [],
         DB_IDS.about ? fetchRows(DB_IDS.about) : [],
@@ -94,17 +111,29 @@ export const getHomePageContent = cache(
         DB_IDS.contactItems ? fetchContactItems(DB_IDS.contactItems) : [],
       ]);
 
-      if (homeRowsAll.length === 0 && layoutRowsAll.length === 0 && aboutRowsAll.length === 0) return fallback;
+      if (
+        homeRowsAll.length === 0 &&
+        layoutRowsAll.length === 0 &&
+        aboutRowsAll.length === 0 &&
+        navRowsAll.length === 0 &&
+        footerRowsAll.length === 0
+      ) {
+        return fallback;
+      }
 
-      const nav = getRows(layoutRowsAll, "nav");
-      const footer = getRows(layoutRowsAll, "footer");
-      const pages = getRows(layoutRowsAll, "pages");
+      // Nav and Footer DBs use sections only for editor grouping in Notion —
+      // field names are unique within each DB, so we look up by field name
+      // across all rows of the DB regardless of section.
+      const nav = navRowsAll;
+      const footer = footerRowsAll;
+      const pages = getRows(layoutRowsAll, "other");
       const hero = getRows(homeRowsAll, "hero");
       const about = getRows(homeRowsAll, "about");
       const pathsSection = getRows(homeRowsAll, "paths");
       const coreWorkSection = getRows(homeRowsAll, "coreWork");
       const approach = getRows(homeRowsAll, "approach");
       const impact = getRows(homeRowsAll, "impact");
+      const ecosystem = getRows(homeRowsAll, "ecosystem");
       const testimonials = getRows(homeRowsAll, "testimonials");
       const contact = getRows(homeRowsAll, "contact");
       const aboutPage = getRows(aboutRowsAll, "aboutPage");
@@ -119,6 +148,7 @@ export const getHomePageContent = cache(
 
       return {
         nav: {
+          home: t(nav, "home", locale) || fallback.nav.home,
           about: t(nav, "about", locale) || fallback.nav.about,
           experiences: t(nav, "experiences", locale) || fallback.nav.experiences,
           whatWeDo: t(nav, "whatWeDo", locale) || fallback.nav.whatWeDo,
@@ -126,15 +156,19 @@ export const getHomePageContent = cache(
           getInTouch: t(nav, "getInTouch", locale) || fallback.nav.getInTouch,
         },
         hero: {
-          eyebrow: t(hero, "eyebrow", locale) || fallback.hero.eyebrow,
+          // Notion hero schema (in document order): overline, title, description,
+          // description-highlight, description, description-highlight, caption,
+          // primaryCTA, secondaryCTA, videoPlaceholder. Duplicates picked by
+          // occurrence so the two "description" rows map to lead + connectText.
+          eyebrow: t(hero, "overline", locale) || fallback.hero.eyebrow,
           title: t(hero, "title", locale) || fallback.hero.title,
-          lead: t(hero, "lead", locale) || fallback.hero.lead,
-          thinkWord: t(hero, "thinkWord", locale) || fallback.hero.thinkWord,
-          connectText: t(hero, "connectText", locale) || fallback.hero.connectText,
-          growWord: t(hero, "growWord", locale) || fallback.hero.growWord,
-          subLead: t(hero, "subLead", locale) || fallback.hero.subLead,
-          primaryCta: t(hero, "primaryCta", locale) || fallback.hero.primaryCta,
-          secondaryCta: t(hero, "secondaryCta", locale) || fallback.hero.secondaryCta,
+          lead: tn(hero, "description", 0, locale) || fallback.hero.lead,
+          thinkWord: tn(hero, "description - highlight", 0, locale) || fallback.hero.thinkWord,
+          connectText: tn(hero, "description", 1, locale) || fallback.hero.connectText,
+          growWord: tn(hero, "description - highlight", 1, locale) || fallback.hero.growWord,
+          subLead: t(hero, "caption", locale) || fallback.hero.subLead,
+          primaryCta: t(hero, "primaryCTA", locale) || fallback.hero.primaryCta,
+          secondaryCta: t(hero, "secondaryCTA", locale) || fallback.hero.secondaryCta,
           videoPlaceholder: t(hero, "videoPlaceholder", locale) || fallback.hero.videoPlaceholder,
         },
         about: {
@@ -148,32 +182,32 @@ export const getHomePageContent = cache(
             : fallback.paths.cards,
         },
         coreWork: {
-          eyebrow: t(coreWorkSection, "eyebrow", locale) || fallback.coreWork.eyebrow,
+          eyebrow: t(coreWorkSection, "overline", locale) || fallback.coreWork.eyebrow,
           title: t(coreWorkSection, "title", locale) || fallback.coreWork.title,
           cards: coreCards.length > 0
             ? coreCards as HomeCopy["coreWork"]["cards"]
             : fallback.coreWork.cards,
         },
         approach: {
-          eyebrow: t(approach, "eyebrow", locale) || fallback.approach.eyebrow,
+          eyebrow: t(approach, "overline", locale) || fallback.approach.eyebrow,
           title: t(approach, "title", locale) || fallback.approach.title,
           description: t(approach, "description", locale) || fallback.approach.description,
         },
         impact: {
-          eyebrow: t(impact, "eyebrow", locale) || fallback.impact.eyebrow,
+          eyebrow: t(impact, "overline", locale) || fallback.impact.eyebrow,
           title: t(impact, "title", locale) || fallback.impact.title,
           description: t(impact, "description", locale) || fallback.impact.description,
           metrics: metrics.length > 0 ? metrics : fallback.impact.metrics,
         },
         testimonials: {
-          eyebrow: t(testimonials, "eyebrow", locale) || fallback.testimonials.eyebrow,
+          eyebrow: t(testimonials, "overline", locale) || fallback.testimonials.eyebrow,
           title: t(testimonials, "title", locale) || fallback.testimonials.title,
           quote: t(testimonials, "quote", locale) || fallback.testimonials.quote,
           author: t(testimonials, "author", locale) || fallback.testimonials.author,
           role: t(testimonials, "role", locale) || fallback.testimonials.role,
         },
         contact: {
-          eyebrow: t(contact, "eyebrow", locale) || fallback.contact.eyebrow,
+          eyebrow: t(contact, "overline", locale) || fallback.contact.eyebrow,
           title: t(contact, "title", locale) || fallback.contact.title,
           callTitle: t(contact, "callTitle", locale) || fallback.contact.callTitle,
           callDescription: t(contact, "callDescription", locale) || fallback.contact.callDescription,
@@ -187,6 +221,27 @@ export const getHomePageContent = cache(
         },
         footer: {
           brand: t(footer, "brand", locale) || fallback.footer.brand,
+          columns: {
+            contact: t(footer, "contactHeading", locale) || fallback.footer.columns.contact,
+            address: t(footer, "addressHeading", locale) || fallback.footer.columns.address,
+            legal: t(footer, "legalHeading", locale) || fallback.footer.columns.legal,
+            documents: t(footer, "documentsHeading", locale) || fallback.footer.columns.documents,
+          },
+          contact: {
+            email: t(footer, "email", locale) || fallback.footer.contact.email,
+            phone: t(footer, "phone", locale) || fallback.footer.contact.phone,
+          },
+          address: {
+            line1: t(footer, "addressLine1", locale) || fallback.footer.address.line1,
+            line2: t(footer, "addressLine2", locale) || fallback.footer.address.line2,
+            line3: t(footer, "addressLine3", locale) || fallback.footer.address.line3,
+          },
+          legal: {
+            companyName: t(footer, "companyName", locale) || fallback.footer.legal.companyName,
+            ico: t(footer, "ico", locale) || fallback.footer.legal.ico,
+            dic: t(footer, "dic", locale) || fallback.footer.legal.dic,
+          },
+          privacyLink: t(footer, "privacyLink", locale) || fallback.footer.privacyLink,
         },
         pages: {
           aboutTitle: t(pages, "aboutTitle", locale) || fallback.pages.aboutTitle,
@@ -228,10 +283,13 @@ export const getHomePageContent = cache(
           impactMetric3Value: t(aboutPage, "impactMetric3Value", locale) || fallback.aboutPage.impactMetric3Value,
           impactMetric3Label: t(aboutPage, "impactMetric3Label", locale) || fallback.aboutPage.impactMetric3Label,
           impactNote1: t(aboutPage, "impactNote1", locale) || fallback.aboutPage.impactNote1,
-          impactNote2: t(aboutPage, "impactNote2", locale) || fallback.aboutPage.impactNote2,
-          ecosystemTitle: t(aboutPage, "ecosystemTitle", locale) || fallback.aboutPage.ecosystemTitle,
+          // These three render on the home page, so they live in the home DB
+          // (impact section / new ecosystem section). aboutPage fallback kept
+          // for the legacy rows during the migration window.
+          impactNote2: t(impact, "note", locale) || t(aboutPage, "impactNote2", locale) || fallback.aboutPage.impactNote2,
+          ecosystemTitle: t(ecosystem, "title", locale) || t(aboutPage, "ecosystemTitle", locale) || fallback.aboutPage.ecosystemTitle,
           ecosystemDescription:
-            t(aboutPage, "ecosystemDescription", locale) || fallback.aboutPage.ecosystemDescription,
+            t(ecosystem, "description", locale) || t(aboutPage, "ecosystemDescription", locale) || fallback.aboutPage.ecosystemDescription,
           heroImage: t(aboutPage, "heroImage", locale) || fallback.aboutPage.heroImage,
           boundaryImage1: t(aboutPage, "boundaryImage1", locale) || fallback.aboutPage.boundaryImage1,
           boundaryImage2: t(aboutPage, "boundaryImage2", locale) || fallback.aboutPage.boundaryImage2,
@@ -268,7 +326,7 @@ export const getExperiencesContent = cache(
 
       const categories: ExperienceCategory[] = [];
       for (const { sectionNum, categoryKey } of categoryMap) {
-        const catRows = getRows(allRows, `cat.${sectionNum}`);
+        const catRows = getRows(allRows, `category.${sectionNum}`);
         if (catRows.length === 0) break;
 
         const categoryItems = items.filter((item) => item.category === categoryKey);
@@ -320,7 +378,7 @@ export const getWhatWeDoContent = cache(
 
         const descriptions: string[] = [];
         for (let d = 1; d <= 5; d++) {
-          const desc = t(areaRows, `desc${d}`, locale);
+          const desc = t(areaRows, `description${d}`, locale);
           if (desc) descriptions.push(desc);
         }
 

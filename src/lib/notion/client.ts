@@ -2,7 +2,11 @@ const API_KEY = process.env.NOTION_API_KEY;
 const NOTION_VERSION = "2022-06-28";
 
 export const DB_IDS = {
+  // Layout was split into three sibling DBs: nav, footer, and the renamed
+  // "General" (which keeps the 'other' rows — page-level shared titles/bodies).
   layout: process.env.NOTION_LAYOUT_DB_ID,
+  nav: process.env.NOTION_NAV_DB_ID,
+  footer: process.env.NOTION_FOOTER_DB_ID,
   home: process.env.NOTION_HOME_DB_ID,
   about: process.env.NOTION_ABOUT_DB_ID,
   experiences: process.env.NOTION_EXPERIENCES_DB_ID,
@@ -49,12 +53,18 @@ function extractFiles(prop: { files?: { file?: { url: string }; external?: { url
   return file?.file?.url ?? file?.external?.url ?? "";
 }
 
+// Editors can prefix section names with "NN " (e.g. "01 hero") to control
+// the visual order in Notion's sidebar — strip it so code lookups stay clean.
+function normalizeSection(raw: string): string {
+  return raw.replace(/^\d+\s+/, "");
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function parseRow(page: any): NotionRow {
   const p = page.properties;
   return {
     field: extractTitle(p.Field),
-    section: extractText(p.Section),
+    section: normalizeSection(extractText(p.Section)),
     order: extractNumber(p.Order),
     en: extractText(p.EN),
     es: extractText(p.ES),
@@ -262,6 +272,16 @@ export function getRows(allRows: NotionRow[], section?: string): NotionRow[] {
 
 export function getText(rows: NotionRow[], field: string, locale: string): string {
   const row = rows.find((r) => r.field === field);
+  if (!row) return "";
+  const localeMap: Record<string, string> = { en: row.en, es: row.es, sk: row.sk };
+  return localeMap[locale] || row.en || "";
+}
+
+// For sections where the same field name appears multiple times (e.g. hero's
+// "description" rows), pick the Nth occurrence in document order.
+export function getTextByOccurrence(rows: NotionRow[], field: string, occurrence: number, locale: string): string {
+  const matches = rows.filter((r) => r.field === field);
+  const row = matches[occurrence];
   if (!row) return "";
   const localeMap: Record<string, string> = { en: row.en, es: row.es, sk: row.sk };
   return localeMap[locale] || row.en || "";

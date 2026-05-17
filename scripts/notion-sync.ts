@@ -6,7 +6,9 @@
  *
  *   📁 Amawa Site CMS (parent page, must be shared with the integration)
  *   ├── 🌐 Shared / Layout
- *   │     └── DB: Layout Text
+ *   │     ├── DB: Nav      (site-wide navigation labels)
+ *   │     ├── DB: Footer   (brand, headings, contact, address, legal, docs)
+ *   │     └── DB: General  (page-level shared titles/bodies)
  *   ├── 🏠 Home
  *   │     ├── DB: Home Text
  *   │     ├── DB: Path Cards
@@ -166,20 +168,29 @@ function kvRow(r: KVRow): Record<string, unknown> {
   };
 }
 
+function readNested(locale: "en" | "es" | "sk", group: string, ...path: string[]): string {
+  let cursor: unknown = (copyByLocale[locale] as Record<string, unknown>)[group];
+  for (const k of path) {
+    if (cursor == null) return "";
+    cursor = (cursor as Record<string, unknown>)[k];
+  }
+  return cursor == null ? "" : String(cursor);
+}
+
 function trans<K1 extends keyof HomeCopy>(
   section: string,
   field: string,
   order: number,
   group: K1,
-  key: keyof HomeCopy[K1],
+  ...path: string[]
 ): KVRow {
   return {
     section,
     field,
     order,
-    en: String((copyByLocale.en[group] as Record<string, unknown>)[key as string] ?? ""),
-    es: String((copyByLocale.es[group] as Record<string, unknown>)[key as string] ?? ""),
-    sk: String((copyByLocale.sk[group] as Record<string, unknown>)[key as string] ?? ""),
+    en: readNested("en", group as string, ...path),
+    es: readNested("es", group as string, ...path),
+    sk: readNested("sk", group as string, ...path),
   };
 }
 
@@ -187,24 +198,58 @@ function trans<K1 extends keyof HomeCopy>(
 // Row generators per database
 // ───────────────────────────────────────────────────────────
 
-function layoutRows(): KVRow[] {
+// Layout is split into three sibling DBs (Nav, Footer, General) so editors
+// have a focused view per concern. Field names are unique within each DB and
+// sections are used only for editor grouping in Notion.
+
+function navRows(): KVRow[] {
   const rows: KVRow[] = [];
   let order = 0;
   const next = () => ++order;
 
-  // Navigation
-  rows.push(trans("nav", "about", next(), "nav", "about"));
-  rows.push(trans("nav", "experiences", next(), "nav", "experiences"));
-  rows.push(trans("nav", "whatWeDo", next(), "nav", "whatWeDo"));
-  rows.push(trans("nav", "collaborate", next(), "nav", "collaborate"));
-  rows.push(trans("nav", "getInTouch", next(), "nav", "getInTouch"));
+  rows.push(trans("nav", "home",         next(), "nav", "home"));
+  rows.push(trans("nav", "about",        next(), "nav", "about"));
+  rows.push(trans("nav", "experiences",  next(), "nav", "experiences"));
+  rows.push(trans("nav", "whatWeDo",     next(), "nav", "whatWeDo"));
+  rows.push(trans("nav", "collaborate",  next(), "nav", "collaborate"));
+  rows.push(trans("nav", "getInTouch",   next(), "nav", "getInTouch"));
 
-  // Footer
-  rows.push(trans("footer", "brand", next(), "footer", "brand"));
+  return rows;
+}
 
-  // Page-level shared titles/bodies
-  rows.push(trans("pages", "aboutTitle", next(), "pages", "aboutTitle"));
-  rows.push(trans("pages", "collaborateBody", next(), "pages", "collaborateBody"));
+function footerRows(): KVRow[] {
+  const rows: KVRow[] = [];
+  let order = 0;
+  const next = () => ++order;
+
+  // Sub-grouped by purpose so editors can group-by-Section in Notion.
+  rows.push(trans("01 brand",      "brand",             next(), "footer", "brand"));
+  rows.push(trans("02 headings",   "contactHeading",    next(), "footer", "columns", "contact"));
+  rows.push(trans("02 headings",   "addressHeading",    next(), "footer", "columns", "address"));
+  rows.push(trans("02 headings",   "legalHeading",      next(), "footer", "columns", "legal"));
+  rows.push(trans("02 headings",   "documentsHeading",  next(), "footer", "columns", "documents"));
+  rows.push(trans("03 contact",    "email",             next(), "footer", "contact", "email"));
+  rows.push(trans("03 contact",    "phone",             next(), "footer", "contact", "phone"));
+  rows.push(trans("04 address",    "addressLine1",      next(), "footer", "address", "line1"));
+  rows.push(trans("04 address",    "addressLine2",      next(), "footer", "address", "line2"));
+  rows.push(trans("04 address",    "addressLine3",      next(), "footer", "address", "line3"));
+  rows.push(trans("05 legal",      "companyName",       next(), "footer", "legal", "companyName"));
+  rows.push(trans("05 legal",      "ico",               next(), "footer", "legal", "ico"));
+  rows.push(trans("05 legal",      "dic",               next(), "footer", "legal", "dic"));
+  rows.push(trans("06 documents",  "privacyLink",       next(), "footer", "privacyLink"));
+
+  return rows;
+}
+
+function generalRows(): KVRow[] {
+  const rows: KVRow[] = [];
+  let order = 0;
+  const next = () => ++order;
+
+  // 'other' = page-level shared titles/bodies that don't belong on any
+  // specific page's DB (about title rendered from collaborate page, etc.).
+  rows.push(trans("other", "aboutTitle",      next(), "pages", "aboutTitle"));
+  rows.push(trans("other", "collaborateBody", next(), "pages", "collaborateBody"));
 
   return rows;
 }
@@ -214,57 +259,67 @@ function homeRows(): KVRow[] {
   let order = 0;
   const next = () => ++order;
 
-  // Hero
-  rows.push(trans("hero", "eyebrow", next(), "hero", "eyebrow"));
-  rows.push(trans("hero", "title", next(), "hero", "title"));
-  rows.push(trans("hero", "lead", next(), "hero", "lead"));
-  rows.push(trans("hero", "thinkWord", next(), "hero", "thinkWord"));
-  rows.push(trans("hero", "connectText", next(), "hero", "connectText"));
-  rows.push(trans("hero", "growWord", next(), "hero", "growWord"));
-  rows.push(trans("hero", "subLead", next(), "hero", "subLead"));
-  rows.push(trans("hero", "primaryCta", next(), "hero", "primaryCta"));
-  rows.push(trans("hero", "secondaryCta", next(), "hero", "secondaryCta"));
-  rows.push(trans("hero", "videoPlaceholder", next(), "hero", "videoPlaceholder"));
+  // Sections are prefixed with "NN " for editor sidebar ordering; client.ts
+  // strips that on read. Field names match the in-Notion convention
+  // (overline, primaryCTA, description / description - highlight).
 
-  // About (home section)
-  rows.push(trans("about", "title", next(), "about", "title"));
-  rows.push(trans("about", "description", next(), "about", "description"));
+  // 01 Hero — the lead/connect/sub copy is split into 2× description
+  // and 2× description - highlight; client.ts picks them by occurrence.
+  rows.push(trans("01 hero", "overline", next(), "hero", "eyebrow"));
+  rows.push(trans("01 hero", "title", next(), "hero", "title"));
+  rows.push(trans("01 hero", "description", next(), "hero", "lead"));
+  rows.push(trans("01 hero", "description - highlight", next(), "hero", "thinkWord"));
+  rows.push(trans("01 hero", "description", next(), "hero", "connectText"));
+  rows.push(trans("01 hero", "description - highlight", next(), "hero", "growWord"));
+  rows.push(trans("01 hero", "caption", next(), "hero", "subLead"));
+  rows.push(trans("01 hero", "primaryCTA", next(), "hero", "primaryCta"));
+  rows.push(trans("01 hero", "secondaryCTA", next(), "hero", "secondaryCta"));
+  rows.push(trans("01 hero", "videoPlaceholder", next(), "hero", "videoPlaceholder"));
 
-  // Paths header (cards live in their own DB)
-  rows.push(trans("paths", "title", next(), "paths", "title"));
+  // 02 About
+  rows.push(trans("02 about", "title", next(), "about", "title"));
+  rows.push(trans("02 about", "description", next(), "about", "description"));
 
-  // Core Work header (cards live in their own DB)
-  rows.push(trans("coreWork", "eyebrow", next(), "coreWork", "eyebrow"));
-  rows.push(trans("coreWork", "title", next(), "coreWork", "title"));
+  // 03 Paths header (cards live in their own DB)
+  rows.push(trans("03 paths", "title", next(), "paths", "title"));
 
-  // Approach
-  rows.push(trans("approach", "eyebrow", next(), "approach", "eyebrow"));
-  rows.push(trans("approach", "title", next(), "approach", "title"));
-  rows.push(trans("approach", "description", next(), "approach", "description"));
+  // 04 Core Work header (cards live in their own DB)
+  rows.push(trans("04 coreWork", "overline", next(), "coreWork", "eyebrow"));
+  rows.push(trans("04 coreWork", "title", next(), "coreWork", "title"));
 
-  // Impact (metrics live in their own DB)
-  rows.push(trans("impact", "eyebrow", next(), "impact", "eyebrow"));
-  rows.push(trans("impact", "title", next(), "impact", "title"));
-  rows.push(trans("impact", "description", next(), "impact", "description"));
+  // 05 Approach
+  rows.push(trans("05 approach", "overline", next(), "approach", "eyebrow"));
+  rows.push(trans("05 approach", "title", next(), "approach", "title"));
+  rows.push(trans("05 approach", "description", next(), "approach", "description"));
 
-  // Testimonials
-  rows.push(trans("testimonials", "eyebrow", next(), "testimonials", "eyebrow"));
-  rows.push(trans("testimonials", "title", next(), "testimonials", "title"));
-  rows.push(trans("testimonials", "quote", next(), "testimonials", "quote"));
-  rows.push(trans("testimonials", "author", next(), "testimonials", "author"));
-  rows.push(trans("testimonials", "role", next(), "testimonials", "role"));
+  // 06 Impact (metrics live in their own DB; 'note' is the line under the metrics)
+  rows.push(trans("06 impact", "overline", next(), "impact", "eyebrow"));
+  rows.push(trans("06 impact", "title", next(), "impact", "title"));
+  rows.push(trans("06 impact", "description", next(), "impact", "description"));
+  rows.push(trans("06 impact", "note", next(), "aboutPage", "impactNote2"));
 
-  // Contact (items live in their own DB; URLs go in Value column)
-  rows.push(trans("contact", "eyebrow", next(), "contact", "eyebrow"));
-  rows.push(trans("contact", "title", next(), "contact", "title"));
-  rows.push(trans("contact", "callTitle", next(), "contact", "callTitle"));
-  rows.push(trans("contact", "callDescription", next(), "contact", "callDescription"));
-  rows.push(trans("contact", "callCta", next(), "contact", "callCta"));
-  rows.push(trans("contact", "connectTitle", next(), "contact", "connectTitle"));
-  rows.push(trans("contact", "connectDescription", next(), "contact", "connectDescription"));
-  rows.push({ section: "contact", field: "emailUrl", order: next(), value: copyByLocale.en.contact.emailUrl });
-  rows.push({ section: "contact", field: "linkedinUrl", order: next(), value: copyByLocale.en.contact.linkedinUrl });
-  rows.push({ section: "contact", field: "instagramUrl", order: next(), value: copyByLocale.en.contact.instagramUrl });
+  // 07 Ecosystem (collaborations strip below the impact metrics)
+  rows.push(trans("07 ecosystem", "title", next(), "aboutPage", "ecosystemTitle"));
+  rows.push(trans("07 ecosystem", "description", next(), "aboutPage", "ecosystemDescription"));
+
+  // 08 Testimonials
+  rows.push(trans("08 testimonials", "overline", next(), "testimonials", "eyebrow"));
+  rows.push(trans("08 testimonials", "title", next(), "testimonials", "title"));
+  rows.push(trans("08 testimonials", "quote", next(), "testimonials", "quote"));
+  rows.push(trans("08 testimonials", "author", next(), "testimonials", "author"));
+  rows.push(trans("08 testimonials", "role", next(), "testimonials", "role"));
+
+  // 09 Contact (items live in their own DB; URLs go in Value column)
+  rows.push(trans("09 contact", "overline", next(), "contact", "eyebrow"));
+  rows.push(trans("09 contact", "title", next(), "contact", "title"));
+  rows.push(trans("09 contact", "callTitle", next(), "contact", "callTitle"));
+  rows.push(trans("09 contact", "callDescription", next(), "contact", "callDescription"));
+  rows.push(trans("09 contact", "callCta", next(), "contact", "callCta"));
+  rows.push(trans("09 contact", "connectTitle", next(), "contact", "connectTitle"));
+  rows.push(trans("09 contact", "connectDescription", next(), "contact", "connectDescription"));
+  rows.push({ section: "09 contact", field: "emailUrl", order: next(), value: copyByLocale.en.contact.emailUrl });
+  rows.push({ section: "09 contact", field: "linkedinUrl", order: next(), value: copyByLocale.en.contact.linkedinUrl });
+  rows.push({ section: "09 contact", field: "instagramUrl", order: next(), value: copyByLocale.en.contact.instagramUrl });
 
   return rows;
 }
@@ -286,8 +341,9 @@ function aboutRows(): KVRow[] {
     "impactMetric1Value", "impactMetric1Label",
     "impactMetric2Value", "impactMetric2Label",
     "impactMetric3Value", "impactMetric3Label",
-    "impactNote1", "impactNote2",
-    "ecosystemTitle", "ecosystemDescription",
+    "impactNote1",
+    // impactNote2, ecosystemTitle, ecosystemDescription now live in the home DB
+    // (06 impact / 07 ecosystem) because they render on the home page.
   ] as const;
   for (const key of textFields) {
     rows.push(trans("aboutPage", key, next(), "aboutPage", key));
@@ -553,8 +609,12 @@ async function main() {
 
   console.log("📊 Creating databases under each sub-page...");
   console.log("  Shared / Layout:");
-  const layoutId = await createDatabase(sharedPageId, "Layout Text", KV_SCHEMA);
-  console.log(`    ✓ Layout Text: ${layoutId}`);
+  const navId = await createDatabase(sharedPageId, "Nav", KV_SCHEMA);
+  console.log(`    ✓ Nav: ${navId}`);
+  const footerId = await createDatabase(sharedPageId, "Footer", KV_SCHEMA);
+  console.log(`    ✓ Footer: ${footerId}`);
+  const generalId = await createDatabase(sharedPageId, "General", KV_SCHEMA);
+  console.log(`    ✓ General: ${generalId}`);
 
   console.log("  Home:");
   const homeId = await createDatabase(homePageId, "Home Text", KV_SCHEMA);
@@ -584,7 +644,9 @@ async function main() {
 
   console.log("📝 Populating from site-copy.ts...");
   console.log("  Layout / Shared");
-  await populate(layoutId, "Layout Text", layoutRows().map(kvRow));
+  await populate(navId, "Nav", navRows().map(kvRow));
+  await populate(footerId, "Footer", footerRows().map(kvRow));
+  await populate(generalId, "General", generalRows().map(kvRow));
   console.log("  Home");
   await populate(homeId, "Home Text", homeRows().map(kvRow));
   await populate(pathCardsId, "Path Cards", pathCardRows());
@@ -600,7 +662,9 @@ async function main() {
   await populate(whatWeDoId, "What We Do Text", whatWeDoRows().map(kvRow));
 
   console.log("\n✅ Done. Add these to .env.local AND to Vercel → Settings → Environment Variables:\n");
-  console.log(`NOTION_LAYOUT_DB_ID=${layoutId}`);
+  console.log(`NOTION_NAV_DB_ID=${navId}`);
+  console.log(`NOTION_FOOTER_DB_ID=${footerId}`);
+  console.log(`NOTION_LAYOUT_DB_ID=${generalId}`);
   console.log(`NOTION_HOME_DB_ID=${homeId}`);
   console.log(`NOTION_ABOUT_DB_ID=${aboutId}`);
   console.log(`NOTION_EXPERIENCES_DB_ID=${experiencesId}`);

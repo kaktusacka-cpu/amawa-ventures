@@ -20,6 +20,7 @@ export type HomeMetric = {
 
 export type HomeCopy = {
   nav: {
+    home: string;
     about: string;
     experiences: string;
     whatWeDo: string;
@@ -84,6 +85,27 @@ export type HomeCopy = {
   };
   footer: {
     brand: string;
+    columns: {
+      contact: string;
+      address: string;
+      legal: string;
+      documents: string;
+    };
+    contact: {
+      email: string;
+      phone: string;
+    };
+    address: {
+      line1: string;
+      line2: string;
+      line3: string;
+    };
+    legal: {
+      companyName: string;
+      ico: string;
+      dic: string;
+    };
+    privacyLink: string;
   };
   pages: {
     aboutTitle: string;
@@ -135,6 +157,7 @@ export type HomeCopy = {
 export const copyByLocale: Record<Locale, HomeCopy> = {
   en: {
     nav: {
+      home: "Home",
       about: "About",
       experiences: "Experiences",
       whatWeDo: "What we do",
@@ -255,6 +278,27 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
     },
     footer: {
       brand: "Amawa Ventures",
+      columns: {
+        contact: "Contact",
+        address: "Address",
+        legal: "Legal",
+        documents: "Documents",
+      },
+      contact: {
+        email: "info@amawaventures.com",
+        phone: "+421 918 444 444",
+      },
+      address: {
+        line1: "Hemerkova 1320/12",
+        line2: "040 23 Košice",
+        line3: "Slovakia",
+      },
+      legal: {
+        companyName: "Amawa Ventures s. r. o.",
+        ico: "IČO: 57142467",
+        dic: "DIČ: 2122582550",
+      },
+      privacyLink: "GDPR - Privacy Policy",
     },
     pages: {
       aboutTitle: "About Amawa",
@@ -319,6 +363,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
   },
   es: {
     nav: {
+      home: "Inicio",
       about: "Nosotros",
       experiences: "Experiencias",
       whatWeDo: "Qué hacemos",
@@ -439,6 +484,27 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
     },
     footer: {
       brand: "Amawa Ventures",
+      columns: {
+        contact: "Contacto",
+        address: "Dirección",
+        legal: "Legal",
+        documents: "Documentos",
+      },
+      contact: {
+        email: "info@amawaventures.com",
+        phone: "+421 918 444 444",
+      },
+      address: {
+        line1: "Hemerkova 1320/12",
+        line2: "040 23 Košice",
+        line3: "Eslovaquia",
+      },
+      legal: {
+        companyName: "Amawa Ventures s. r. o.",
+        ico: "IČO: 57142467",
+        dic: "DIČ: 2122582550",
+      },
+      privacyLink: "GDPR - Política de privacidad",
     },
     pages: {
       aboutTitle: "Sobre Amawa",
@@ -503,6 +569,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
   },
   sk: {
     nav: {
+      home: "Domov",
       about: "O nás",
       experiences: "Skúsenosti",
       whatWeDo: "Čo robíme",
@@ -620,6 +687,27 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
     },
     footer: {
       brand: "Amawa Ventures",
+      columns: {
+        contact: "Kontakt",
+        address: "Adresa",
+        legal: "Právne údaje",
+        documents: "Dokumenty",
+      },
+      contact: {
+        email: "info@amawaventures.com",
+        phone: "+421 918 444 444",
+      },
+      address: {
+        line1: "Hemerkova 1320/12",
+        line2: "040 23 Košice",
+        line3: "Slovensko",
+      },
+      legal: {
+        companyName: "Amawa Ventures s. r. o.",
+        ico: "IČO: 57142467",
+        dic: "DIČ: 2122582550",
+      },
+      privacyLink: "GDPR - Zásady ochrany osobných údajov",
     },
     pages: {
       aboutTitle: "O Amawa",

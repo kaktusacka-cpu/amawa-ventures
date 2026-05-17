@@ -31,7 +31,7 @@ export default async function LocaleLayout({
       <RouteScrollManager />
       <SiteNavbar locale={locale as Locale} labels={content.nav} />
       <div id="main-content" tabIndex={-1} className="flex-1">{children}</div>
-      <SiteFooter brand={content.footer.brand} />
+      <SiteFooter footer={content.footer} />
     </div>
   );
 }
