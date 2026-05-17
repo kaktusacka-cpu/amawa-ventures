@@ -1272,15 +1272,6 @@ export function getDefaultExperiencesCopy(locale: Locale): ExperiencesCopy {
 
 // Keyed by the Notion item Name field. Used as fallback when Notion columns
 // EN_CtaLabel / CtaUrl are not yet filled in.
-export const experienceCtaOverrides: Record<string, { en: string; es: string; sk: string; url: string }> = {
-  Valencia: {
-    en: "Learn more",
-    es: "Saber más",
-    sk: "Zistiť viac",
-    url: "https://www.verbal.sk/valencia",
-  },
-};
-
 // ── What We Do Page ──
 
 export type WhatWeDoArea = {

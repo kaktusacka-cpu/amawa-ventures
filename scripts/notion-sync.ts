@@ -34,7 +34,6 @@ import {
   copyByLocale,
   experiencesCopyByLocale,
   whatWeDoCopyByLocale,
-  experienceCtaOverrides,
   type HomeCopy,
 } from "../src/lib/site-copy";
 
@@ -473,7 +472,6 @@ function experienceItemRows(): Array<Record<string, unknown>> {
     cat.experiences.forEach((exp, expIdx) => {
       const esExp = es.categories[catIdx]?.experiences[expIdx];
       const skExp = sk.categories[catIdx]?.experiences[expIdx];
-      const override = experienceCtaOverrides[exp.title];
       order++;
       rows.push({
         Name: { title: text(exp.title) },
@@ -485,10 +483,10 @@ function experienceItemRows(): Array<Record<string, unknown>> {
         EN_Description: { rich_text: text(exp.description) },
         ES_Description: { rich_text: text(esExp?.description ?? exp.description) },
         SK_Description: { rich_text: text(skExp?.description ?? exp.description) },
-        EN_CtaLabel: { rich_text: text(exp.ctaLabel || override?.en || "") },
-        ES_CtaLabel: { rich_text: text(esExp?.ctaLabel || override?.es || "") },
-        SK_CtaLabel: { rich_text: text(skExp?.ctaLabel || override?.sk || "") },
-        CtaUrl: { url: exp.ctaUrl || override?.url || null },
+        EN_CtaLabel: { rich_text: text(exp.ctaLabel || "") },
+        ES_CtaLabel: { rich_text: text(esExp?.ctaLabel || "") },
+        SK_CtaLabel: { rich_text: text(skExp?.ctaLabel || "") },
+        CtaUrl: { url: exp.ctaUrl || null },
         IsUpcoming: { checkbox: exp.isUpcoming },
         Image: { url: exp.image || null },
       });

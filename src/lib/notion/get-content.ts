@@ -4,7 +4,6 @@ import {
   getDefaultCopy,
   getDefaultExperiencesCopy,
   getDefaultWhatWeDoCopy,
-  experienceCtaOverrides,
   DEFAULT_SECTION_ORDER,
   type HomeCopy,
   type HomeSectionKey,
@@ -42,14 +41,27 @@ function tn(rows: NotionRow[], field: string, occurrence: number, locale: string
   return getTextByOccurrence(rows, field, occurrence, locale);
 }
 
+// Generic CTA label per locale used when an editor sets only a CtaUrl in
+// Notion (so the button can render with a sensible label without forcing the
+// editor to write one).
+const DEFAULT_CTA_LABEL: Record<string, string> = {
+  en: "Learn more",
+  es: "Saber más",
+  sk: "Zistiť viac",
+};
+
 function itemToExperience(item: ExperienceItemRow, locale: string) {
   const titleMap: Record<string, string> = { en: item.enTitle, es: item.esTitle, sk: item.skTitle };
   const descMap: Record<string, string> = { en: item.enDescription, es: item.esDescription, sk: item.skDescription };
   const ctaMap: Record<string, string> = { en: item.enCtaLabel, es: item.esCtaLabel, sk: item.skCtaLabel };
   const title = titleMap[locale] || item.enTitle;
-  const override = experienceCtaOverrides[item.name];
-  const ctaUrl = item.ctaUrl || override?.url || "";
-  const ctaLabel = ctaMap[locale] || item.enCtaLabel || override?.[locale as "en" | "es" | "sk"] || override?.en || "";
+  // CTA visibility is driven by CtaUrl alone: if the editor sets a URL in
+  // Notion, the button appears. Empty URL → no button at all (the component
+  // already guards on `ctaUrl && ctaLabel`).
+  const ctaUrl = item.ctaUrl;
+  const ctaLabel = ctaUrl
+    ? (ctaMap[locale] || item.enCtaLabel || DEFAULT_CTA_LABEL[locale] || DEFAULT_CTA_LABEL.en)
+    : "";
   return {
     title,
     description: descMap[locale] || item.enDescription,
