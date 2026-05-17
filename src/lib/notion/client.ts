@@ -18,6 +18,7 @@ export const DB_IDS = {
   contactItems: process.env.NOTION_CONTACT_ITEMS_DB_ID,
   collaborations: process.env.NOTION_COLLABORATIONS_DB_ID,
   homeSections: process.env.NOTION_HOME_SECTIONS_DB_ID,
+  experienceSections: process.env.NOTION_EXPERIENCE_SECTIONS_DB_ID,
 } as const;
 
 export type NotionRow = {
@@ -80,6 +81,7 @@ export type ExperienceItemRow = {
   name: string;
   category: string;
   order: number;
+  visible: boolean;
   enTitle: string;
   esTitle: string;
   skTitle: string;
@@ -109,6 +111,8 @@ function parseExperienceItem(page: any): ExperienceItemRow {
     name: extractTitle(p.Name),
     category: extractSelect(p.Category),
     order: extractNumber(p.Order),
+    // Visible column added later; default to true so pre-existing items render.
+    visible: p.Visible ? extractCheckbox(p.Visible) : true,
     enTitle: extractText(p.EN_Title),
     esTitle: extractText(p.ES_Title),
     skTitle: extractText(p.SK_Title),
@@ -287,14 +291,16 @@ export async function fetchCollaborations(dbId: string): Promise<CollaborationRo
   return pages.map(parseCollaboration).sort((a, b) => a.order - b.order);
 }
 
-export type HomeSectionRow = {
+// Generic shape for any "control" DB that has Section/Visible/PageOrder.
+// Used by Home Sections and Experience Sections.
+export type ControlSectionRow = {
   section: string;
   visible: boolean;
   pageOrder: number;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function parseHomeSection(page: any): HomeSectionRow {
+function parseControlSection(page: any): ControlSectionRow {
   const p = page.properties;
   return {
     section: extractTitle(p.Section),
@@ -303,10 +309,14 @@ function parseHomeSection(page: any): HomeSectionRow {
   };
 }
 
-export async function fetchHomeSections(dbId: string): Promise<HomeSectionRow[]> {
+export async function fetchControlSections(dbId: string): Promise<ControlSectionRow[]> {
   const pages = await queryDb(dbId);
-  return pages.map(parseHomeSection).sort((a, b) => a.pageOrder - b.pageOrder);
+  return pages.map(parseControlSection).sort((a, b) => a.pageOrder - b.pageOrder);
 }
+
+// Aliases kept for the existing get-content.ts imports.
+export type HomeSectionRow = ControlSectionRow;
+export const fetchHomeSections = fetchControlSections;
 
 export function getRows(allRows: NotionRow[], section?: string): NotionRow[] {
   return allRows

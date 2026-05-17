@@ -21,6 +21,7 @@ import {
   fetchContactItems,
   fetchCollaborations,
   fetchHomeSections,
+  fetchControlSections,
   getRows,
   getText,
   getTextByOccurrence,
@@ -30,6 +31,7 @@ import {
   type MetricItemRow,
   type ContactItemRow,
   type HomeSectionRow,
+  type ControlSectionRow,
 } from "./client";
 
 function t(rows: NotionRow[], field: string, locale: string): string {
@@ -357,7 +359,10 @@ export const getExperiencesContent = cache(
 
     try {
       if (!DB_IDS.experiences) return fallback;
-      const allRows = await fetchRows(DB_IDS.experiences);
+      const [allRows, experienceSectionRows] = await Promise.all([
+        fetchRows(DB_IDS.experiences),
+        DB_IDS.experienceSections ? fetchControlSections(DB_IDS.experienceSections) : [],
+      ]);
       if (allRows.length === 0) return fallback;
 
       const hero = getRows(allRows, "hero");
@@ -365,37 +370,66 @@ export const getExperiencesContent = cache(
 
       // Experience items live in the same database — use experienceItems ID if set, else fall back to experiences ID
       const itemsDbId = DB_IDS.experienceItems || DB_IDS.experiences;
-      const items = itemsDbId ? await fetchExperienceItems(itemsDbId) : [];
+      const allItems = itemsDbId ? await fetchExperienceItems(itemsDbId) : [];
+      // Editors can hide a single program by unchecking Visible on its row.
+      const items = allItems.filter((item) => item.visible);
 
-      // Categories are driven entirely by Notion now. Find every "category.N"
-      // section that has rows, sort by N, and render each one. To add a new
-      // category, editors just add rows to a new section (e.g. category.4)
-      // with a 'key' field that matches an option in the Experience Items
-      // Category select — no code change needed.
+      // Experience Sections control DB drives per-category visibility/order.
+      // Each row's Section title matches the Experience Items Category Select
+      // option (e.g. "Individuals"). Missing rows default to visible/order=∞.
+      const sectionMeta = new Map<string, ControlSectionRow>(
+        experienceSectionRows.map((r) => [r.section, r]),
+      );
+
+      // Categories are driven entirely by Notion. Find every "category.N"
+      // section in the Experiences DB, read its key (matching a Category
+      // select option), apply visibility + order from the control DB.
       const categorySectionNums = [...new Set(allRows.map((r) => r.section))]
         .filter((s) => s.startsWith("category."))
         .map((s) => Number(s.split(".")[1]))
         .filter((n) => Number.isFinite(n))
         .sort((a, b) => a - b);
 
-      const categories: ExperienceCategory[] = [];
+      type CategoryWithMeta = { node: ExperienceCategory; key: string; sectionNum: number };
+      const built: CategoryWithMeta[] = [];
       for (const sectionNum of categorySectionNums) {
         const catRows = getRows(allRows, `category.${sectionNum}`);
         if (catRows.length === 0) continue;
 
         const categoryKey = t(catRows, "key", locale);
+        const meta = sectionMeta.get(categoryKey);
+        if (meta && !meta.visible) continue; // hidden by editor
+
         const categoryItems = categoryKey
           ? items.filter((item) => item.category === categoryKey)
           : [];
         const experiences = categoryItems.map((item) => itemToExperience(item, locale));
 
-        categories.push({
-          label: t(catRows, "label", locale),
-          title: t(catRows, "title", locale),
-          description: t(catRows, "description", locale),
-          experiences: experiences.length > 0 ? experiences : (fallback.categories[sectionNum - 1]?.experiences ?? []),
+        built.push({
+          key: categoryKey,
+          sectionNum,
+          node: {
+            label: t(catRows, "label", locale),
+            title: t(catRows, "title", locale),
+            description: t(catRows, "description", locale),
+            experiences: experiences.length > 0
+              ? experiences
+              : (fallback.categories[sectionNum - 1]?.experiences ?? []),
+          },
         });
       }
+
+      // Sort by control DB PageOrder; categories without a control row keep
+      // their natural section.N position.
+      built.sort((a, b) => {
+        const ao = sectionMeta.get(a.key)?.pageOrder;
+        const bo = sectionMeta.get(b.key)?.pageOrder;
+        if (ao != null && bo != null) return ao - bo;
+        if (ao != null) return -1;
+        if (bo != null) return 1;
+        return a.sectionNum - b.sectionNum;
+      });
+      const categories: ExperienceCategory[] = built.map((c) => c.node);
 
       return {
         hero: {
