@@ -20,6 +20,7 @@ import {
   fetchMetricItems,
   fetchContactItems,
   fetchCollaborations,
+  fetchHomeSections,
   getRows,
   getText,
   getTextByOccurrence,
@@ -28,6 +29,7 @@ import {
   type CardItemRow,
   type MetricItemRow,
   type ContactItemRow,
+  type HomeSectionRow,
 } from "./client";
 
 function t(rows: NotionRow[], field: string, locale: string): string {
@@ -103,6 +105,7 @@ export const getHomePageContent = cache(
         metricItems,
         contactItemRows,
         collaborationItems,
+        homeSectionRows,
       ] = await Promise.all([
         DB_IDS.nav ? fetchRows(DB_IDS.nav) : [],
         DB_IDS.footer ? fetchRows(DB_IDS.footer) : [],
@@ -114,7 +117,15 @@ export const getHomePageContent = cache(
         DB_IDS.impactMetrics ? fetchMetricItems(DB_IDS.impactMetrics) : [],
         DB_IDS.contactItems ? fetchContactItems(DB_IDS.contactItems) : [],
         DB_IDS.collaborations ? fetchCollaborations(DB_IDS.collaborations) : [],
+        DB_IDS.homeSections ? fetchHomeSections(DB_IDS.homeSections) : [],
       ]);
+
+      // Build a lookup keyed by section name for O(1) access in field reads.
+      const sectionMeta = new Map<string, HomeSectionRow>(
+        homeSectionRows.map((r) => [r.section, r]),
+      );
+      const metaFor = (key: HomeSectionKey): HomeSectionRow | undefined =>
+        sectionMeta.get(key);
 
       if (
         homeRowsAll.length === 0 &&
@@ -151,35 +162,29 @@ export const getHomePageContent = cache(
       const metrics = metricItems.map((item) => metricItemToMetric(item, locale));
       const connectItems = contactItemRows.map((item) => contactItemToLabel(item, locale));
 
-      // Each home section has a 'visible' row whose EN value is "true"/"false".
-      // Missing rows or any non-"false" value default to visible.
-      const sectionRows: Record<HomeSectionKey, typeof hero> = {
-        hero, about, paths: pathsSection, coreWork: coreWorkSection,
-        approach, impact, ecosystem, testimonials, contact,
-      };
-      const sectionKeys = Object.keys(sectionRows) as HomeSectionKey[];
+      // visibleSections + sectionOrder come from the Home Sections DB, where
+      // each row = one section with checkbox + number columns. Sections
+      // missing from the DB default to visible and keep DEFAULT_SECTION_ORDER.
+      const sectionKeys = DEFAULT_SECTION_ORDER;
       const visibleSections = Object.fromEntries(
         sectionKeys.map((key) => {
-          const raw = t(sectionRows[key], "visible", locale).trim().toLowerCase();
-          return [key, raw !== "false"];
+          const meta = metaFor(key);
+          return [key, meta ? meta.visible : true];
         }),
       ) as Record<HomeSectionKey, boolean>;
 
-      // Each section also has a 'pageOrder' row (numeric string in EN). Sort
-      // by ascending pageOrder; sections without a row keep their default
-      // position from DEFAULT_SECTION_ORDER.
       const defaultIndex = (key: HomeSectionKey) => {
         const idx = DEFAULT_SECTION_ORDER.indexOf(key);
         return idx === -1 ? Number.MAX_SAFE_INTEGER : idx;
       };
       const sectionOrder = [...sectionKeys].sort((a, b) => {
-        const ao = Number(t(sectionRows[a], "pageOrder", locale));
-        const bo = Number(t(sectionRows[b], "pageOrder", locale));
-        const aValid = Number.isFinite(ao);
-        const bValid = Number.isFinite(bo);
-        if (aValid && bValid) return ao - bo;
-        if (aValid) return -1;
-        if (bValid) return 1;
+        const am = metaFor(a);
+        const bm = metaFor(b);
+        const ao = am?.pageOrder;
+        const bo = bm?.pageOrder;
+        if (ao != null && bo != null) return ao - bo;
+        if (ao != null) return -1;
+        if (bo != null) return 1;
         return defaultIndex(a) - defaultIndex(b);
       });
 
@@ -209,12 +214,12 @@ export const getHomePageContent = cache(
           primaryCta: t(hero, "primaryCTA", locale) || fallback.hero.primaryCta,
           secondaryCta: t(hero, "secondaryCTA", locale) || fallback.hero.secondaryCta,
           videoPlaceholder: t(hero, "videoPlaceholder", locale) || fallback.hero.videoPlaceholder,
-          videoUrl: t(hero, "videoUrl", locale) || fallback.hero.videoUrl,
+          videoUrl: metaFor("hero")?.videoUrl || fallback.hero.videoUrl,
         },
         about: {
           title: t(about, "title", locale) || fallback.about.title,
           description: t(about, "description", locale) || fallback.about.description,
-          markImage: t(about, "markImage", locale) || fallback.about.markImage,
+          markImage: metaFor("about")?.markImage || fallback.about.markImage,
         },
         collaborations: collaborationItems.length > 0
           ? collaborationItems.map((c) => ({ name: c.name, image: c.image }))

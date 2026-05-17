@@ -17,6 +17,7 @@ export const DB_IDS = {
   impactMetrics: process.env.NOTION_IMPACT_METRICS_DB_ID,
   contactItems: process.env.NOTION_CONTACT_ITEMS_DB_ID,
   collaborations: process.env.NOTION_COLLABORATIONS_DB_ID,
+  homeSections: process.env.NOTION_HOME_SECTIONS_DB_ID,
 } as const;
 
 export type NotionRow = {
@@ -284,6 +285,31 @@ export async function fetchContactItems(dbId: string): Promise<ContactItemRow[]>
 export async function fetchCollaborations(dbId: string): Promise<CollaborationRow[]> {
   const pages = await queryDb(dbId);
   return pages.map(parseCollaboration).sort((a, b) => a.order - b.order);
+}
+
+export type HomeSectionRow = {
+  section: string;
+  visible: boolean;
+  pageOrder: number;
+  videoUrl: string;
+  markImage: string;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function parseHomeSection(page: any): HomeSectionRow {
+  const p = page.properties;
+  return {
+    section: extractTitle(p.Section),
+    visible: extractCheckbox(p.Visible),
+    pageOrder: extractNumber(p.PageOrder),
+    videoUrl: extractUrl(p.VideoUrl),
+    markImage: extractUrl(p.MarkImage),
+  };
+}
+
+export async function fetchHomeSections(dbId: string): Promise<HomeSectionRow[]> {
+  const pages = await queryDb(dbId);
+  return pages.map(parseHomeSection).sort((a, b) => a.pageOrder - b.pageOrder);
 }
 
 export function getRows(allRows: NotionRow[], section?: string): NotionRow[] {
