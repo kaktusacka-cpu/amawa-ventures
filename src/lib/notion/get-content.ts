@@ -214,12 +214,12 @@ export const getHomePageContent = cache(
           primaryCta: t(hero, "primaryCTA", locale) || fallback.hero.primaryCta,
           secondaryCta: t(hero, "secondaryCTA", locale) || fallback.hero.secondaryCta,
           videoPlaceholder: t(hero, "videoPlaceholder", locale) || fallback.hero.videoPlaceholder,
-          videoUrl: metaFor("hero")?.videoUrl || fallback.hero.videoUrl,
+          videoUrl: t(hero, "videoUrl", locale) || fallback.hero.videoUrl,
         },
         about: {
           title: t(about, "title", locale) || fallback.about.title,
           description: t(about, "description", locale) || fallback.about.description,
-          markImage: metaFor("about")?.markImage || fallback.about.markImage,
+          markImage: t(about, "markImage", locale) || fallback.about.markImage,
         },
         collaborations: collaborationItems.length > 0
           ? collaborationItems.map((c) => ({ name: c.name, image: c.image }))

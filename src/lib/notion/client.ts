@@ -291,8 +291,6 @@ export type HomeSectionRow = {
   section: string;
   visible: boolean;
   pageOrder: number;
-  videoUrl: string;
-  markImage: string;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -302,8 +300,6 @@ function parseHomeSection(page: any): HomeSectionRow {
     section: extractTitle(p.Section),
     visible: extractCheckbox(p.Visible),
     pageOrder: extractNumber(p.PageOrder),
-    videoUrl: extractUrl(p.VideoUrl),
-    markImage: extractUrl(p.MarkImage),
   };
 }
 
