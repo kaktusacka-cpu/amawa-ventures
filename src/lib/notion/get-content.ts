@@ -453,10 +453,10 @@ export const getExperiencesContent = cache(
       return {
         hero: {
           title: t(hero, "title", locale) || fallback.hero.title,
-          tagline: t(hero, "tagline", locale) || fallback.hero.tagline,
-          description: t(hero, "description", locale) || fallback.hero.description,
-          ctaLabel: t(hero, "ctaLabel", locale) || fallback.hero.ctaLabel,
-          image: t(hero, "image", locale) || fallback.hero.image,
+          tagline: t(hero, "description", locale) || fallback.hero.tagline,
+          description: t(hero, "caption", locale) || fallback.hero.description,
+          ctaLabel: t(hero, "CTA", locale) || fallback.hero.ctaLabel,
+          image: getImage(hero, "image") || fallback.hero.image,
         },
         statusLabels: {
           upcoming: t(statusLabels, "upcoming", locale) || fallback.statusLabels.upcoming,
@@ -551,10 +551,10 @@ export const getWhatWeDoContent = cache(
       return {
         hero: {
           title: t(hero, "title", locale) || fallback.hero.title,
-          leadText: t(hero, "leadText", locale) || fallback.hero.leadText,
-          secondaryText: t(hero, "secondaryText", locale) || fallback.hero.secondaryText,
-          ctaLabel: t(hero, "ctaLabel", locale) || fallback.hero.ctaLabel,
-          image: t(hero, "image", locale) || fallback.hero.image,
+          leadText: t(hero, "description", locale) || fallback.hero.leadText,
+          secondaryText: t(hero, "caption", locale) || fallback.hero.secondaryText,
+          ctaLabel: t(hero, "CTA", locale) || fallback.hero.ctaLabel,
+          image: getImage(hero, "image") || fallback.hero.image,
         },
         sectionImages: fallback.sectionImages,
         areas: areas.length > 0 ? areas : fallback.areas,
