@@ -230,7 +230,7 @@ function parseCollaboration(page: any): CollaborationRow {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const cache = new Map<string, { rows: any[]; time: number }>();
-const CACHE_TTL = 60_000; // 1 minute
+const CACHE_TTL = 30_000; // 30 seconds
 
 async function queryDb(dbId: string) {
   if (!API_KEY || !dbId) return [];
