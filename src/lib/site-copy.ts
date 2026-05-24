@@ -331,7 +331,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       callDescription:
         "Prefer a conversation? Schedule a free 30 minute call to explore how we can work together.",
       callCta: "Schedule a call",
-      callImage: "/calendar-meeting.svg",
+      callImage: "/calendar.svg",
       connectTitle: "Connect with us",
       connectDescription:
         "Follow our journey or reach out directly — we'd love to hear from you.",
@@ -555,7 +555,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       callDescription:
         "¿Prefieres conversar? Agenda una llamada gratuita de 30 minutos.",
       callCta: "Agendar llamada",
-      callImage: "/calendar-meeting.svg",
+      callImage: "/calendar.svg",
       connectTitle: "Conecta con nosotros",
       connectDescription:
         "Sigue nuestro camino o escríbenos directamente — nos encantaría saber de ti.",
@@ -776,7 +776,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       callDescription:
         "Preferujete rozhovor? Rezervujte si bezplatný 30-minútový hovor.",
       callCta: "Rezervovať",
-      callImage: "/calendar-meeting.svg",
+      callImage: "/calendar.svg",
       connectTitle: "Spojte sa s nami",
       connectDescription:
         "Sledujte našu cestu alebo nás kontaktujte priamo — radi sa s vami spojíme.",
