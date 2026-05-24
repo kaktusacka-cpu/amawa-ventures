@@ -79,7 +79,7 @@ export default async function AboutPage({
         />
         <Reveal
           animation="fade-in-slow"
-          className="mt-10 w-full max-w-[1000px] md:mt-16"
+          className="mt-10 w-full max-w-[1000px] overflow-hidden rounded-2xl md:mt-16"
         >
           <Image
             src={aboutPage.philosophyImage}
