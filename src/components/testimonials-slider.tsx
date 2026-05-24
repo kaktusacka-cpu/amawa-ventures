@@ -82,7 +82,7 @@ export function TestimonialsSlider({ items }: TestimonialsSliderProps) {
       style={{ height: "fit-content" }}
     >
       <div className="mx-auto mt-8 flex max-w-2xl text-lg leading-8 text-foreground">
-        <div className="flex items-start gap-2" style={{ height: "140px" }}>
+        <div className="flex items-start gap-2">
           <Image
             src="/socials/quote.svg"
             alt=""
@@ -90,7 +90,7 @@ export function TestimonialsSlider({ items }: TestimonialsSliderProps) {
             height={32}
             className="shrink-0"
           />
-          <blockquote className="flex-1 pt-2 pb-2" style={{ height: "100%" }}>
+          <blockquote className="flex-1 pt-2 pb-2 line-clamp-4 min-h-[8rem]">
             {active.quote}
           </blockquote>
           <Image

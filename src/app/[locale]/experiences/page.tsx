@@ -12,16 +12,19 @@ const CATEGORY_CONFIG = [
     id: "individuals",
     bg: "bg-surface-alt",
     rowBg: (index: number) => (index < 3 ? "bg-surface-alt" : ""),
+    hidden: true,
   },
   {
     id: "teams",
-    bg: "bg-surface",
-    rowBg: (index: number) => (index === 0 || index === 2 ? "bg-surface" : ""),
+    bg: "bg-surface-alt",
+    rowBg: (index: number) => (index === 0 || index === 2 ? "bg-surface-alt" : ""),
+    hidden: false,
   },
   {
     id: "ecosystems",
-    bg: "bg-surface-alt",
-    rowBg: () => "bg-surface-alt",
+    bg: "bg-surface",
+    rowBg: () => "bg-surface",
+    hidden: false,
   },
 ] as const;
 
@@ -52,7 +55,7 @@ export default async function ExperiencesPage({
   };
 
   return (
-    <main className="bg-surface text-foreground flex flex-col justify-center items-center">
+    <main className="bg-surface-alt text-foreground flex flex-col justify-center items-center">
       <ScrollToHash />
 
       <PageHero
@@ -72,7 +75,7 @@ export default async function ExperiencesPage({
           <div
             key={category.title}
             id={config.id}
-            className={`w-full ${config.bg} py-6 lg:pt-[60px] lg:pb-[60px]`}
+            className={`w-full ${config.bg} py-6 lg:pt-[60px] lg:pb-[60px]${config.hidden ? " hidden" : ""}`}
           >
             <section
               className={`w-full px-4 py-4 sm:py-[44px] sm:px-6 lg:px-8 flex flex-col justify-center items-center ${config.bg}`}

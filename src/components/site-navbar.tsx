@@ -180,7 +180,7 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
           ))}
         </nav>
 
-        <div ref={languageMenuRef} className="relative hidden lg:block">
+        <div ref={languageMenuRef} className="relative hidden">
           <button
             type="button"
             className="inline-flex items-center gap-1 rounded-md px-2 py-2 text-base font-normal text-foreground-body hover:bg-surface-hover"
@@ -238,7 +238,7 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
               </Link>
             ))}
 
-            <div className="mt-2 flex w-full max-w-sm items-center justify-center px-2">
+            <div className="mt-2 hidden w-full max-w-sm items-center justify-center px-2">
               <div className="w-full">
                 <button
                   type="button"

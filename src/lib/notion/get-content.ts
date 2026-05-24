@@ -276,6 +276,7 @@ export const getHomePageContent = cache(
           callTitle: t(contact, "callTitle", locale) || fallback.contact.callTitle,
           callDescription: t(contact, "callDescription", locale) || fallback.contact.callDescription,
           callCta: t(contact, "callCta", locale) || fallback.contact.callCta,
+          callImage: fallback.contact.callImage,
           connectTitle: t(contact, "connectTitle", locale) || fallback.contact.connectTitle,
           connectDescription: t(contact, "connectDescription", locale) || fallback.contact.connectDescription,
           connectItems: connectItems.length > 0 ? connectItems : fallback.contact.connectItems,

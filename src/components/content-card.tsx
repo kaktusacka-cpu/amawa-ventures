@@ -22,12 +22,12 @@ export function ContentCard({ title, description, cta, image, imageAlt, href }: 
             alt={imageAlt ?? title}
             fill
             className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-            sizes="(max-width: 768px) 100vw, 33vw"
+            sizes="(max-width: 768px) 100vw, 50vw"
           />
         </Reveal>
       )}
-      <div className="flex flex-col gap-4 px-6 pt-6 pb-6">
-        <div className="space-y-2">
+      <div className="flex flex-col flex-1 gap-4 px-6 pt-6 pb-6">
+        <div className="space-y-2 grow">
           <div className="text-[18px] font-medium leading-none">{title}</div>
           <div className="text-muted-foreground text-base leading-5 font-normal">{description}</div>
         </div>
@@ -58,7 +58,7 @@ export function ContentCard({ title, description, cta, image, imageAlt, href }: 
     return (
       <Link
         href={href}
-        className={`group block overflow-hidden rounded-xl border border-border shadow-none cursor-pointer transition-colors ${baseBg} hover:bg-surface-hover`}
+        className={`group flex flex-col overflow-hidden rounded-xl border border-border shadow-none cursor-pointer transition-colors ${baseBg} hover:bg-surface-hover`}
       >
         {cardContent}
       </Link>
@@ -66,7 +66,7 @@ export function ContentCard({ title, description, cta, image, imageAlt, href }: 
   }
 
   return (
-    <div className={`overflow-hidden rounded-xl border border-border shadow-none ${baseBg}`}>
+    <div className={`flex flex-col overflow-hidden rounded-xl border border-border shadow-none ${baseBg}`}>
       {cardContent}
     </div>
   );

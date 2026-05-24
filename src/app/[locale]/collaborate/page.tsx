@@ -31,25 +31,24 @@ export default async function CollaboratePage({
             </p>
           </Reveal>
 
-          <div className="mt-16 grid gap-6 md:grid-cols-2 text-left">
+          <div className="mt-16 grid gap-6 text-left max-w-[667px] mx-auto w-full">
             <Reveal animation="fade-in-up" delay={160}>
-              <ContactCard title={content.contact.callTitle} description={content.contact.callDescription}>
-                <Button variant="outline-warm" size="pill">
+              <ContactCard title={content.contact.callTitle} description={content.contact.callDescription} image={content.contact.callImage} imageAlt="Schedule a meeting">
+                <Button variant="default" size="pill">
                   {content.contact.callCta}
                 </Button>
               </ContactCard>
             </Reveal>
 
-            <Reveal animation="fade-in-up" delay={240}>
+            <Reveal animation="fade-in-up" delay={240} className="hidden">
               <ContactCard title={content.contact.connectTitle} description={content.contact.connectDescription}>
                 <div className="flex gap-3">
                   {content.contact.connectItems.map((item, i) => {
                     const lower = item.label.toLowerCase();
-                    const icon = lower.includes("linkedin")
-                      ? "/socials/social-2.svg"
-                      : lower.includes("instagram")
-                        ? "/socials/social-1.svg"
-                        : "/socials/social-3.svg";
+                    if (lower.includes("linkedin")) return null;
+                    const icon = lower.includes("instagram")
+                      ? "/socials/social-1.svg"
+                      : "/socials/social-3.svg";
                     return (
                       <Button
                         key={item.label + i}

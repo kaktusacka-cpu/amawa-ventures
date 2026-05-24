@@ -118,9 +118,10 @@ export default async function HomePage({
         <Reveal animation="fade-in-up">
           <h2 className="font-display text-center text-[32px] sm:text-5xl">{content.paths.title}</h2>
         </Reveal>
-        <Reveal animation="fade-in-up" delay={150} className="mt-9 grid w-full gap-6 md:grid-cols-3">
+        <Reveal animation="fade-in-up" delay={150} className="mt-9 grid w-full gap-6 md:grid-cols-2">
           {content.paths.cards.map((card, index) => {
             const cardAnchors = ["individuals", "teams", "ecosystems"];
+            if (index === 0) return null;
             return (
               <ContentCard
                 key={card.title}
@@ -147,9 +148,10 @@ export default async function HomePage({
           <Reveal animation="fade-in-up" delay={80}>
             <h2 className="font-display mt-4 text-center text-[32px] sm:text-5xl">{content.coreWork.title}</h2>
           </Reveal>
-          <Reveal animation="fade-in-up" delay={200} className="mt-9 grid gap-6 sm:grid-cols-2">
+          <Reveal animation="fade-in-up" delay={200} className="mt-9 grid gap-6 sm:grid-cols-2 [&>*:last-child]:sm:col-span-2">
             {content.coreWork.cards.map((area, index) => {
               const areaAnchors = ["venture", "learning", "ecosystem", "purpose"];
+              if (index === 3) return null;
               return (
                 <ContentCard
                   key={area.title}
@@ -290,16 +292,16 @@ export default async function HomePage({
             </p>
           </Reveal>
 
-          <div className="mt-10 grid w-full gap-6 sm:mt-14 md:grid-cols-2">
+          <div className="mt-10 grid w-full gap-6 sm:mt-14 max-w-[667px]">
             <Reveal animation="fade-in-up" delay={100} className="h-full">
-              <ContactCard title={content.contact.callTitle} description={content.contact.callDescription}>
-                <Button variant="outline-warm" size="pill">
+              <ContactCard title={content.contact.callTitle} description={content.contact.callDescription} image={content.contact.callImage} imageAlt="Schedule a meeting">
+                <Button variant="default" size="pill">
                   {content.contact.callCta}
                 </Button>
               </ContactCard>
             </Reveal>
 
-            <Reveal animation="fade-in-up" delay={200} className="h-full">
+            <Reveal animation="fade-in-up" delay={200} className="h-full hidden">
               <ContactCard title={content.contact.connectTitle} description={content.contact.connectDescription}>
                 <div className="flex gap-3">
                   {content.contact.connectItems.map((item, i) => {
