@@ -79,13 +79,14 @@ export default async function AboutPage({
         />
         <Reveal
           animation="fade-in-slow"
-          className="relative mt-10 h-[180px] w-full max-w-[1000px] overflow-hidden rounded-2xl md:mt-16 md:h-[312px]"
+          className="mt-10 w-full max-w-[1000px] md:mt-16"
         >
           <Image
             src={aboutPage.philosophyImage}
-            alt="Calm forest path"
-            fill
-            className="object-cover"
+            alt="Our philosophy"
+            width={1000}
+            height={372}
+            className="w-full h-auto"
             sizes="(max-width: 1000px) 100vw, 1000px"
           />
         </Reveal>

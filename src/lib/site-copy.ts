@@ -424,7 +424,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       heroImage: "/about-hero.svg",
       boundaryImage1: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600&h=500&fit=crop",
       boundaryImage2: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&h=500&fit=crop",
-      philosophyImage: "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=1600&h=500&fit=crop",
+      philosophyImage: "/infographic.png",
     },
   },
   es: {
@@ -648,7 +648,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       heroImage: "/about-hero.svg",
       boundaryImage1: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600&h=500&fit=crop",
       boundaryImage2: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&h=500&fit=crop",
-      philosophyImage: "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=1600&h=500&fit=crop",
+      philosophyImage: "/infographic.png",
     },
   },
   sk: {
@@ -869,7 +869,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       heroImage: "/about-hero.svg",
       boundaryImage1: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600&h=500&fit=crop",
       boundaryImage2: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&h=500&fit=crop",
-      philosophyImage: "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=1600&h=500&fit=crop",
+      philosophyImage: "/infographic.png",
     },
   },
 };

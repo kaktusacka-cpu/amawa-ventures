@@ -93,7 +93,7 @@ export default async function HomePage({
 
     about: (
       <section className="relative -mt-[96px] bg-surface-alt pb-[80px] pt-[176px] sm:-mt-[288px] sm:pb-[160px] sm:pt-[448px]">
-        <div className="mx-auto max-w-xl px-4 text-center sm:px-6">
+        <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
           <Reveal animation="fade-in">
             <Image
               src={content.about.markImage}
@@ -148,7 +148,7 @@ export default async function HomePage({
           <Reveal animation="fade-in-up" delay={80}>
             <h2 className="font-display mt-4 text-center text-[32px] sm:text-5xl">{content.coreWork.title}</h2>
           </Reveal>
-          <Reveal animation="fade-in-up" delay={200} className="mt-9 grid gap-6 sm:grid-cols-2 [&>*:last-child]:sm:col-span-2">
+          <Reveal animation="fade-in-up" delay={200} className="mt-9 grid gap-6 sm:grid-cols-2 [&>*:last-child]:sm:col-span-2 [&>*:last-child]:sm:w-[calc(50%-12px)] [&>*:last-child]:sm:mx-auto">
             {content.coreWork.cards.map((area, index) => {
               const areaAnchors = ["venture", "learning", "ecosystem", "purpose"];
               if (index === 3) return null;
