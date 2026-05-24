@@ -167,7 +167,10 @@ export const getHomePageContent = cache(
       const ecosystem = getRows(homeRowsAll, "ecosystem");
       const testimonials = getRows(homeRowsAll, "testimonials");
       const contact = getRows(homeRowsAll, "contact");
-      const aboutPage = getRows(aboutRowsAll, "aboutPage");
+      const aboutHero = getRows(aboutRowsAll, "hero");
+      const aboutWhoWeAre = getRows(aboutRowsAll, "who we are");
+      const aboutWhyAmawa = getRows(aboutRowsAll, "why amawa");
+      const aboutPhilosophy = getRows(aboutRowsAll, "philosophy");
 
       const pathCards = pathCardItems.map((item, i) => {
         const card = cardItemToCard(item, locale);
@@ -313,52 +316,54 @@ export const getHomePageContent = cache(
           collaborateBody: t(pages, "collaborateBody", locale) || fallback.pages.collaborateBody,
         },
         aboutPage: {
-          heroIntro: t(aboutPage, "heroIntro", locale) || fallback.aboutPage.heroIntro,
-          heroCta: t(aboutPage, "heroCta", locale) || fallback.aboutPage.heroCta,
-          whoWeAreTitle: t(aboutPage, "whoWeAreTitle", locale) || fallback.aboutPage.whoWeAreTitle,
-          whoWeAreIntro: t(aboutPage, "whoWeAreIntro", locale) || fallback.aboutPage.whoWeAreIntro,
-          whoWeAreStrategicTitle:
-            t(aboutPage, "whoWeAreStrategicTitle", locale) || fallback.aboutPage.whoWeAreStrategicTitle,
-          whoWeAreStrategicBody:
-            t(aboutPage, "whoWeAreStrategicBody", locale) || fallback.aboutPage.whoWeAreStrategicBody,
-          whoWeAreLivedTitle: t(aboutPage, "whoWeAreLivedTitle", locale) || fallback.aboutPage.whoWeAreLivedTitle,
-          whoWeAreLivedBody: t(aboutPage, "whoWeAreLivedBody", locale) || fallback.aboutPage.whoWeAreLivedBody,
-          whoWeAreOutro: t(aboutPage, "whoWeAreOutro", locale) || fallback.aboutPage.whoWeAreOutro,
-          whyTitle: t(aboutPage, "whyTitle", locale) || fallback.aboutPage.whyTitle,
-          whyIntro: t(aboutPage, "whyIntro", locale) || fallback.aboutPage.whyIntro,
-          whyAmaTitle: t(aboutPage, "whyAmaTitle", locale) || fallback.aboutPage.whyAmaTitle,
-          whyAmaBody: t(aboutPage, "whyAmaBody", locale) || fallback.aboutPage.whyAmaBody,
-          whyAwaTitle: t(aboutPage, "whyAwaTitle", locale) || fallback.aboutPage.whyAwaTitle,
-          whyAwaBody: t(aboutPage, "whyAwaBody", locale) || fallback.aboutPage.whyAwaBody,
-          whyVenturesTitle: t(aboutPage, "whyVenturesTitle", locale) || fallback.aboutPage.whyVenturesTitle,
-          whyVenturesBody: t(aboutPage, "whyVenturesBody", locale) || fallback.aboutPage.whyVenturesBody,
-          whyOutro: t(aboutPage, "whyOutro", locale) || fallback.aboutPage.whyOutro,
-          philosophyTitle: t(aboutPage, "philosophyTitle", locale) || fallback.aboutPage.philosophyTitle,
-          philosophyBeliefTitle:
-            t(aboutPage, "philosophyBeliefTitle", locale) || fallback.aboutPage.philosophyBeliefTitle,
-          philosophyBelief1: t(aboutPage, "philosophyBelief1", locale) || fallback.aboutPage.philosophyBelief1,
-          philosophyBelief2: t(aboutPage, "philosophyBelief2", locale) || fallback.aboutPage.philosophyBelief2,
-          philosophyBelief3: t(aboutPage, "philosophyBelief3", locale) || fallback.aboutPage.philosophyBelief3,
-          philosophyOutro: t(aboutPage, "philosophyOutro", locale) || fallback.aboutPage.philosophyOutro,
-          impactTitle: t(aboutPage, "impactTitle", locale) || fallback.aboutPage.impactTitle,
-          impactMetric1Value: t(aboutPage, "impactMetric1Value", locale) || fallback.aboutPage.impactMetric1Value,
-          impactMetric1Label: t(aboutPage, "impactMetric1Label", locale) || fallback.aboutPage.impactMetric1Label,
-          impactMetric2Value: t(aboutPage, "impactMetric2Value", locale) || fallback.aboutPage.impactMetric2Value,
-          impactMetric2Label: t(aboutPage, "impactMetric2Label", locale) || fallback.aboutPage.impactMetric2Label,
-          impactMetric3Value: t(aboutPage, "impactMetric3Value", locale) || fallback.aboutPage.impactMetric3Value,
-          impactMetric3Label: t(aboutPage, "impactMetric3Label", locale) || fallback.aboutPage.impactMetric3Label,
-          impactNote1: t(aboutPage, "impactNote1", locale) || fallback.aboutPage.impactNote1,
-          // These three render on the home page, so they live in the home DB
-          // (impact section / new ecosystem section). aboutPage fallback kept
-          // for the legacy rows during the migration window.
-          impactNote2: t(impact, "note", locale) || t(aboutPage, "impactNote2", locale) || fallback.aboutPage.impactNote2,
-          ecosystemTitle: t(ecosystem, "title", locale) || t(aboutPage, "ecosystemTitle", locale) || fallback.aboutPage.ecosystemTitle,
-          ecosystemDescription:
-            t(ecosystem, "description", locale) || t(aboutPage, "ecosystemDescription", locale) || fallback.aboutPage.ecosystemDescription,
-          heroImage: t(aboutPage, "heroImage", locale) || fallback.aboutPage.heroImage,
-          boundaryImage1: t(aboutPage, "boundaryImage1", locale) || fallback.aboutPage.boundaryImage1,
-          boundaryImage2: t(aboutPage, "boundaryImage2", locale) || fallback.aboutPage.boundaryImage2,
-          philosophyImage: t(aboutPage, "philosophyImage", locale) || fallback.aboutPage.philosophyImage,
+          // 01 hero
+          heroIntro: t(aboutHero, "description", locale) || fallback.aboutPage.heroIntro,
+          heroCta: t(aboutHero, "CTA", locale) || fallback.aboutPage.heroCta,
+          heroImage: getImage(aboutHero, "image") || fallback.aboutPage.heroImage,
+
+          // 02 who we are
+          whoWeAreTitle: t(aboutWhoWeAre, "title", locale) || fallback.aboutPage.whoWeAreTitle,
+          whoWeAreIntro: tn(aboutWhoWeAre, "description", 0, locale) || fallback.aboutPage.whoWeAreIntro,
+          whoWeAreStrategicTitle: tn(aboutWhoWeAre, "description - highlight", 0, locale) || fallback.aboutPage.whoWeAreStrategicTitle,
+          whoWeAreStrategicBody: tn(aboutWhoWeAre, "description", 1, locale) || fallback.aboutPage.whoWeAreStrategicBody,
+          whoWeAreLivedTitle: tn(aboutWhoWeAre, "description - highlight", 1, locale) || fallback.aboutPage.whoWeAreLivedTitle,
+          whoWeAreLivedBody: tn(aboutWhoWeAre, "description", 2, locale) || fallback.aboutPage.whoWeAreLivedBody,
+          whoWeAreOutro: t(aboutWhoWeAre, "caption", locale) || fallback.aboutPage.whoWeAreOutro,
+          boundaryImage1: getImage(aboutWhoWeAre, "image") || fallback.aboutPage.boundaryImage1,
+
+          // 03 why amawa
+          whyTitle: t(aboutWhyAmawa, "title", locale) || fallback.aboutPage.whyTitle,
+          whyIntro: tn(aboutWhyAmawa, "description", 0, locale) || fallback.aboutPage.whyIntro,
+          whyAmaTitle: tn(aboutWhyAmawa, "description - highlight", 0, locale) || fallback.aboutPage.whyAmaTitle,
+          whyAmaBody: tn(aboutWhyAmawa, "description", 1, locale) || fallback.aboutPage.whyAmaBody,
+          whyAwaTitle: tn(aboutWhyAmawa, "description - highlight", 1, locale) || fallback.aboutPage.whyAwaTitle,
+          whyAwaBody: tn(aboutWhyAmawa, "description", 2, locale) || fallback.aboutPage.whyAwaBody,
+          whyVenturesTitle: tn(aboutWhyAmawa, "description - highlight", 2, locale) || fallback.aboutPage.whyVenturesTitle,
+          whyVenturesBody: tn(aboutWhyAmawa, "description", 3, locale) || fallback.aboutPage.whyVenturesBody,
+          whyOutro: tn(aboutWhyAmawa, "description", 4, locale) || fallback.aboutPage.whyOutro,
+          boundaryImage2: getImage(aboutWhyAmawa, "image") || fallback.aboutPage.boundaryImage2,
+
+          // 04 philosophy
+          philosophyTitle: t(aboutPhilosophy, "title", locale) || fallback.aboutPage.philosophyTitle,
+          philosophyBeliefTitle: tn(aboutPhilosophy, "description - highlight", 0, locale) || fallback.aboutPage.philosophyBeliefTitle,
+          philosophyBelief1: tn(aboutPhilosophy, "description", 0, locale) || fallback.aboutPage.philosophyBelief1,
+          philosophyBelief2: tn(aboutPhilosophy, "description", 1, locale) || fallback.aboutPage.philosophyBelief2,
+          philosophyBelief3: tn(aboutPhilosophy, "description", 2, locale) || fallback.aboutPage.philosophyBelief3,
+          philosophyOutro: tn(aboutPhilosophy, "description", 3, locale) || fallback.aboutPage.philosophyOutro,
+          philosophyImage: getImage(aboutPhilosophy, "image") || fallback.aboutPage.philosophyImage,
+
+          // legacy / home-derived fields
+          impactTitle: fallback.aboutPage.impactTitle,
+          impactMetric1Value: fallback.aboutPage.impactMetric1Value,
+          impactMetric1Label: fallback.aboutPage.impactMetric1Label,
+          impactMetric2Value: fallback.aboutPage.impactMetric2Value,
+          impactMetric2Label: fallback.aboutPage.impactMetric2Label,
+          impactMetric3Value: fallback.aboutPage.impactMetric3Value,
+          impactMetric3Label: fallback.aboutPage.impactMetric3Label,
+          impactNote1: fallback.aboutPage.impactNote1,
+          impactNote2: t(impact, "note", locale) || fallback.aboutPage.impactNote2,
+          ecosystemTitle: t(ecosystem, "title", locale) || fallback.aboutPage.ecosystemTitle,
+          ecosystemDescription: t(ecosystem, "description", locale) || fallback.aboutPage.ecosystemDescription,
         },
       };
     } catch {
