@@ -404,7 +404,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       whyOutro:
         "Together, Amawa Ventures represents the balance between care and ambition, building innovation while staying grounded and connected to what is essential.",
       philosophyTitle: "Our Philosophy",
-      philosophyBeliefTitle: "We believe",
+      philosophyBeliefTitle: "",
       philosophyBelief1:
         "in learning that is lived and felt: learning that engages emotions, senses and experience, making it deeper and longer-lasting.",
       philosophyBelief2: "in innovation with intention, not as a trend.",
@@ -634,7 +634,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       whyOutro:
         "Juntas, Amawa Ventures representa el equilibrio entre cuidado y ambición, construyendo innovación sin perder lo esencial.",
       philosophyTitle: "Nuestra Filosofía",
-      philosophyBeliefTitle: "Creemos",
+      philosophyBeliefTitle: "",
       philosophyBelief1:
         "en un aprendizaje vivido y sentido: un aprendizaje que involucra emociones, sentidos y experiencia, haciéndolo más profundo y duradero.",
       philosophyBelief2: "en la innovación con intención, no como tendencia.",
@@ -861,7 +861,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       whyOutro:
         "Spolu Amawa Ventures predstavuje rovnováhu medzi starostlivosťou a ambíciou, budovaním inovácií pri zachovaní prepojenia s tým podstatným.",
       philosophyTitle: "Naša Filozofia",
-      philosophyBeliefTitle: "Veríme",
+      philosophyBeliefTitle: "",
       philosophyBelief1:
         "v učenie, ktoré je prežité a precítené: učenie, ktoré zapája emócie, zmysly a skúsenosť, čím sa stáva hlbším a trvácnejším.",
       philosophyBelief2: "v inovácie so zámerom, nie ako trend.",

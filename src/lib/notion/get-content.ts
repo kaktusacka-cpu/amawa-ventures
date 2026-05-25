@@ -59,6 +59,8 @@ const EXPERIENCE_LOCAL_IMAGES: Record<string, string> = {
   "Strategic Advisory & Mentoring": "/photos/strategic-advisory.jpeg",
   "Tailored & Bespoke Programs": "/photos/Tailored-and-beskoed-programs.jpeg",
   "Tailored & Bespoke Formats": "/photos/Tailored-and-beskoed-programs.jpeg",
+  "Innovation & Entrepreneurship Bootcamp": "/photos/innovation-entrepeneurship-programs.jpeg",
+  "Valencia Innovation: Inside the Ecosystem": "/photos/valencia.jpeg",
 };
 
 function itemToExperience(item: ExperienceItemRow, locale: string) {

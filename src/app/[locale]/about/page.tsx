@@ -81,7 +81,7 @@ export default async function AboutPage({
           title={aboutPage.philosophyTitle}
           body={[
             <>
-              <strong>{aboutPage.philosophyBeliefTitle}</strong> {aboutPage.philosophyBelief1}{" "}
+              {aboutPage.philosophyBeliefTitle && <><strong>{aboutPage.philosophyBeliefTitle}</strong>{" "}</>}{aboutPage.philosophyBelief1}{" "}
               {aboutPage.philosophyBelief2} {aboutPage.philosophyBelief3}
             </>,
             aboutPage.philosophyOutro,
