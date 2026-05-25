@@ -172,6 +172,24 @@ export const getHomePageContent = cache(
       const aboutWhyAmawa = getRows(aboutRowsAll, "why amawa");
       const aboutPhilosophy = getRows(aboutRowsAll, "philosophy");
 
+      const ABOUT_RESERVED = new Set(["hero", "who we are", "why amawa", "philosophy"]);
+      const aboutExtraNames = [...new Set(aboutRowsAll.map((r) => r.section))]
+        .filter((s) => s && !ABOUT_RESERVED.has(s));
+      const extraSections = aboutExtraNames
+        .map((name) => {
+          const rows = getRows(aboutRowsAll, name);
+          const title = t(rows, "title", locale);
+          if (!title) return null;
+          const descRows = rows
+            .filter((r) => r.field === "description" || r.field === "caption")
+            .sort((a, b) => a.order - b.order);
+          const descriptions = descRows
+            .map((r) => (locale === "es" ? r.es : locale === "sk" ? r.sk : r.en) || r.en || r.value || "")
+            .filter(Boolean);
+          return { title, descriptions, image: getImage(rows, "image") };
+        })
+        .filter((s): s is NonNullable<typeof s> => s !== null);
+
       const pathCards = pathCardItems.map((item, i) => {
         const card = cardItemToCard(item, locale);
         return { ...card, image: card.image || fallback.paths.cards[i]?.image || "" };
@@ -364,6 +382,7 @@ export const getHomePageContent = cache(
           impactNote2: t(impact, "note", locale) || fallback.aboutPage.impactNote2,
           ecosystemTitle: t(ecosystem, "title", locale) || fallback.aboutPage.ecosystemTitle,
           ecosystemDescription: t(ecosystem, "description", locale) || fallback.aboutPage.ecosystemDescription,
+          extraSections,
         },
       };
     } catch {

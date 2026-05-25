@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Fragment } from "react";
 import { notFound } from "next/navigation";
 import { BoundaryImage } from "@/components/boundary-image";
 import { PageHero } from "@/components/page-hero";
@@ -46,6 +47,15 @@ export default async function AboutPage({
       </section>
 
       <BoundaryImage src={aboutPage.boundaryImage1} alt="Mountain landscape" />
+
+      {aboutPage.extraSections.map((section) => (
+        <Fragment key={section.title}>
+          <section className="w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center bg-surface pt-[140px] pb-[140px] md:pt-[276px] md:pb-[276px]">
+            <SectionHeading title={section.title} body={section.descriptions} />
+          </section>
+          <BoundaryImage src={section.image || aboutPage.boundaryImage1} alt={section.title} />
+        </Fragment>
+      ))}
 
       {/* Why Amawa Ventures — bg-surface, extra padding on both sides for images */}
       <section className="w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center bg-surface pt-[140px] pb-[140px] md:pt-[276px] md:pb-[276px]">

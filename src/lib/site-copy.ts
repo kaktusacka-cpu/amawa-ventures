@@ -199,6 +199,7 @@ export type HomeCopy = {
     boundaryImage1: string;
     boundaryImage2: string;
     philosophyImage: string;
+    extraSections: { title: string; descriptions: string[]; image: string }[];
   };
 };
 
@@ -237,7 +238,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       primaryCta: "Explore our programs",
       secondaryCta: "Learn more about us",
       videoPlaceholder: "video preview",
-      videoUrl: "/placeholder-video.mp4",
+      videoUrl: "/amawa_logo.mp4",
     },
     about: {
       title: "What is Amawa?",
@@ -425,6 +426,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       boundaryImage1: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600&h=500&fit=crop",
       boundaryImage2: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&h=500&fit=crop",
       philosophyImage: "/infographic.png",
+      extraSections: [],
     },
   },
   es: {
@@ -462,7 +464,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       secondaryCta: "Conocer más",
       videoPlaceholder: "vista previa",
       connectText: "actúa con intención y",
-      videoUrl: "/placeholder-video.mp4",
+      videoUrl: "/amawa_logo.mp4",
     },
     about: {
       title: "¿Qué es Amawa?",
@@ -649,6 +651,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       boundaryImage1: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600&h=500&fit=crop",
       boundaryImage2: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&h=500&fit=crop",
       philosophyImage: "/infographic.png",
+      extraSections: [],
     },
   },
   sk: {
@@ -686,7 +689,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       secondaryCta: "Zistiť viac",
       videoPlaceholder: "ukážka videa",
       connectText: "konaj s úmyslom a",
-      videoUrl: "/placeholder-video.mp4",
+      videoUrl: "/amawa_logo.mp4",
     },
     about: {
       title: "Čo je Amawa?",
@@ -870,6 +873,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       boundaryImage1: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600&h=500&fit=crop",
       boundaryImage2: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&h=500&fit=crop",
       philosophyImage: "/infographic.png",
+      extraSections: [],
     },
   },
 };
