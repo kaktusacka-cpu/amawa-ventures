@@ -58,7 +58,7 @@ export function SiteFooter({ footer, documents, locale }: SiteFooterProps) {
   const page = segments[1] ?? "";
   const isHomePage = segments.length === 1;
   const footerBgClass =
-    isHomePage || page === "about" || page === "experiences"
+    isHomePage || page === "about" || page === "programs"
       ? "bg-surface-alt"
       : "bg-surface";
 

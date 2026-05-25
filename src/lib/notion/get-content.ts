@@ -50,6 +50,12 @@ function getValueFor(rows: NotionRow[], field: string): string {
   return rows.find((r) => r.field === field)?.value ?? "";
 }
 
+// Local photos (public/photos) for About page extra sections.
+// Key = exact EN title of the section.
+const ABOUT_EXTRA_LOCAL_IMAGES: Record<string, string> = {
+  "Behind Amawa": "/photos/photo07.png",
+};
+
 // Local photos (public/photos) for What We Do areas.
 // Key = exact EN title of the area (title field in Notion).
 const WW_DO_LOCAL_IMAGES: Record<string, string> = {
@@ -210,7 +216,7 @@ export const getHomePageContent = cache(
           const descriptions = descRows
             .map((r) => (locale === "es" ? r.es : locale === "sk" ? r.sk : r.en) || r.en || r.value || "")
             .filter(Boolean);
-          return { title, descriptions, image: getImage(rows, "image") };
+          return { title, descriptions, image: ABOUT_EXTRA_LOCAL_IMAGES[title] || getImage(rows, "image") };
         })
         .filter((s): s is NonNullable<typeof s> => s !== null);
 

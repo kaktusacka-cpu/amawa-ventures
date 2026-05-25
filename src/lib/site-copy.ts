@@ -220,7 +220,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
     nav: {
       home: "Home",
       about: "About",
-      experiences: "Experiences",
+      experiences: "Programs",
       whatWeDo: "What we do",
       collaborate: "Collaborate",
       getInTouch: "Get in touch",
@@ -452,7 +452,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
     nav: {
       home: "Inicio",
       about: "Nosotros",
-      experiences: "Experiencias",
+      experiences: "Programas",
       whatWeDo: "Qué hacemos",
       collaborate: "Colaborar",
       getInTouch: "Contacto",
@@ -684,7 +684,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
     nav: {
       home: "Domov",
       about: "O nás",
-      experiences: "Skúsenosti",
+      experiences: "Programy",
       whatWeDo: "Čo robíme",
       collaborate: "Spolupráca",
       getInTouch: "Kontakt",

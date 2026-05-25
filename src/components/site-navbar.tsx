@@ -58,7 +58,7 @@ export function SiteNavbar({ locale, labels }: SiteNavbarProps) {
   const navLinks = [
     { href: `/${locale}`, label: labels.home ?? "Home" },
     { href: `/${locale}/about`, label: labels.about },
-    { href: `/${locale}/experiences`, label: labels.experiences },
+    { href: `/${locale}/programs`, label: labels.experiences },
     { href: `/${locale}/what-we-do`, label: labels.whatWeDo },
     { href: `/${locale}/collaborate`, label: labels.collaborate },
   ];

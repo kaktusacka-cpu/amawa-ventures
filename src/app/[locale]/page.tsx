@@ -54,7 +54,7 @@ export default async function HomePage({
             <Reveal animation="hero-up" delay={800}>
               <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
                 <Button asChild size="pill">
-                  <Link href={`/${locale}/experiences`}>{content.hero.primaryCta}</Link>
+                  <Link href={`/${locale}/programs`}>{content.hero.primaryCta}</Link>
                 </Button>
                 <Button asChild variant="outline-warm" size="pill">
                   <Link href={`/${locale}/about`}>{content.hero.secondaryCta}</Link>

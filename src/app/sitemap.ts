@@ -4,7 +4,7 @@ import { getSiteUrl } from "@/lib/site-url";
 
 const siteUrl = getSiteUrl();
 
-const routes = ["", "about", "experiences", "what-we-do", "collaborate"];
+const routes = ["", "about", "programs", "what-we-do", "collaborate"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
