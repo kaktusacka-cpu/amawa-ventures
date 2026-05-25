@@ -50,6 +50,12 @@ function getValueFor(rows: NotionRow[], field: string): string {
   return rows.find((r) => r.field === field)?.value ?? "";
 }
 
+// Local photos (public/photos) used as fallback when Notion has no image set.
+// Key = exact value of the Name column in the Experience Items DB.
+const EXPERIENCE_LOCAL_IMAGES: Record<string, string> = {
+  "Valencia Coast Bootcamp": "/photos/Valencia Coast Bootcamp.png",
+};
+
 function itemToExperience(item: ExperienceItemRow, locale: string) {
   const titleMap: Record<string, string> = { en: item.enTitle, es: item.esTitle, sk: item.skTitle };
   const descMap: Record<string, string> = { en: item.enDescription, es: item.esDescription, sk: item.skDescription };
@@ -63,7 +69,7 @@ function itemToExperience(item: ExperienceItemRow, locale: string) {
   return {
     title,
     description: descMap[locale] || item.enDescription,
-    image: item.image || "",
+    image: item.image || EXPERIENCE_LOCAL_IMAGES[item.name] || "",
     imageAlt: title,
     isUpcoming: item.isUpcoming,
     ctaLabel,
