@@ -66,6 +66,7 @@ const EXPERIENCE_LOCAL_IMAGES: Record<string, string> = {
   "Roots & Routes": "/photos/roots-and-routes.jpeg",
   "Tailored & Bespoke Programs": "/photos/Tailored-and-beskoed-programs.jpeg",
   "Leadership in Motion": "/photos/LeadershipinMotion.jpg",
+  "High Ground - Nepal Team Expedition": "/photos/nepal.jpg",
   "Tailored & Bespoke Formats": "/photos/Tailored-and-beskoed-programs.jpeg",
   "Innovation & Entrepreneurship Bootcamp": "/photos/innovation-entrepeneurship-programs.jpeg",
   "Valencia Innovation: Inside the Ecosystem": "/photos/valencia.jpeg",
