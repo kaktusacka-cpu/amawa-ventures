@@ -50,17 +50,24 @@ function getValueFor(rows: NotionRow[], field: string): string {
   return rows.find((r) => r.field === field)?.value ?? "";
 }
 
+// Local photos (public/photos) for What We Do areas.
+// Key = exact EN title of the area (title field in Notion).
+const WW_DO_LOCAL_IMAGES: Record<string, string> = {
+  "Team Bootcamps & Offsites": "/photos/Team-bootcamps-and-offsites.png",
+};
+
 // Local photos (public/photos) used as fallback when Notion has no image set.
 // Key = exact value of the Name column in the Experience Items DB.
 const EXPERIENCE_LOCAL_IMAGES: Record<string, string> = {
   "Valencia Coast Bootcamp": "/photos/valencia-coast-bootcamp.png",
-  "Roots & Routes - Slovakia Team Experience": "/photos/roots-and-routes.jpg",
-  "Roots & Routes": "/photos/roots-and-routes.jpg",
+  "Roots & Routes - Slovakia Team Experience": "/photos/roots-and-routes.jpeg",
+  "Roots & Routes": "/photos/roots-and-routes.jpeg",
   "Strategic Advisory & Mentoring": "/photos/strategic-advisory.jpeg",
   "Tailored & Bespoke Programs": "/photos/Tailored-and-beskoed-programs.jpeg",
   "Tailored & Bespoke Formats": "/photos/Tailored-and-beskoed-programs.jpeg",
   "Innovation & Entrepreneurship Bootcamp": "/photos/innovation-entrepeneurship-programs.jpeg",
   "Valencia Innovation: Inside the Ecosystem": "/photos/valencia.jpeg",
+  "Startup Acceleration Programs": "/photos/Startup-acceleration-programs.png",
 };
 
 function itemToExperience(item: ExperienceItemRow, locale: string) {
@@ -579,7 +586,7 @@ export const getWhatWeDoContent = cache(
 
         // Image lives in the row's Image (url) column. parseRow already
         // extracts this into row.image, so getImage finds it.
-        const image = getImage(areaRows, "image");
+        const image = WW_DO_LOCAL_IMAGES[title] || getImage(areaRows, "image");
 
         areas.push({
           title,
