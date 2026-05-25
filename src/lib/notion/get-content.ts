@@ -54,6 +54,7 @@ function getValueFor(rows: NotionRow[], field: string): string {
 // Key = exact value of the Name column in the Experience Items DB.
 const EXPERIENCE_LOCAL_IMAGES: Record<string, string> = {
   "Valencia Coast Bootcamp": "/photos/valencia-coast-bootcamp.png",
+  "Roots & Routes - Slovakia Team Experience": "/photos/roots-and-routes.jpg",
 };
 
 function itemToExperience(item: ExperienceItemRow, locale: string) {
