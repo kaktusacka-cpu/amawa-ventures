@@ -55,6 +55,7 @@ function getValueFor(rows: NotionRow[], field: string): string {
 const EXPERIENCE_LOCAL_IMAGES: Record<string, string> = {
   "Valencia Coast Bootcamp": "/photos/valencia-coast-bootcamp.png",
   "Roots & Routes - Slovakia Team Experience": "/photos/roots-and-routes.jpg",
+  "Roots & Routes": "/photos/roots-and-routes.jpg",
 };
 
 function itemToExperience(item: ExperienceItemRow, locale: string) {
@@ -70,7 +71,7 @@ function itemToExperience(item: ExperienceItemRow, locale: string) {
   return {
     title,
     description: descMap[locale] || item.enDescription,
-    image: item.image || EXPERIENCE_LOCAL_IMAGES[item.name] || "",
+    image: EXPERIENCE_LOCAL_IMAGES[item.name] || EXPERIENCE_LOCAL_IMAGES[item.enTitle] || item.image || "",
     imageAlt: title,
     isUpcoming: item.isUpcoming,
     ctaLabel,
