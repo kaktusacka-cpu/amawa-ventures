@@ -56,6 +56,8 @@ const EXPERIENCE_LOCAL_IMAGES: Record<string, string> = {
   "Valencia Coast Bootcamp": "/photos/valencia-coast-bootcamp.png",
   "Roots & Routes - Slovakia Team Experience": "/photos/roots-and-routes.jpg",
   "Roots & Routes": "/photos/roots-and-routes.jpg",
+  "Strategic Advisory & Mentoring": "/photos/strategic-advisory.jpeg",
+  "Tailored & Bespoke Programs": "/photos/Tailored-and-beskoed-programs.jpeg",
 };
 
 function itemToExperience(item: ExperienceItemRow, locale: string) {

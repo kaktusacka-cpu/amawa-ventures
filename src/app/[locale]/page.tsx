@@ -28,6 +28,7 @@ export default async function HomePage({
       quote: content.testimonials.quote,
       author: content.testimonials.author,
       role: content.testimonials.role,
+      link: "https://tuytu.tech/",
     },
     {
       quote: content.approach.description,

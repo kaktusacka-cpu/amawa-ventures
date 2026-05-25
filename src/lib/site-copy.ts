@@ -321,9 +321,9 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       eyebrow: "Testimonials",
       title: "What did you say about us?",
       quote:
-        "This program completely shifted how our team approaches problem-solving. The frameworks are practical and the facilitation was world-class.",
-      author: "Sara Chan",
-      role: "Head of Innovation, Tech Corp",
+        "Since working with Amawa Ventures, we have gained much more clarity around TuyTu's vision, strategy and growth path. Their advisory support has helped us move from having strong ideas to building a more structured, realistic and actionable project. Their experience in innovation, technology and international business has been truly valuable for our team.",
+      author: "Amir Es Sabbany",
+      role: "CEO, TuYtu tech",
     },
     contact: {
       eyebrow: "Get in touch",
@@ -546,9 +546,9 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       eyebrow: "Testimonios",
       title: "¿Qué dicen de nosotros?",
       quote:
-        "Este programa cambió por completo la forma en que nuestro equipo aborda la resolución de problemas.",
+        "Since working with Amawa Ventures, we have gained much more clarity around TuyTu's vision, strategy and growth path. Their advisory support has helped us move from having strong ideas to building a more structured, realistic and actionable project. Their experience in innovation, technology and international business has been truly valuable for our team.",
       author: "Sara Chan",
-      role: "Directora de Innovación, Tech Corp",
+      role: "CEO, TuYtu tech",
     },
     contact: {
       eyebrow: "Contacto",
@@ -768,9 +768,9 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       eyebrow: "Referencie",
       title: "Čo o nás hovoria?",
       quote:
-        "Tento program úplne zmenil spôsob, akým náš tím pristupuje k riešeniu problémov.",
-      author: "Sara Chan",
-      role: "Head of Innovation, Tech Corp",
+        "Since working with Amawa Ventures, we have gained much more clarity around TuyTu's vision, strategy and growth path. Their advisory support has helped us move from having strong ideas to building a more structured, realistic and actionable project. Their experience in innovation, technology and international business has been truly valuable for our team.",
+      author: "Amir Es Sabbany",
+      role: "CEO, TuYtu tech",
     },
     contact: {
       eyebrow: "Kontakt",
