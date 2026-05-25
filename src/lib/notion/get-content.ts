@@ -520,12 +520,9 @@ export const getWhatWeDoContent = cache(
         const title = t(areaRows, "title", locale);
         if (!title) continue;
 
-        // Two supported patterns for paragraph copy:
-        //   (a) multiple rows all named 'description' (in Order sequence)
-        //   (b) named rows 'description1' .. 'description5'
         const descriptions: string[] = [];
         const descRows = areaRows
-          .filter((r) => r.field === "description")
+          .filter((r) => r.field === "description" || r.field === "decription" || r.field === "caption")
           .sort((a, b) => a.order - b.order);
         for (const r of descRows) {
           const localized = locale === "es" ? r.es : locale === "sk" ? r.sk : r.en;
