@@ -53,8 +53,9 @@ function getValueFor(rows: NotionRow[], field: string): string {
 // Local photos (public/photos) for What We Do areas.
 // Key = exact EN title of the area (title field in Notion).
 const WW_DO_LOCAL_IMAGES: Record<string, string> = {
-  "Team Bootcamps & Offsites": "/photos/Team-bootcamps-and-offsites.png",
+  "Team Bootcamps & Offsites": "/photos/Team-bootcamps-and-offsites.jpg",
   "Innovation Missions": "/photos/inovation-missions.jpg",
+  "Strategic Advisory & Mentoring": "/photos/photo02.jpg",
 };
 
 // Local photos (public/photos) used as fallback when Notion has no image set.
@@ -63,8 +64,8 @@ const EXPERIENCE_LOCAL_IMAGES: Record<string, string> = {
   "Valencia Coast Bootcamp": "/photos/valencia-coast-bootcamp.png",
   "Roots & Routes - Slovakia Team Experience": "/photos/roots-and-routes.jpeg",
   "Roots & Routes": "/photos/roots-and-routes.jpeg",
-  "Strategic Advisory & Mentoring": "/photos/photo02.jpg",
   "Tailored & Bespoke Programs": "/photos/Tailored-and-beskoed-programs.jpeg",
+  "Leadership in Motion": "/photos/LeadershipinMotion.jpg",
   "Tailored & Bespoke Formats": "/photos/Tailored-and-beskoed-programs.jpeg",
   "Innovation & Entrepreneurship Bootcamp": "/photos/innovation-entrepeneurship-programs.jpeg",
   "Valencia Innovation: Inside the Ecosystem": "/photos/valencia.jpeg",
