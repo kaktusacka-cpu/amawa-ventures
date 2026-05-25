@@ -1331,7 +1331,7 @@ export const whatWeDoCopyByLocale: Record<Locale, WhatWeDoCopy> = {
       secondaryText:
         "Our work takes different forms, but all of them are rooted in the same philosophy: creating the right conditions to think clearly, act with intention and grow with purpose.",
       ctaLabel: "Get in touch",
-      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&h=600&fit=crop",
+      image: "/infographic.png",
     },
     sectionImages: [
       "https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&h=500&fit=crop",
@@ -1378,7 +1378,7 @@ export const whatWeDoCopyByLocale: Record<Locale, WhatWeDoCopy> = {
       secondaryText:
         "Nuestro trabajo toma diferentes formas, pero todas están enraizadas en la misma filosofía: crear las condiciones adecuadas para pensar con claridad, actuar con intención y crecer con propósito.",
       ctaLabel: "Contacto",
-      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&h=600&fit=crop",
+      image: "/infographic.png",
     },
     sectionImages: [
       "https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&h=500&fit=crop",
@@ -1425,7 +1425,7 @@ export const whatWeDoCopyByLocale: Record<Locale, WhatWeDoCopy> = {
       secondaryText:
         "Naša práca má rôzne formy, ale všetky sú zakorenené v rovnakej filozofii: vytvárať správne podmienky na jasné myslenie, zámerné konanie a rast so zmyslom.",
       ctaLabel: "Kontakt",
-      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&h=600&fit=crop",
+      image: "/infographic.png",
     },
     sectionImages: [
       "https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&h=500&fit=crop",

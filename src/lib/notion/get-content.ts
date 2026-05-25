@@ -54,6 +54,7 @@ function getValueFor(rows: NotionRow[], field: string): string {
 // Key = exact EN title of the area (title field in Notion).
 const WW_DO_LOCAL_IMAGES: Record<string, string> = {
   "Team Bootcamps & Offsites": "/photos/Team-bootcamps-and-offsites.png",
+  "Innovation Missions": "/photos/inovation-missions.jpg",
 };
 
 // Local photos (public/photos) used as fallback when Notion has no image set.
@@ -62,7 +63,7 @@ const EXPERIENCE_LOCAL_IMAGES: Record<string, string> = {
   "Valencia Coast Bootcamp": "/photos/valencia-coast-bootcamp.png",
   "Roots & Routes - Slovakia Team Experience": "/photos/roots-and-routes.jpeg",
   "Roots & Routes": "/photos/roots-and-routes.jpeg",
-  "Strategic Advisory & Mentoring": "/photos/strategic-advisory.jpeg",
+  "Strategic Advisory & Mentoring": "/photos/photo02.jpg",
   "Tailored & Bespoke Programs": "/photos/Tailored-and-beskoed-programs.jpeg",
   "Tailored & Bespoke Formats": "/photos/Tailored-and-beskoed-programs.jpeg",
   "Innovation & Entrepreneurship Bootcamp": "/photos/innovation-entrepeneurship-programs.jpeg",
@@ -390,7 +391,7 @@ export const getHomePageContent = cache(
           whyVenturesTitle: tn(aboutWhyAmawa, "description - highlight", 2, locale) || fallback.aboutPage.whyVenturesTitle,
           whyVenturesBody: tn(aboutWhyAmawa, "description", 3, locale) || fallback.aboutPage.whyVenturesBody,
           whyOutro: tn(aboutWhyAmawa, "description", 4, locale) || fallback.aboutPage.whyOutro,
-          boundaryImage2: getImage(aboutWhyAmawa, "image") || fallback.aboutPage.boundaryImage2,
+          boundaryImage2: fallback.aboutPage.boundaryImage2 || getImage(aboutWhyAmawa, "image"),
 
           // 04 philosophy
           philosophyTitle: t(aboutPhilosophy, "title", locale) || fallback.aboutPage.philosophyTitle,
@@ -601,7 +602,7 @@ export const getWhatWeDoContent = cache(
           leadText: t(hero, "description", locale) || fallback.hero.leadText,
           secondaryText: t(hero, "caption", locale) || fallback.hero.secondaryText,
           ctaLabel: t(hero, "CTA", locale) || fallback.hero.ctaLabel,
-          image: getImage(hero, "image") || fallback.hero.image,
+          image: fallback.hero.image || getImage(hero, "image"),
         },
         sectionImages: fallback.sectionImages,
         areas: areas.length > 0 ? areas : fallback.areas,
