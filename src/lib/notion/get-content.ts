@@ -61,17 +61,17 @@ const WW_DO_LOCAL_IMAGES: Record<string, string> = {
 // Local photos (public/photos) used as fallback when Notion has no image set.
 // Key = exact value of the Name column in the Experience Items DB.
 const EXPERIENCE_LOCAL_IMAGES: Record<string, string> = {
-  "Valencia Coast Bootcamp": "/photos/valencia-coast-bootcamp.png",
+  "Valencia Coast Bootcamp": "/photos/valencia-coast-bootcamp.jpg",
   "Roots & Routes - Slovakia Team Experience": "/photos/roots-and-routes.jpeg",
   "Roots & Routes": "/photos/roots-and-routes.jpeg",
   "Tailored & Bespoke Programs": "/photos/Tailored-and-beskoed-programs.jpeg",
   "Leadership in Motion": "/photos/LeadershipinMotion.jpg",
-  "High Ground - Nepal Team Expedition": "/photos/nepal02.png",
+  "High Ground - Nepal Team Expedition": "/photos/nepal02.jpg",
   "Tailored & Bespoke Formats": "/photos/Tailored-and-beskoed-programs.jpeg",
   "Innovation & Entrepreneurship Bootcamp": "/photos/innovation-entrepeneurship-programs.jpeg",
   "Innovation & Entrepreneurship Bootcamps": "/photos/photo06.jpeg",
   "Valencia Innovation: Inside the Ecosystem": "/photos/valencia.jpeg",
-  "Startup Acceleration Programs": "/photos/Startup-acceleration-programs.png",
+  "Startup Acceleration Programs": "/photos/Startup-acceleration-programs.jpg",
 };
 
 function itemToExperience(item: ExperienceItemRow, locale: string) {
