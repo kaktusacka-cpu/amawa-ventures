@@ -91,7 +91,7 @@ export function TestimonialsSlider({ items }: TestimonialsSliderProps) {
             height={32}
             className="shrink-0"
           />
-          <blockquote className="flex-1 pt-2 pb-2 line-clamp-4 min-h-[8rem]">
+          <blockquote className="flex-1 pt-2 pb-2 line-clamp-5 min-h-[8rem]">
             {active.quote}
           </blockquote>
           <Image

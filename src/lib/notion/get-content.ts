@@ -58,6 +58,7 @@ const EXPERIENCE_LOCAL_IMAGES: Record<string, string> = {
   "Roots & Routes": "/photos/roots-and-routes.jpg",
   "Strategic Advisory & Mentoring": "/photos/strategic-advisory.jpeg",
   "Tailored & Bespoke Programs": "/photos/Tailored-and-beskoed-programs.jpeg",
+  "Tailored & Bespoke Formats": "/photos/Tailored-and-beskoed-programs.jpeg",
 };
 
 function itemToExperience(item: ExperienceItemRow, locale: string) {
