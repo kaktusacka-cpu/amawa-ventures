@@ -23,24 +23,7 @@ export default async function HomePage({
 
   const content = await getHomePageContent(locale as Locale);
 
-  const testimonialItems = [
-    {
-      quote: content.testimonials.quote,
-      author: content.testimonials.author,
-      role: content.testimonials.role,
-      link: "https://tuytu.tech/",
-    },
-    {
-      quote: content.approach.description,
-      author: content.testimonials.author,
-      role: content.testimonials.role,
-    },
-    {
-      quote: content.about.description,
-      author: content.testimonials.author,
-      role: content.testimonials.role,
-    },
-  ];
+  const testimonialItems = content.testimonials.items;
 
   // Each section is defined once as JSX. Order comes from content.sectionOrder
   // (Notion pageOrder rows); visibility comes from content.visibleSections.

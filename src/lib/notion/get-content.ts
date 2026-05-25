@@ -297,9 +297,20 @@ export const getHomePageContent = cache(
         testimonials: {
           eyebrow: t(testimonials, "overline", locale) || fallback.testimonials.eyebrow,
           title: t(testimonials, "title", locale) || fallback.testimonials.title,
-          quote: t(testimonials, "quote", locale) || fallback.testimonials.quote,
-          author: t(testimonials, "author", locale) || fallback.testimonials.author,
-          role: t(testimonials, "role", locale) || fallback.testimonials.role,
+          items: (() => {
+            const built = [];
+            for (let i = 0; i < 10; i++) {
+              const quote = tn(testimonials, "quote", i, locale);
+              if (!quote) break;
+              built.push({
+                quote,
+                author: tn(testimonials, "author", i, locale),
+                role: tn(testimonials, "role", i, locale),
+                link: tn(testimonials, "link", i, locale) || undefined,
+              });
+            }
+            return built.length > 0 ? built : fallback.testimonials.items;
+          })(),
         },
         contact: {
           eyebrow: t(contact, "overline", locale) || fallback.contact.eyebrow,

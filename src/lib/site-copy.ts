@@ -111,9 +111,7 @@ export type HomeCopy = {
   testimonials: {
     eyebrow: string;
     title: string;
-    quote: string;
-    author: string;
-    role: string;
+    items: { quote: string; author: string; role: string; link?: string }[];
   };
   contact: {
     eyebrow: string;
@@ -320,10 +318,15 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
     testimonials: {
       eyebrow: "Testimonials",
       title: "What did you say about us?",
-      quote:
-        "Since working with Amawa Ventures, we have gained much more clarity around TuyTu's vision, strategy and growth path. Their advisory support has helped us move from having strong ideas to building a more structured, realistic and actionable project. Their experience in innovation, technology and international business has been truly valuable for our team.",
-      author: "Amir Es Sabbany",
-      role: "CEO, TuYtu tech",
+      items: [
+        {
+          quote:
+            "Since working with Amawa Ventures, we have gained much more clarity around TuyTu's vision, strategy and growth path. Their advisory support has helped us move from having strong ideas to building a more structured, realistic and actionable project. Their experience in innovation, technology and international business has been truly valuable for our team.",
+          author: "Amir Es Sabbany",
+          role: "CEO, TuYtu tech",
+          link: "https://tuytu.tech/",
+        },
+      ],
     },
     contact: {
       eyebrow: "Get in touch",
@@ -545,10 +548,15 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
     testimonials: {
       eyebrow: "Testimonios",
       title: "¿Qué dicen de nosotros?",
-      quote:
-        "Since working with Amawa Ventures, we have gained much more clarity around TuyTu's vision, strategy and growth path. Their advisory support has helped us move from having strong ideas to building a more structured, realistic and actionable project. Their experience in innovation, technology and international business has been truly valuable for our team.",
-      author: "Sara Chan",
-      role: "CEO, TuYtu tech",
+      items: [
+        {
+          quote:
+            "Since working with Amawa Ventures, we have gained much more clarity around TuyTu's vision, strategy and growth path. Their advisory support has helped us move from having strong ideas to building a more structured, realistic and actionable project. Their experience in innovation, technology and international business has been truly valuable for our team.",
+          author: "Amir Es Sabbany",
+          role: "CEO, TuYtu tech",
+          link: "https://tuytu.tech/",
+        },
+      ],
     },
     contact: {
       eyebrow: "Contacto",
@@ -767,10 +775,15 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
     testimonials: {
       eyebrow: "Referencie",
       title: "Čo o nás hovoria?",
-      quote:
-        "Since working with Amawa Ventures, we have gained much more clarity around TuyTu's vision, strategy and growth path. Their advisory support has helped us move from having strong ideas to building a more structured, realistic and actionable project. Their experience in innovation, technology and international business has been truly valuable for our team.",
-      author: "Amir Es Sabbany",
-      role: "CEO, TuYtu tech",
+      items: [
+        {
+          quote:
+            "Since working with Amawa Ventures, we have gained much more clarity around TuyTu's vision, strategy and growth path. Their advisory support has helped us move from having strong ideas to building a more structured, realistic and actionable project. Their experience in innovation, technology and international business has been truly valuable for our team.",
+          author: "Amir Es Sabbany",
+          role: "CEO, TuYtu tech",
+          link: "https://tuytu.tech/",
+        },
+      ],
     },
     contact: {
       eyebrow: "Kontakt",
