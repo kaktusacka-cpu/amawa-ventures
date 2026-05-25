@@ -156,6 +156,7 @@ export type HomeCopy = {
   pages: {
     aboutTitle: string;
     collaborateBody: string;
+    collaborateCaption: string;
   };
   aboutPage: {
     heroIntro: string;
@@ -374,6 +375,8 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       aboutTitle: "About Amawa",
       collaborateBody:
         "Looking for a partner in innovation and learning? Let's build something meaningful together.",
+      collaborateCaption:
+        "Are you a mentor, expedition leader or ecosystem practitioner? We are always looking for passionate collaborators. Tell us about yourself.",
     },
     aboutPage: {
       heroIntro:
@@ -604,6 +607,8 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       aboutTitle: "Sobre Amawa",
       collaborateBody:
         "¿Buscas un aliado en innovación y aprendizaje? Construyamos algo valioso.",
+      collaborateCaption:
+        "Are you a mentor, expedition leader or ecosystem practitioner? We are always looking for passionate collaborators. Tell us about yourself.",
     },
     aboutPage: {
       heroIntro:
@@ -831,6 +836,8 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       aboutTitle: "O Amawa",
       collaborateBody:
         "Hľadáte partnera pre inovácie a učenie? Poďme niečo vytvoriť spolu.",
+      collaborateCaption:
+        "Are you a mentor, expedition leader or ecosystem practitioner? We are always looking for passionate collaborators. Tell us about yourself.",
     },
     aboutPage: {
       heroIntro:

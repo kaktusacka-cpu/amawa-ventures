@@ -30,6 +30,13 @@ export default async function CollaboratePage({
               {content.pages.collaborateBody}
             </p>
           </Reveal>
+          {content.pages.collaborateCaption && (
+            <Reveal animation="fade-in-up" delay={140}>
+              <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-muted-foreground">
+                {content.pages.collaborateCaption}
+              </p>
+            </Reveal>
+          )}
 
           <div className="mt-16 grid gap-6 text-left max-w-[667px] mx-auto w-full">
             <Reveal animation="fade-in-up" delay={160}>

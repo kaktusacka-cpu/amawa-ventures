@@ -367,6 +367,7 @@ export const getHomePageContent = cache(
         pages: {
           aboutTitle: t(pages, "aboutTitle", locale) || fallback.pages.aboutTitle,
           collaborateBody: t(pages, "collaborateBody", locale) || fallback.pages.collaborateBody,
+          collaborateCaption: t(pages, "collaborateCaption", locale) || fallback.pages.collaborateCaption,
         },
         aboutPage: {
           // 01 hero
