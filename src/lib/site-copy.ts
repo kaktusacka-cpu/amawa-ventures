@@ -352,9 +352,9 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       },
       contact: {
         email: "info@amawaventures.com",
-        phone: "+421 918 444 444",
+        phone: "",
         emailHref: "mailto:info@amawaventures.com",
-        phoneHref: "tel:+421918444444",
+        phoneHref: "",
       },
       address: {
         line1: "Hemerkova 1320/12",
@@ -577,9 +577,9 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       },
       contact: {
         email: "info@amawaventures.com",
-        phone: "+421 918 444 444",
+        phone: "",
         emailHref: "mailto:info@amawaventures.com",
-        phoneHref: "tel:+421918444444",
+        phoneHref: "",
       },
       address: {
         line1: "Hemerkova 1320/12",
@@ -799,9 +799,9 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       },
       contact: {
         email: "info@amawaventures.com",
-        phone: "+421 918 444 444",
+        phone: "",
         emailHref: "mailto:info@amawaventures.com",
-        phoneHref: "tel:+421918444444",
+        phoneHref: "",
       },
       address: {
         line1: "Hemerkova 1320/12",
