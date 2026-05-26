@@ -54,6 +54,9 @@ function getValueFor(rows: NotionRow[], field: string): string {
 // Key = exact EN title of the section.
 const ABOUT_EXTRA_LOCAL_IMAGES: Record<string, string> = {
   "Behind Amawa": "/photos/photo07.png",
+  "behind amawa": "/photos/photo07.png",
+  "Our Approach": "/photos/ourapproach.jpg",
+  "our approach": "/photos/ourapproach.jpg",
 };
 
 // Local photos (public/photos) for What We Do areas.
@@ -71,7 +74,7 @@ const EXPERIENCE_LOCAL_IMAGES: Record<string, string> = {
   "Roots & Routes - Slovakia Team Experience": "/photos/roots-and-routes.jpeg",
   "Roots & Routes": "/photos/roots-and-routes.jpeg",
   "Tailored & Bespoke Programs": "/photos/Tailored-and-beskoed-programs.jpeg",
-  "Leadership in Motion": "/photos/LeadershipinMotion.jpg",
+  "Leadership in Motion": "/photos/LeadershipinMotion-opt.jpg",
   "High Ground - Nepal Team Expedition": "/photos/nepal02.jpg",
   "Tailored & Bespoke Formats": "/photos/Tailored-and-beskoed-programs.jpeg",
   "Innovation & Entrepreneurship Bootcamp": "/photos/innovation-entrepeneurship-programs.jpeg",
@@ -216,13 +219,14 @@ export const getHomePageContent = cache(
           const descriptions = descRows
             .map((r) => (locale === "es" ? r.es : locale === "sk" ? r.sk : r.en) || r.en || r.value || "")
             .filter(Boolean);
-          return { title, descriptions, image: ABOUT_EXTRA_LOCAL_IMAGES[title] || getImage(rows, "image") };
+          const localImg = ABOUT_EXTRA_LOCAL_IMAGES[title] || ABOUT_EXTRA_LOCAL_IMAGES[name] || ABOUT_EXTRA_LOCAL_IMAGES[title.toLowerCase()] || ABOUT_EXTRA_LOCAL_IMAGES[name.toLowerCase()];
+          return { title, descriptions, image: localImg || getImage(rows, "image") };
         })
         .filter((s): s is NonNullable<typeof s> => s !== null);
 
       const pathCards = pathCardItems.map((item, i) => {
         const card = cardItemToCard(item, locale);
-        return { ...card, image: card.image || fallback.paths.cards[i]?.image || "" };
+        return { ...card, image: fallback.paths.cards[i]?.image || card.image || "" };
       });
       const coreCards = coreCardItems.map((item) => cardItemToCard(item, locale));
       const metrics = metricItems.map((item) => metricItemToMetric(item, locale));
@@ -389,7 +393,7 @@ export const getHomePageContent = cache(
           whoWeAreLivedTitle: tn(aboutWhoWeAre, "description - highlight", 1, locale) || fallback.aboutPage.whoWeAreLivedTitle,
           whoWeAreLivedBody: tn(aboutWhoWeAre, "description", 2, locale) || fallback.aboutPage.whoWeAreLivedBody,
           whoWeAreOutro: t(aboutWhoWeAre, "caption", locale) || fallback.aboutPage.whoWeAreOutro,
-          boundaryImage1: getImage(aboutWhoWeAre, "image") || fallback.aboutPage.boundaryImage1,
+          boundaryImage1: fallback.aboutPage.boundaryImage1 || getImage(aboutWhoWeAre, "image"),
 
           // 03 why amawa
           whyTitle: t(aboutWhyAmawa, "title", locale) || fallback.aboutPage.whyTitle,
@@ -517,7 +521,7 @@ export const getExperiencesContent = cache(
           tagline: t(hero, "description", locale) || fallback.hero.tagline,
           description: t(hero, "caption", locale) || fallback.hero.description,
           ctaLabel: t(hero, "CTA", locale) || fallback.hero.ctaLabel,
-          image: getImage(hero, "image") || fallback.hero.image,
+          image: fallback.hero.image || getImage(hero, "image"),
         },
         statusLabels: {
           upcoming: t(statusLabels, "upcoming", locale) || fallback.statusLabels.upcoming,

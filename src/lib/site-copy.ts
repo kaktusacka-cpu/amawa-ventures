@@ -258,13 +258,13 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
           title: "For Teams & Companies",
           description: "Practice purpose-driven leadership and collaboration.",
           cta: "Explore team pathways",
-          image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&h=360&fit=crop",
+          image: "/photos/LeadershipinMotion-opt.jpg",
         },
         {
           title: "For Ecosystems & Hubs",
           description: "Create stronger bridges across sectors and regions.",
           cta: "Explore ecosystem paths",
-          image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600&h=360&fit=crop",
+          image: "/photos/hubs.jpeg",
         },
       ],
     },
@@ -429,7 +429,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       ecosystemDescription:
         "Our professional experience includes collaboration with leading organizations across innovation, education and impact ecosystems. From venture building and academia to public innovation and impact partners, this network enables cross-border learning and long-term collaboration.",
       heroImage: "/about-hero.svg",
-      boundaryImage1: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600&h=500&fit=crop",
+      boundaryImage1: "/photos/ourapproach.jpg",
       boundaryImage2: "/photos/Why-Amawa-Ventures.jpg",
       philosophyImage: "/infographic.png",
       extraSections: [],
@@ -491,13 +491,13 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
           title: "Para equipos y empresas",
           description: "Practica liderazgo y colaboración con propósito.",
           cta: "Explorar equipo",
-          image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&h=360&fit=crop",
+          image: "/photos/LeadershipinMotion-opt.jpg",
         },
         {
           title: "Para ecosistemas y hubs",
           description: "Crea puentes entre sectores y regiones.",
           cta: "Explorar ecosistema",
-          image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600&h=360&fit=crop",
+          image: "/photos/hubs.jpeg",
         },
       ],
     },
@@ -661,7 +661,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       ecosystemDescription:
         "Nuestra experiencia profesional incluye colaboración con organizaciones líderes en innovación, educación y ecosistemas de impacto. Desde venture building y academia hasta innovación pública y aliados de impacto, esta red habilita aprendizaje transfronterizo y colaboración a largo plazo.",
       heroImage: "/about-hero.svg",
-      boundaryImage1: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600&h=500&fit=crop",
+      boundaryImage1: "/photos/ourapproach.jpg",
       boundaryImage2: "/photos/Why-Amawa-Ventures.jpg",
       philosophyImage: "/infographic.png",
       extraSections: [],
@@ -723,13 +723,13 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
           title: "Pre tímy a firmy",
           description: "Rozvíjajte líderstvo a spoluprácu so zmyslom.",
           cta: "Preskúmať tímy",
-          image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&h=360&fit=crop",
+          image: "/photos/LeadershipinMotion-opt.jpg",
         },
         {
           title: "Pre ekosystémy a huby",
           description: "Vytvárajte mosty medzi sektormi a regiónmi.",
           cta: "Preskúmať ekosystém",
-          image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600&h=360&fit=crop",
+          image: "/photos/hubs.jpeg",
         },
       ],
     },
@@ -890,7 +890,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       ecosystemDescription:
         "Naše profesionálne skúsenosti zahŕňajú spoluprácu s poprednými organizáciami v oblasti inovácií, vzdelávania a impact ekosystémov. Od venture buildingu a akademického prostredia po verejné inovácie a impact partnerov, táto sieť umožňuje cezhraničné učenie a dlhodobú spoluprácu.",
       heroImage: "/about-hero.svg",
-      boundaryImage1: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600&h=500&fit=crop",
+      boundaryImage1: "/photos/ourapproach.jpg",
       boundaryImage2: "/photos/Why-Amawa-Ventures.jpg",
       philosophyImage: "/infographic.png",
       extraSections: [],
@@ -945,7 +945,7 @@ export const experiencesCopyByLocale: Record<Locale, ExperiencesCopy> = {
       description:
         "Our experiences take place outside conventional environments, creating opportunities for deep reflection, meaningful connection, and transformative learning.",
       ctaLabel: "Get in touch",
-      image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600&h=600&fit=crop",
+      image: "/photos/programs-hero-image.jpeg",
     },
     statusLabels: {
       upcoming: "Upcoming Journeys & Experiences",
@@ -1066,7 +1066,7 @@ export const experiencesCopyByLocale: Record<Locale, ExperiencesCopy> = {
       description:
         "Nuestras experiencias tienen lugar fuera de entornos convencionales, creando oportunidades para la reflexión profunda, la conexión significativa y el aprendizaje transformador.",
       ctaLabel: "Contacto",
-      image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600&h=600&fit=crop",
+      image: "/photos/programs-hero-image.jpeg",
     },
     statusLabels: {
       upcoming: "Próximos viajes y experiencias",
@@ -1187,7 +1187,7 @@ export const experiencesCopyByLocale: Record<Locale, ExperiencesCopy> = {
       description:
         "Naše skúsenosti sa odohrávajú mimo konvenčných prostredí a vytvárajú príležitosti na hlbokú reflexiu, zmysluplné spojenie a transformačné učenie.",
       ctaLabel: "Kontakt",
-      image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600&h=600&fit=crop",
+      image: "/photos/programs-hero-image.jpeg",
     },
     statusLabels: {
       upcoming: "Nadchádzajúce cesty a skúsenosti",
@@ -1338,7 +1338,7 @@ export const whatWeDoCopyByLocale: Record<Locale, WhatWeDoCopy> = {
       secondaryText:
         "Our work takes different forms, but all of them are rooted in the same philosophy: creating the right conditions to think clearly, act with intention and grow with purpose.",
       ctaLabel: "Get in touch",
-      image: "/infographic.png",
+      image: "/photos/ourareasofwork-hero-image.jpg",
     },
     sectionImages: [
       "https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&h=500&fit=crop",
@@ -1385,7 +1385,7 @@ export const whatWeDoCopyByLocale: Record<Locale, WhatWeDoCopy> = {
       secondaryText:
         "Nuestro trabajo toma diferentes formas, pero todas están enraizadas en la misma filosofía: crear las condiciones adecuadas para pensar con claridad, actuar con intención y crecer con propósito.",
       ctaLabel: "Contacto",
-      image: "/infographic.png",
+      image: "/photos/ourareasofwork-hero-image.jpg",
     },
     sectionImages: [
       "https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&h=500&fit=crop",
@@ -1432,7 +1432,7 @@ export const whatWeDoCopyByLocale: Record<Locale, WhatWeDoCopy> = {
       secondaryText:
         "Naša práca má rôzne formy, ale všetky sú zakorenené v rovnakej filozofii: vytvárať správne podmienky na jasné myslenie, zámerné konanie a rast so zmyslom.",
       ctaLabel: "Kontakt",
-      image: "/infographic.png",
+      image: "/photos/ourareasofwork-hero-image.jpg",
     },
     sectionImages: [
       "https://images.unsplash.com/photo-1551632811-561732d1e306?w=800&h=500&fit=crop",
