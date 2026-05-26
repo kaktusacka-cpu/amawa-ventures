@@ -53,8 +53,8 @@ function getValueFor(rows: NotionRow[], field: string): string {
 // Local photos (public/photos) for About page extra sections.
 // Key = exact EN title of the section.
 const ABOUT_EXTRA_LOCAL_IMAGES: Record<string, string> = {
-  "Behind Amawa": "/photos/photo07.png",
-  "behind amawa": "/photos/photo07.png",
+  "Behind Amawa": "/photos/photo07.jpg",
+  "behind amawa": "/photos/photo07.jpg",
   "Our Approach": "/photos/ourapproach.jpg",
   "our approach": "/photos/ourapproach.jpg",
 };
