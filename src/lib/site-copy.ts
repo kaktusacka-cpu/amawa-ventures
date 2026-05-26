@@ -945,7 +945,7 @@ export const experiencesCopyByLocale: Record<Locale, ExperiencesCopy> = {
       description:
         "Our experiences take place outside conventional environments, creating opportunities for deep reflection, meaningful connection, and transformative learning.",
       ctaLabel: "Get in touch",
-      image: "/photos/programs-hero-image.jpeg",
+      image: "/photos/Immersive-programs.jpg",
     },
     statusLabels: {
       upcoming: "Upcoming Journeys & Experiences",
@@ -1066,7 +1066,7 @@ export const experiencesCopyByLocale: Record<Locale, ExperiencesCopy> = {
       description:
         "Nuestras experiencias tienen lugar fuera de entornos convencionales, creando oportunidades para la reflexión profunda, la conexión significativa y el aprendizaje transformador.",
       ctaLabel: "Contacto",
-      image: "/photos/programs-hero-image.jpeg",
+      image: "/photos/Immersive-programs.jpg",
     },
     statusLabels: {
       upcoming: "Próximos viajes y experiencias",
@@ -1187,7 +1187,7 @@ export const experiencesCopyByLocale: Record<Locale, ExperiencesCopy> = {
       description:
         "Naše skúsenosti sa odohrávajú mimo konvenčných prostredí a vytvárajú príležitosti na hlbokú reflexiu, zmysluplné spojenie a transformačné učenie.",
       ctaLabel: "Kontakt",
-      image: "/photos/programs-hero-image.jpeg",
+      image: "/photos/Immersive-programs.jpg",
     },
     statusLabels: {
       upcoming: "Nadchádzajúce cesty a skúsenosti",
