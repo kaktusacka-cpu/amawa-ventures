@@ -237,7 +237,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       primaryCta: "Explore our programs",
       secondaryCta: "Learn more about us",
       videoPlaceholder: "video preview",
-      videoUrl: "/amawa_logo.mp4",
+      videoUrl: "/amawa-ventures.mp4",
     },
     about: {
       title: "What is Amawa?",
@@ -470,7 +470,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       secondaryCta: "Conocer más",
       videoPlaceholder: "vista previa",
       connectText: "actúa con intención y",
-      videoUrl: "/amawa_logo.mp4",
+      videoUrl: "/amawa-ventures.mp4",
     },
     about: {
       title: "¿Qué es Amawa?",
@@ -702,7 +702,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       secondaryCta: "Zistiť viac",
       videoPlaceholder: "ukážka videa",
       connectText: "konaj s úmyslom a",
-      videoUrl: "/amawa_logo.mp4",
+      videoUrl: "/amawa-ventures.mp4",
     },
     about: {
       title: "Čo je Amawa?",

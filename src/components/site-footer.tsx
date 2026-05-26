@@ -76,8 +76,8 @@ export function SiteFooter({ footer, documents, locale }: SiteFooterProps) {
           />
         </div>
 
-        {/* 4 columns */}
-        <div className="mx-auto grid max-w-sm grid-cols-1 gap-x-12 gap-y-10 pb-16 min-[350px]:grid-cols-2 md:max-w-none md:grid-cols-4">
+        {/* 3 columns */}
+        <div className="mx-auto grid max-w-sm grid-cols-1 gap-x-12 gap-y-10 pb-16 min-[350px]:grid-cols-2 md:max-w-none md:grid-cols-3">
           <div className="flex flex-col gap-3">
             <p className="text-xs uppercase tracking-[0.24em] text-muted-foreground">{footer.columns.contact}</p>
             <div className="flex flex-col gap-1">
@@ -108,7 +108,7 @@ export function SiteFooter({ footer, documents, locale }: SiteFooterProps) {
             </div>
           </div>
 
-          <div className="flex flex-col gap-3">
+          <div className="hidden flex-col gap-3">
             <p className="text-xs uppercase tracking-[0.24em] text-muted-foreground">{footer.columns.documents}</p>
             <div className="flex flex-col items-start gap-1">
               {documents.map((doc) =>
