@@ -284,7 +284,7 @@ export const getHomePageContent = cache(
           primaryCta: t(hero, "primaryCTA", locale) || fallback.hero.primaryCta,
           secondaryCta: t(hero, "secondaryCTA", locale) || fallback.hero.secondaryCta,
           videoPlaceholder: t(hero, "videoPlaceholder", locale) || fallback.hero.videoPlaceholder,
-          videoUrl: t(hero, "videoUrl", locale) || fallback.hero.videoUrl,
+          videoUrl: fallback.hero.videoUrl || t(hero, "videoUrl", locale),
         },
         about: {
           title: t(about, "title", locale) || fallback.about.title,
