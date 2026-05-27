@@ -275,7 +275,7 @@ export default async function HomePage({
           </Reveal>
           <Reveal animation="fade-in-up" delay={160}>
             <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-foreground-body">
-              {content.contact.callDescription}
+              {content.pages.collaborateBody}
             </p>
           </Reveal>
 

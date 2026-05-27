@@ -91,7 +91,7 @@ export function SiteFooter({ footer, documents, locale }: SiteFooterProps) {
               )}
               {footer.contact.linkedin && (
                 <a href={footer.contact.linkedin} target="_blank" rel="noopener noreferrer" className="link text-sm">
-                  LinkedIn
+                  linkedin.com/in/martinaluckanic
                 </a>
               )}
             </div>
