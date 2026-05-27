@@ -25,7 +25,7 @@ export default async function AboutPage({
   const prevHasBoundary = (i: number) => {
     if (i === 0) return false;
     const prev = aboutPage.aboutSections[i - 1];
-    if (prev.kind === "whyAmawa") return true;
+    if (prev.kind === "whyAmawa") return !!aboutPage.boundaryImage2;
     if (prev.kind === "extra") return !!prev.image;
     return false;
   };
@@ -34,6 +34,17 @@ export default async function AboutPage({
     prevHasBoundary(i)
       ? "pt-[140px] md:pt-[276px]"
       : "pt-[60px] md:pt-[120px]";
+
+  // Large bottom padding only when a BoundaryImage follows the section.
+  const hasBoundaryAfter = (section: typeof aboutPage.aboutSections[number]) => {
+    if (section.kind === "whyAmawa") return !!aboutPage.boundaryImage2;
+    if (section.kind === "extra") return !!section.image;
+    return false;
+  };
+  const pb = (section: typeof aboutPage.aboutSections[number]) =>
+    hasBoundaryAfter(section)
+      ? "pb-[140px] md:pb-[276px]"
+      : "pb-[60px] md:pb-[120px]";
 
   // Position-based backgrounds: first and last → bg-surface-alt, middle → bg-surface.
   const last = aboutPage.aboutSections.length - 1;
@@ -56,7 +67,7 @@ export default async function AboutPage({
         if (section.kind === "extra") {
           return (
             <Fragment key={section.title}>
-              <section className={`w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center ${sectionBg(i)} pb-[140px] md:pb-[276px] ${pt(i)}`}>
+              <section className={`w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center ${sectionBg(i)} ${pb(section)} ${pt(i)}`}>
                 <SectionHeading title={section.title} body={section.descriptions} />
               </section>
               {section.image && <BoundaryImage src={section.image} alt={section.title} />}
@@ -67,7 +78,7 @@ export default async function AboutPage({
         if (section.kind === "whyAmawa") {
           return (
             <Fragment key="whyAmawa">
-              <section className={`w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center ${sectionBg(i)} pb-[140px] md:pb-[276px] ${pt(i)}`}>
+              <section className={`w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center ${sectionBg(i)} ${pb(section)} ${pt(i)}`}>
                 <SectionHeading
                   title={aboutPage.whyTitle}
                   body={
@@ -81,7 +92,7 @@ export default async function AboutPage({
                   }
                 />
               </section>
-              <BoundaryImage src={aboutPage.boundaryImage2} alt="Mountain landscape" />
+              {aboutPage.boundaryImage2 && <BoundaryImage src={aboutPage.boundaryImage2} alt="Mountain landscape" />}
             </Fragment>
           );
         }
@@ -90,7 +101,7 @@ export default async function AboutPage({
           return (
             <section
               key="philosophy"
-              className={`w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center ${sectionBg(i)} pb-[60px] md:pb-[120px] ${pt(i)}`}
+              className={`w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center ${sectionBg(i)} ${pb(section)} ${pt(i)}`}
             >
               <SectionHeading
                 title={aboutPage.philosophyTitle}
