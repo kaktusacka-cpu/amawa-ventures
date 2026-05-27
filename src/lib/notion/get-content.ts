@@ -447,10 +447,11 @@ export const getHomePageContent = cache(
               { key: "why amawa", entry: { kind: "whyAmawa" as const }, defaultOrder: extraSections.length },
               { key: "our philosophy", entry: { kind: "philosophy" as const }, defaultOrder: extraSections.length + 1 },
             ];
+            const dbConfigured = aboutSectionRows.length > 0;
             return defs
               .filter((d) => {
                 const m = meta.get(d.key);
-                return m ? m.visible : false;
+                return m ? m.visible : !dbConfigured;
               })
               .sort((a, b) => {
                 const ao = meta.get(a.key)?.pageOrder;
