@@ -18,6 +18,7 @@ export const DB_IDS = {
   contactItems: process.env.NOTION_CONTACT_ITEMS_DB_ID,
   collaborations: process.env.NOTION_COLLABORATIONS_DB_ID,
   homeSections: process.env.NOTION_HOME_SECTIONS_DB_ID,
+  aboutSections: process.env.NOTION_ABOUT_SECTIONS_DB_ID,
   experienceSections: process.env.NOTION_EXPERIENCE_SECTIONS_DB_ID,
   whatWeDoSections: process.env.NOTION_WHAT_WE_DO_SECTIONS_DB_ID,
   documents: process.env.NOTION_DOCUMENTS_DB_ID,

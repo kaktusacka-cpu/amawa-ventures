@@ -5,8 +5,10 @@ import {
   getDefaultExperiencesCopy,
   getDefaultWhatWeDoCopy,
   DEFAULT_SECTION_ORDER,
+  DEFAULT_ABOUT_SECTION_ORDER,
   type HomeCopy,
   type HomeSectionKey,
+  type AboutSectionKey,
   type ExperiencesCopy,
   type ExperienceCategory,
   type WhatWeDoCopy,
@@ -154,6 +156,7 @@ export const getHomePageContent = cache(
         contactItemRows,
         collaborationItems,
         homeSectionRows,
+        aboutSectionRows,
       ] = await Promise.all([
         DB_IDS.nav ? fetchRows(DB_IDS.nav) : [],
         DB_IDS.footer ? fetchRows(DB_IDS.footer) : [],
@@ -166,6 +169,7 @@ export const getHomePageContent = cache(
         DB_IDS.contactItems ? fetchContactItems(DB_IDS.contactItems) : [],
         DB_IDS.collaborations ? fetchCollaborations(DB_IDS.collaborations) : [],
         DB_IDS.homeSections ? fetchHomeSections(DB_IDS.homeSections) : [],
+        DB_IDS.aboutSections ? fetchControlSections(DB_IDS.aboutSections) : [],
       ]);
 
       // Build a lookup keyed by section name for O(1) access in field reads.
@@ -429,6 +433,24 @@ export const getHomePageContent = cache(
           ecosystemTitle: t(ecosystem, "title", locale) || fallback.aboutPage.ecosystemTitle,
           ecosystemDescription: t(ecosystem, "description", locale) || fallback.aboutPage.ecosystemDescription,
           extraSections,
+          ...(() => {
+            const aboutSectionMeta = new Map(aboutSectionRows.map((r) => [r.section, r]));
+            const aboutVisibleSections = Object.fromEntries(
+              DEFAULT_ABOUT_SECTION_ORDER.map((key) => {
+                const meta = aboutSectionMeta.get(key);
+                return [key, meta ? meta.visible : true];
+              }),
+            ) as Record<AboutSectionKey, boolean>;
+            const aboutSectionOrder = [...DEFAULT_ABOUT_SECTION_ORDER].sort((a, b) => {
+              const ao = aboutSectionMeta.get(a)?.pageOrder;
+              const bo = aboutSectionMeta.get(b)?.pageOrder;
+              if (ao != null && bo != null) return ao - bo;
+              if (ao != null) return -1;
+              if (bo != null) return 1;
+              return DEFAULT_ABOUT_SECTION_ORDER.indexOf(a) - DEFAULT_ABOUT_SECTION_ORDER.indexOf(b);
+            });
+            return { aboutVisibleSections, aboutSectionOrder };
+          })(),
         },
       };
     } catch {

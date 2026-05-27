@@ -113,7 +113,7 @@ export default async function HomePage({
                 description={card.description}
                 cta={card.cta}
                 image={card.image}
-                href={`/${locale}/experiences#${cardAnchors[index]}`}
+                href={`/${locale}/programs#${cardAnchors[index]}`}
               />
             );
           })}

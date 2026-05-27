@@ -36,6 +36,10 @@ export type HomeSectionKey =
   | "testimonials"
   | "contact";
 
+export type AboutSectionKey = "whoWeAre" | "whyAmawa" | "philosophy";
+
+export const DEFAULT_ABOUT_SECTION_ORDER: AboutSectionKey[] = ["whoWeAre", "whyAmawa", "philosophy"];
+
 // Order of sections on the home page, driven by Notion's per-section
 // pageOrder rows. Editors change pageOrder to reorder sections.
 export const DEFAULT_SECTION_ORDER: HomeSectionKey[] = [
@@ -199,6 +203,8 @@ export type HomeCopy = {
     boundaryImage2: string;
     philosophyImage: string;
     extraSections: { title: string; descriptions: string[]; image: string }[];
+    aboutVisibleSections: Record<AboutSectionKey, boolean>;
+    aboutSectionOrder: AboutSectionKey[];
   };
 };
 
@@ -433,6 +439,8 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       boundaryImage2: "/photos/Why-Amawa-Ventures.jpg",
       philosophyImage: "/infographic.png",
       extraSections: [],
+      aboutVisibleSections: { whoWeAre: true, whyAmawa: true, philosophy: true },
+      aboutSectionOrder: DEFAULT_ABOUT_SECTION_ORDER,
     },
   },
   es: {
@@ -665,6 +673,8 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       boundaryImage2: "/photos/Why-Amawa-Ventures.jpg",
       philosophyImage: "/infographic.png",
       extraSections: [],
+      aboutVisibleSections: { whoWeAre: true, whyAmawa: true, philosophy: true },
+      aboutSectionOrder: DEFAULT_ABOUT_SECTION_ORDER,
     },
   },
   sk: {
@@ -894,6 +904,8 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       boundaryImage2: "/photos/Why-Amawa-Ventures.jpg",
       philosophyImage: "/infographic.png",
       extraSections: [],
+      aboutVisibleSections: { whoWeAre: true, whyAmawa: true, philosophy: true },
+      aboutSectionOrder: DEFAULT_ABOUT_SECTION_ORDER,
     },
   },
 };
