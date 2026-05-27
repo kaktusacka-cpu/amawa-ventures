@@ -26,6 +26,7 @@ export default async function AboutPage({
     if (i === 0) return false;
     const prev = aboutPage.aboutSections[i - 1];
     if (prev.kind === "whyAmawa") return !!aboutPage.boundaryImage2;
+    if (prev.kind === "philosophy") return !!aboutPage.philosophyImage;
     if (prev.kind === "extra") return i - 1 !== last && !!prev.image;
     return false;
   };
@@ -33,19 +34,24 @@ export default async function AboutPage({
   const pt = (i: number) =>
     prevHasBoundary(i)
       ? "pt-[140px] md:pt-[276px]"
-      : "pt-[40px] md:pt-[80px]";
+      : i === 0
+      ? "pt-[80px] md:pt-[160px]"
+      : "pt-[20px] md:pt-[40px]";
 
-  // BoundaryImage only when there is a next section to overlap into (not last).
+  // BoundaryImage only for non-last extra sections that have an image.
   const hasBoundaryAfter = (section: typeof aboutPage.aboutSections[number], i: number) => {
     if (i === last) return false;
-    if (section.kind === "whyAmawa") return !!aboutPage.boundaryImage2;
     if (section.kind === "extra") return !!section.image;
+    if (section.kind === "whyAmawa") return !!aboutPage.boundaryImage2;
+    if (section.kind === "philosophy") return !!aboutPage.philosophyImage;
     return false;
   };
   const pb = (section: typeof aboutPage.aboutSections[number], i: number) =>
     hasBoundaryAfter(section, i)
       ? "pb-[140px] md:pb-[276px]"
-      : "pb-[40px] md:pb-[80px]";
+      : i === last && section.kind === "extra" && !!section.image
+      ? "pb-[80px] md:pb-[160px]"
+      : "pb-[20px] md:pb-[40px]";
 
   // Position-based backgrounds: first and last → bg-surface-alt, middle → bg-surface.
   const last = aboutPage.aboutSections.length - 1;
@@ -112,34 +118,21 @@ export default async function AboutPage({
 
         if (section.kind === "philosophy") {
           return (
-            <section
-              key="philosophy"
-              className={`w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center ${sectionBg(i)} ${pb(section, i)} ${pt(i)}`}
-            >
-              <SectionHeading
-                title={aboutPage.philosophyTitle}
-                body={[
-                  <>
-                    {aboutPage.philosophyBeliefTitle && <><strong>{aboutPage.philosophyBeliefTitle}</strong>{" "}</>}{aboutPage.philosophyBelief1}{" "}
-                    {aboutPage.philosophyBelief2} {aboutPage.philosophyBelief3}
-                  </>,
-                  aboutPage.philosophyOutro,
-                ]}
-              />
-              <Reveal
-                animation="fade-in-slow"
-                className="mt-10 w-full max-w-[1000px] overflow-hidden rounded-2xl md:mt-16"
-              >
-                <Image
-                  src={aboutPage.philosophyImage}
-                  alt="Our philosophy"
-                  width={1000}
-                  height={372}
-                  className="w-full h-auto"
-                  sizes="(max-width: 1000px) 100vw, 1000px"
+            <Fragment key="philosophy">
+              <section className={`w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center ${sectionBg(i)} ${pb(section, i)} ${pt(i)}`}>
+                <SectionHeading
+                  title={aboutPage.philosophyTitle}
+                  body={[
+                    <>
+                      {aboutPage.philosophyBeliefTitle && <><strong>{aboutPage.philosophyBeliefTitle}</strong>{" "}</>}{aboutPage.philosophyBelief1}{" "}
+                      {aboutPage.philosophyBelief2} {aboutPage.philosophyBelief3}
+                    </>,
+                    aboutPage.philosophyOutro,
+                  ]}
                 />
-              </Reveal>
-            </section>
+              </section>
+              {aboutPage.philosophyImage && <BoundaryImage src={aboutPage.philosophyImage} alt="Our philosophy" />}
+            </Fragment>
           );
         }
 
