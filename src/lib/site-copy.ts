@@ -52,8 +52,6 @@ export const DEFAULT_SECTION_ORDER: HomeSectionKey[] = [
 // overrides this — defaults are only used when Notion is unreachable.
 const DEFAULT_COLLABORATIONS: HomeCollaboration[] = [
   { name: "AIMPLAS — Plastics Technology Centre",     image: "/collaborations/Container.svg" },
-  { name: "REDIT Ventures",                            image: "/collaborations/Container-1.svg" },
-  { name: "IDEAS UPV",                                 image: "/collaborations/Container-2.svg" },
   { name: "Universitat de València",                   image: "/collaborations/Container-3.svg" },
   { name: "IGKK",                                      image: "/collaborations/Container-4.svg" },
   { name: "UVP TECHNICOM",                             image: "/collaborations/Container-5.svg" },
@@ -61,6 +59,17 @@ const DEFAULT_COLLABORATIONS: HomeCollaboration[] = [
   { name: "Oceanica — Fundación para la Conservación", image: "/collaborations/Container-7.svg" },
   { name: "Access Nepal Tour & Trekking",              image: "/collaborations/Container-8.svg" },
   { name: "Universidad Politécnica de Valencia",       image: "/collaborations/Container-9.svg" },
+  { name: "Collaboration partner",                     image: "/collaborations/01.png" },
+  { name: "Collaboration partner",                     image: "/collaborations/02.png" },
+  { name: "Collaboration partner",                     image: "/collaborations/03.png" },
+  { name: "Collaboration partner",                     image: "/collaborations/04.png" },
+  { name: "Collaboration partner",                     image: "/collaborations/05.png" },
+  { name: "Collaboration partner",                     image: "/collaborations/06.png" },
+  { name: "Collaboration partner",                     image: "/collaborations/07.png" },
+  { name: "Collaboration partner",                     image: "/collaborations/08.png" },
+  { name: "Collaboration partner",                     image: "/collaborations/09.png" },
+  { name: "Collaboration partner",                     image: "/collaborations/10.png" },
+  { name: "Collaboration partner",                     image: "/collaborations/11.png" },
 ];
 
 export type HomeCopy = {
