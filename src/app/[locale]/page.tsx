@@ -191,7 +191,7 @@ export default async function HomePage({
           <Reveal animation="fade-in" delay={280}>
             <AnimatedMetrics
               metrics={content.impact.metrics}
-              className="mt-8 grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4"
+              className="mt-8 grid w-full grid-cols-1 gap-6 sm:grid-cols-3"
             />
           </Reveal>
           <Reveal animation="fade-in-up" delay={360}>

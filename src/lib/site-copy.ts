@@ -310,10 +310,9 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       description:
         "Built on 15+ years of experience in innovation, venture building and ecosystem development across Europe. Shaped by movement, exploration, and collaboration with experienced educators and ecosystem practitioners.",
       metrics: [
-        { value: "500+", label: "Participants empowered" },
-        { value: "53", label: "Programs delivered" },
-        { value: "30+", label: "Partner organizations" },
-        { value: "12", label: "Countries reached" },
+        { value: "1500+", label: "Participants empowered" },
+        { value: "120+", label: "Startups & spinoffs mentored" },
+        { value: "18", label: "Partner organizations" },
       ],
     },
     testimonials: {
@@ -537,10 +536,9 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       description:
         "Construido sobre más de 15 años de experiencia en innovación, venture building y desarrollo de ecosistemas en Europa.",
       metrics: [
-        { value: "500+", label: "Participantes" },
-        { value: "53", label: "Programas" },
-        { value: "30+", label: "Organizaciones" },
-        { value: "12", label: "Países" },
+        { value: "1500+", label: "Participantes" },
+        { value: "120+", label: "Startups mentorizados" },
+        { value: "18", label: "Organizaciones" },
       ],
     },
     testimonials: {
@@ -762,10 +760,9 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       description:
         "Postavené na viac ako 15 rokoch skúseností v inováciách, venture buildingu a rozvoji ekosystémov v Európe.",
       metrics: [
-        { value: "500+", label: "Účastníkov" },
-        { value: "53", label: "Programov" },
-        { value: "30+", label: "Partnerov" },
-        { value: "12", label: "Krajín" },
+        { value: "1500+", label: "Účastníkov" },
+        { value: "120+", label: "Startupov mentorizovaných" },
+        { value: "18", label: "Partnerov" },
       ],
     },
     testimonials: {

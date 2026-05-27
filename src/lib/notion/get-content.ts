@@ -232,7 +232,9 @@ export const getHomePageContent = cache(
         return { ...card, image: fallback.paths.cards[i]?.image || card.image || "" };
       });
       const coreCards = coreCardItems.map((item) => cardItemToCard(item, locale));
-      const metrics = metricItems.map((item) => metricItemToMetric(item, locale));
+      const metrics = metricItems
+        .map((item) => metricItemToMetric(item, locale))
+        .filter((m) => m.value !== "");
       const connectItems = contactItemRows.map((item) => contactItemToConnect(item, locale));
 
       // visibleSections + sectionOrder come from the Home Sections DB, where
