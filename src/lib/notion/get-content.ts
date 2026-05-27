@@ -168,7 +168,7 @@ export const getHomePageContent = cache(
         DB_IDS.contactItems ? fetchContactItems(DB_IDS.contactItems) : [],
         DB_IDS.collaborations ? fetchCollaborations(DB_IDS.collaborations) : [],
         DB_IDS.homeSections ? fetchHomeSections(DB_IDS.homeSections) : [],
-        DB_IDS.aboutSections ? fetchControlSections(DB_IDS.aboutSections) : [],
+        (DB_IDS.aboutSections ? fetchControlSections(DB_IDS.aboutSections) : Promise.resolve([])).catch(() => []),
       ]);
 
       // Build a lookup keyed by section name for O(1) access in field reads.
