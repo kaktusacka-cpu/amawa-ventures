@@ -56,8 +56,6 @@ function getValueFor(rows: NotionRow[], field: string): string {
 const ABOUT_EXTRA_LOCAL_IMAGES: Record<string, string> = {
   "Behind Amawa": "/photos/photo07.jpg",
   "behind amawa": "/photos/photo07.jpg",
-  "Our Approach": "/photos/ourapproach.jpg",
-  "our approach": "/photos/ourapproach.jpg",
 };
 
 // Local photos (public/photos) for What We Do areas.

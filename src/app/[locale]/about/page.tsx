@@ -25,7 +25,9 @@ export default async function AboutPage({
   const prevHasBoundary = (i: number) => {
     if (i === 0) return false;
     const prev = aboutPage.aboutSections[i - 1];
-    return prev.kind === "extra" || prev.kind === "whyAmawa";
+    if (prev.kind === "whyAmawa") return true;
+    if (prev.kind === "extra") return !!prev.image;
+    return false;
   };
 
   const pt = (i: number) =>
@@ -64,7 +66,7 @@ export default async function AboutPage({
               <section className={`w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center ${extraBg.get(section.title) ?? "bg-surface"} pb-[140px] md:pb-[276px] ${pt(i)}`}>
                 <SectionHeading title={section.title} body={section.descriptions} />
               </section>
-              <BoundaryImage src={section.image || aboutPage.boundaryImage1} alt={section.title} />
+              {section.image && <BoundaryImage src={section.image} alt={section.title} />}
             </Fragment>
           );
         }
