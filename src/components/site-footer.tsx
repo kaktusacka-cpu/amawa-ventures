@@ -84,9 +84,16 @@ export function SiteFooter({ footer, documents, locale }: SiteFooterProps) {
               <a href={resolveMailto(footer.contact.email, footer.contact.emailHref)} className="link text-sm">
                 {footer.contact.email}
               </a>
-              <a href={resolveTel(footer.contact.phone, footer.contact.phoneHref)} className="link text-sm">
-                {footer.contact.phone}
-              </a>
+              {footer.contact.phone && (
+                <a href={resolveTel(footer.contact.phone, footer.contact.phoneHref)} className="link text-sm">
+                  {footer.contact.phone}
+                </a>
+              )}
+              {footer.contact.linkedin && (
+                <a href={footer.contact.linkedin} target="_blank" rel="noopener noreferrer" className="link text-sm">
+                  LinkedIn
+                </a>
+              )}
             </div>
           </div>
 

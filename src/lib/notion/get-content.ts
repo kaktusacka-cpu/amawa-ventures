@@ -365,6 +365,7 @@ export const getHomePageContent = cache(
             // empty, site-footer falls back to constructed mailto:/tel:.
             emailHref: getValueFor(footer, "email"),
             phoneHref: getValueFor(footer, "phone"),
+            linkedin: getValueFor(footer, "linkedin") || fallback.footer.contact.linkedin,
           },
           address: {
             line1: t(footer, "addressLine1", locale) || fallback.footer.address.line1,

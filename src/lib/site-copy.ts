@@ -155,6 +155,7 @@ export type HomeCopy = {
       // site-footer constructs mailto:/tel: from the display text.
       emailHref: string;
       phoneHref: string;
+      linkedin: string;
     };
     address: {
       line1: string;
@@ -367,6 +368,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
         phone: "",
         emailHref: "mailto:info@amawaventures.com",
         phoneHref: "",
+        linkedin: "https://www.linkedin.com/in/martinaluckanic/",
       },
       address: {
         line1: "Hemerkova 1320/12",
@@ -593,6 +595,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
         phone: "",
         emailHref: "mailto:info@amawaventures.com",
         phoneHref: "",
+        linkedin: "https://www.linkedin.com/in/martinaluckanic/",
       },
       address: {
         line1: "Hemerkova 1320/12",
@@ -817,6 +820,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
         phone: "",
         emailHref: "mailto:info@amawaventures.com",
         phoneHref: "",
+        linkedin: "https://www.linkedin.com/in/martinaluckanic/",
       },
       address: {
         line1: "Hemerkova 1320/12",

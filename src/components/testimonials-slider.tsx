@@ -82,7 +82,7 @@ export function TestimonialsSlider({ items }: TestimonialsSliderProps) {
       aria-live={reducedMotion ? "polite" : "off"}
       style={{ height: "fit-content" }}
     >
-      <div className="mx-auto mt-8 flex max-w-2xl text-lg leading-8 text-foreground">
+      <div className="mx-auto mt-8 max-w-2xl text-lg leading-8 text-foreground">
         <div className="flex items-start gap-2">
           <Image
             src="/socials/quote.svg"
@@ -91,9 +91,19 @@ export function TestimonialsSlider({ items }: TestimonialsSliderProps) {
             height={32}
             className="shrink-0"
           />
-          <blockquote className="flex-1 pt-2 pb-2 line-clamp-5 min-h-[8rem]">
-            {active.quote}
-          </blockquote>
+          <div className="flex-1 grid">
+            {items.map((item, index) => (
+              <blockquote
+                key={index}
+                aria-hidden={index !== activeIndex}
+                className={`[grid-area:1/1] pt-2 pb-2 text-center line-clamp-8 transition-opacity duration-500 ${
+                  index === activeIndex ? "opacity-100" : "opacity-0 pointer-events-none select-none"
+                }`}
+              >
+                {item.quote}
+              </blockquote>
+            ))}
+          </div>
           <Image
             src="/socials/quote.svg"
             alt=""
@@ -103,18 +113,31 @@ export function TestimonialsSlider({ items }: TestimonialsSliderProps) {
           />
         </div>
       </div>
-      <p className="mt-7 text-base font-medium">{active.author}</p>
-      <p className="mt-1 text-sm text-muted-foreground">{active.role}</p>
-      {active.link && (
-        <a
-          href={active.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-1 text-sm text-muted-foreground underline hover:text-foreground transition-colors"
-        >
-          {active.link}
-        </a>
-      )}
+
+      <div className="mt-7 grid">
+        {items.map((item, index) => (
+          <div
+            key={index}
+            aria-hidden={index !== activeIndex}
+            className={`[grid-area:1/1] transition-opacity duration-500 ${
+              index === activeIndex ? "opacity-100" : "opacity-0 pointer-events-none select-none"
+            }`}
+          >
+            <p className="text-center text-base font-medium">{item.author}</p>
+            <p className="mt-1 text-center text-sm text-muted-foreground">{item.role}</p>
+            {item.link && (
+              <a
+                href={item.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-1 text-sm text-muted-foreground underline hover:text-foreground transition-colors"
+              >
+                {item.link}
+              </a>
+            )}
+          </div>
+        ))}
+      </div>
 
       <div className="mt-5 flex items-center justify-center gap-4">
         <button
