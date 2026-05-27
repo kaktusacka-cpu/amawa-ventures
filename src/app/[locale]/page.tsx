@@ -222,12 +222,12 @@ export default async function HomePage({
             </p>
           </Reveal>
           <div
-            className="mt-10 grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-5 sm:mt-14"
+            className="mt-10 flex flex-wrap justify-center gap-6 sm:mt-14"
             role="list"
             aria-label={content.aboutPage.ecosystemTitle}
           >
             {content.collaborations.map(({ name, image }, i) => (
-              <Reveal key={`${name}-${i}`} animation="fade-in" delay={i * 50}>
+              <Reveal key={`${name}-${i}`} animation="fade-in" delay={i * 50} className="w-[calc(50%_-_12px)] sm:w-[calc(33.33%_-_16px)] md:w-[calc(20%_-_19.2px)]">
                 <div role="listitem" className="overflow-hidden rounded-[10px]">
                   <Image
                     src={image}
