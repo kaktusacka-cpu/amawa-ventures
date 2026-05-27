@@ -36,9 +36,10 @@ export type HomeSectionKey =
   | "testimonials"
   | "contact";
 
-export type AboutSectionKey = "whoWeAre" | "whyAmawa" | "philosophy";
-
-export const DEFAULT_ABOUT_SECTION_ORDER: AboutSectionKey[] = ["whoWeAre", "whyAmawa", "philosophy"];
+export type AboutSectionEntry =
+  | { kind: "extra"; title: string; descriptions: string[]; image: string }
+  | { kind: "whyAmawa" }
+  | { kind: "philosophy" };
 
 // Order of sections on the home page, driven by Notion's per-section
 // pageOrder rows. Editors change pageOrder to reorder sections.
@@ -203,8 +204,7 @@ export type HomeCopy = {
     boundaryImage2: string;
     philosophyImage: string;
     extraSections: { title: string; descriptions: string[]; image: string }[];
-    aboutVisibleSections: Record<AboutSectionKey, boolean>;
-    aboutSectionOrder: AboutSectionKey[];
+    aboutSections: AboutSectionEntry[];
   };
 };
 
@@ -439,8 +439,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       boundaryImage2: "/photos/Why-Amawa-Ventures.jpg",
       philosophyImage: "/infographic.png",
       extraSections: [],
-      aboutVisibleSections: { whoWeAre: true, whyAmawa: true, philosophy: true },
-      aboutSectionOrder: DEFAULT_ABOUT_SECTION_ORDER,
+      aboutSections: [{ kind: "whyAmawa" }, { kind: "philosophy" }],
     },
   },
   es: {
@@ -673,8 +672,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       boundaryImage2: "/photos/Why-Amawa-Ventures.jpg",
       philosophyImage: "/infographic.png",
       extraSections: [],
-      aboutVisibleSections: { whoWeAre: true, whyAmawa: true, philosophy: true },
-      aboutSectionOrder: DEFAULT_ABOUT_SECTION_ORDER,
+      aboutSections: [{ kind: "whyAmawa" }, { kind: "philosophy" }],
     },
   },
   sk: {
@@ -904,8 +902,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       boundaryImage2: "/photos/Why-Amawa-Ventures.jpg",
       philosophyImage: "/infographic.png",
       extraSections: [],
-      aboutVisibleSections: { whoWeAre: true, whyAmawa: true, philosophy: true },
-      aboutSectionOrder: DEFAULT_ABOUT_SECTION_ORDER,
+      aboutSections: [{ kind: "whyAmawa" }, { kind: "philosophy" }],
     },
   },
 };

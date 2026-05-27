@@ -5,10 +5,9 @@ import {
   getDefaultExperiencesCopy,
   getDefaultWhatWeDoCopy,
   DEFAULT_SECTION_ORDER,
-  DEFAULT_ABOUT_SECTION_ORDER,
   type HomeCopy,
   type HomeSectionKey,
-  type AboutSectionKey,
+  type AboutSectionEntry,
   type ExperiencesCopy,
   type ExperienceCategory,
   type WhatWeDoCopy,
@@ -433,23 +432,34 @@ export const getHomePageContent = cache(
           ecosystemTitle: t(ecosystem, "title", locale) || fallback.aboutPage.ecosystemTitle,
           ecosystemDescription: t(ecosystem, "description", locale) || fallback.aboutPage.ecosystemDescription,
           extraSections,
-          ...(() => {
-            const aboutSectionMeta = new Map(aboutSectionRows.map((r) => [r.section, r]));
-            const aboutVisibleSections = Object.fromEntries(
-              DEFAULT_ABOUT_SECTION_ORDER.map((key) => {
-                const meta = aboutSectionMeta.get(key);
-                return [key, meta ? meta.visible : true];
-              }),
-            ) as Record<AboutSectionKey, boolean>;
-            const aboutSectionOrder = [...DEFAULT_ABOUT_SECTION_ORDER].sort((a, b) => {
-              const ao = aboutSectionMeta.get(a)?.pageOrder;
-              const bo = aboutSectionMeta.get(b)?.pageOrder;
-              if (ao != null && bo != null) return ao - bo;
-              if (ao != null) return -1;
-              if (bo != null) return 1;
-              return DEFAULT_ABOUT_SECTION_ORDER.indexOf(a) - DEFAULT_ABOUT_SECTION_ORDER.indexOf(b);
-            });
-            return { aboutVisibleSections, aboutSectionOrder };
+          aboutSections: (() => {
+            const meta = new Map(
+              aboutSectionRows.map((r) => [r.section.toLowerCase(), r]),
+            );
+            type Def = { key: string; entry: AboutSectionEntry; defaultOrder: number };
+            const defs: Def[] = [
+              ...extraSections.map((s, i) => ({
+                key: s.title.toLowerCase(),
+                entry: { kind: "extra" as const, title: s.title, descriptions: s.descriptions, image: s.image },
+                defaultOrder: i,
+              })),
+              { key: "why amawa", entry: { kind: "whyAmawa" as const }, defaultOrder: extraSections.length },
+              { key: "philosophy", entry: { kind: "philosophy" as const }, defaultOrder: extraSections.length + 1 },
+            ];
+            return defs
+              .filter((d) => {
+                const m = meta.get(d.key);
+                return m ? m.visible : true;
+              })
+              .sort((a, b) => {
+                const ao = meta.get(a.key)?.pageOrder;
+                const bo = meta.get(b.key)?.pageOrder;
+                if (ao != null && bo != null) return ao - bo;
+                if (ao != null) return -1;
+                if (bo != null) return 1;
+                return a.defaultOrder - b.defaultOrder;
+              })
+              .map((d) => d.entry);
           })(),
         },
       };
