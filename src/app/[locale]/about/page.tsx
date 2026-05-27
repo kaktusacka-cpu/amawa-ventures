@@ -33,7 +33,7 @@ export default async function AboutPage({
   const pt = (i: number) =>
     prevHasBoundary(i)
       ? "pt-[140px] md:pt-[276px]"
-      : "pt-[60px] md:pt-[120px]";
+      : "pt-[40px] md:pt-[80px]";
 
   // Large bottom padding only when a BoundaryImage follows the section.
   const hasBoundaryAfter = (section: typeof aboutPage.aboutSections[number]) => {
@@ -44,7 +44,7 @@ export default async function AboutPage({
   const pb = (section: typeof aboutPage.aboutSections[number]) =>
     hasBoundaryAfter(section)
       ? "pb-[140px] md:pb-[276px]"
-      : "pb-[60px] md:pb-[120px]";
+      : "pb-[40px] md:pb-[80px]";
 
   // Position-based backgrounds: first and last → bg-surface-alt, middle → bg-surface.
   const last = aboutPage.aboutSections.length - 1;
