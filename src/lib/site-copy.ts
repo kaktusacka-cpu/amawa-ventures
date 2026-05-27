@@ -48,8 +48,8 @@ export const DEFAULT_SECTION_ORDER: HomeSectionKey[] = [
   "impact", "ecosystem", "testimonials", "contact",
 ];
 
-// Partner logos in the ecosystem section. Notion's Collaborations DB
-// overrides this — defaults are only used when Notion is unreachable.
+// Partner logos in the ecosystem section. Managed here — add/remove logos
+// by editing this array and placing image files in public/collaborations/.
 const DEFAULT_COLLABORATIONS: HomeCollaboration[] = [
   { name: "AIMPLAS — Plastics Technology Centre",     image: "/collaborations/Container.svg" },
   { name: "Universitat de València",                   image: "/collaborations/Container-3.svg" },

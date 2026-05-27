@@ -296,9 +296,7 @@ export const getHomePageContent = cache(
           description: t(about, "description", locale) || fallback.about.description,
           markImage: t(about, "markImage", locale) || fallback.about.markImage,
         },
-        collaborations: collaborationItems.length > 0
-          ? collaborationItems.map((c) => ({ name: c.name, image: c.image }))
-          : fallback.collaborations,
+        collaborations: fallback.collaborations,
         paths: {
           title: t(pathsSection, "title", locale) || fallback.paths.title,
           cards: pathCards.length > 0
