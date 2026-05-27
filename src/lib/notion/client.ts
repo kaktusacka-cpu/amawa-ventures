@@ -63,7 +63,7 @@ function extractFiles(prop: { files?: { file?: { url: string }; external?: { url
 // Editors can prefix section names with "NN " (e.g. "01 hero") to control
 // the visual order in Notion's sidebar — strip it so code lookups stay clean.
 function normalizeSection(raw: string): string {
-  return raw.replace(/^\d+\s+/, "");
+  return raw.replace(/^\d+\s*/, "");
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
