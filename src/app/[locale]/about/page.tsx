@@ -26,7 +26,7 @@ export default async function AboutPage({
     if (i === 0) return false;
     const prev = aboutPage.aboutSections[i - 1];
     if (prev.kind === "whyAmawa") return !!aboutPage.boundaryImage2;
-    if (prev.kind === "extra") return !!prev.image;
+    if (prev.kind === "extra") return i - 1 !== last && !!prev.image;
     return false;
   };
 
@@ -35,14 +35,15 @@ export default async function AboutPage({
       ? "pt-[140px] md:pt-[276px]"
       : "pt-[40px] md:pt-[80px]";
 
-  // Large bottom padding only when a BoundaryImage follows the section.
-  const hasBoundaryAfter = (section: typeof aboutPage.aboutSections[number]) => {
+  // BoundaryImage only when there is a next section to overlap into (not last).
+  const hasBoundaryAfter = (section: typeof aboutPage.aboutSections[number], i: number) => {
+    if (i === last) return false;
     if (section.kind === "whyAmawa") return !!aboutPage.boundaryImage2;
     if (section.kind === "extra") return !!section.image;
     return false;
   };
-  const pb = (section: typeof aboutPage.aboutSections[number]) =>
-    hasBoundaryAfter(section)
+  const pb = (section: typeof aboutPage.aboutSections[number], i: number) =>
+    hasBoundaryAfter(section, i)
       ? "pb-[140px] md:pb-[276px]"
       : "pb-[40px] md:pb-[80px]";
 
@@ -67,10 +68,22 @@ export default async function AboutPage({
         if (section.kind === "extra") {
           return (
             <Fragment key={section.title}>
-              <section className={`w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center ${sectionBg(i)} ${pb(section)} ${pt(i)}`}>
+              <section className={`w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center ${sectionBg(i)} ${pb(section, i)} ${pt(i)}`}>
                 <SectionHeading title={section.title} body={section.descriptions} />
+                {section.image && i === last && (
+                  <Reveal animation="fade-in-slow" className="mt-10 w-full max-w-[1000px] overflow-hidden rounded-2xl md:mt-16">
+                    <Image
+                      src={section.image}
+                      alt={section.title}
+                      width={1000}
+                      height={500}
+                      className="w-full h-auto object-cover"
+                      sizes="(max-width: 1000px) 100vw, 1000px"
+                    />
+                  </Reveal>
+                )}
               </section>
-              {section.image && <BoundaryImage src={section.image} alt={section.title} />}
+              {section.image && i !== last && <BoundaryImage src={section.image} alt={section.title} />}
             </Fragment>
           );
         }
@@ -78,7 +91,7 @@ export default async function AboutPage({
         if (section.kind === "whyAmawa") {
           return (
             <Fragment key="whyAmawa">
-              <section className={`w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center ${sectionBg(i)} ${pb(section)} ${pt(i)}`}>
+              <section className={`w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center ${sectionBg(i)} ${pb(section, i)} ${pt(i)}`}>
                 <SectionHeading
                   title={aboutPage.whyTitle}
                   body={
@@ -101,7 +114,7 @@ export default async function AboutPage({
           return (
             <section
               key="philosophy"
-              className={`w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center ${sectionBg(i)} ${pb(section)} ${pt(i)}`}
+              className={`w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center ${sectionBg(i)} ${pb(section, i)} ${pt(i)}`}
             >
               <SectionHeading
                 title={aboutPage.philosophyTitle}
