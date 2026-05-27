@@ -296,12 +296,6 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
             "Connecting communities, experts, and institutions across contexts.",
           cta: "Explore our networks",
         },
-        {
-          title: "Purpose-driven Experiences",
-          description:
-            "Programs aligning values, business outcomes, and human growth.",
-          cta: "Explore our programs",
-        },
       ],
     },
     approach: {
@@ -529,12 +523,6 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
           description: "Conectamos comunidades, expertos e instituciones.",
           cta: "Explorar redes",
         },
-        {
-          title: "Experiencias con propósito",
-          description:
-            "Programas que alinean valores, resultados y desarrollo humano.",
-          cta: "Explorar programas",
-        },
       ],
     },
     approach: {
@@ -759,11 +747,6 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
           title: "Ekosystémy a medzinárodné siete",
           description: "Spájame komunity, expertov a inštitúcie.",
           cta: "Preskúmať siete",
-        },
-        {
-          title: "Zážitky riadené zmyslom",
-          description: "Programy prepájajúce hodnoty, výsledky a rast.",
-          cta: "Preskúmať programy",
         },
       ],
     },

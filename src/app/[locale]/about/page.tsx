@@ -33,8 +33,20 @@ export default async function AboutPage({
       ? "pt-[140px] md:pt-[276px]"
       : "pt-[60px] md:pt-[120px]";
 
+  // Alternate extra-section backgrounds: 0→bg-surface, 1→bg-surface-alt, …
+  const extraBg = (() => {
+    const map = new Map<string, string>();
+    let idx = 0;
+    for (const s of aboutPage.aboutSections) {
+      if (s.kind === "extra") {
+        map.set(s.title, idx++ % 2 === 0 ? "bg-surface" : "bg-surface-alt");
+      }
+    }
+    return map;
+  })();
+
   return (
-    <main className="bg-surface text-foreground flex flex-col justify-center items-center">
+    <main className="bg-surface-alt text-foreground flex flex-col justify-center items-center">
       <PageHero
         title={content.pages.aboutTitle}
         description={aboutPage.heroIntro}
@@ -49,7 +61,7 @@ export default async function AboutPage({
         if (section.kind === "extra") {
           return (
             <Fragment key={section.title}>
-              <section className={`w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center bg-surface pb-[140px] md:pb-[276px] ${pt(i)}`}>
+              <section className={`w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center ${extraBg.get(section.title) ?? "bg-surface"} pb-[140px] md:pb-[276px] ${pt(i)}`}>
                 <SectionHeading title={section.title} body={section.descriptions} />
               </section>
               <BoundaryImage src={section.image || aboutPage.boundaryImage1} alt={section.title} />

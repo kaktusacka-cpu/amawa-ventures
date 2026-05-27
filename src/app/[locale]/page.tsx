@@ -133,16 +133,19 @@ export default async function HomePage({
             <h2 className="font-display mt-4 text-center text-[32px] sm:text-5xl">{content.coreWork.title}</h2>
           </Reveal>
           <Reveal animation="fade-in-up" delay={200} className="mt-9 grid gap-6 sm:grid-cols-2 [&>*:last-child]:sm:col-span-2 [&>*:last-child]:sm:w-[calc(50%-12px)] [&>*:last-child]:sm:mx-auto">
-            {content.coreWork.cards.map((area, index) => {
-              const areaAnchors = ["venture", "learning", "ecosystem", "purpose"];
-              if (index === 3) return null;
+            {content.coreWork.cards.map((area) => {
+              const slugify = (s: string) =>
+                s.toLowerCase()
+                  .normalize("NFD").replace(/[̀-ͯ]/g, "")
+                  .replace(/[^a-z0-9]+/g, "-")
+                  .replace(/(^-|-$)/g, "");
               return (
                 <ContentCard
                   key={area.title}
                   title={area.title}
                   description={area.description}
                   cta={area.cta}
-                  href={`/${locale}/what-we-do#${areaAnchors[index]}`}
+                  href={`/${locale}/what-we-do#${slugify(area.title)}`}
                 />
               );
             })}
