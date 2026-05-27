@@ -19,6 +19,20 @@ export default async function AboutPage({
   const content = await getHomePageContent(locale as Locale);
   const aboutPage = content.aboutPage;
 
+  // Determines whether the section at a given index is preceded by a
+  // BoundaryImage (i.e. the previous section renders one). Used to set the
+  // correct top padding so the overlap looks right.
+  const prevHasBoundary = (i: number) => {
+    if (i === 0) return false;
+    const prev = aboutPage.aboutSections[i - 1];
+    return prev.kind === "extra" || prev.kind === "whyAmawa";
+  };
+
+  const pt = (i: number) =>
+    prevHasBoundary(i)
+      ? "pt-[140px] md:pt-[276px]"
+      : "pt-[60px] md:pt-[120px]";
+
   return (
     <main className="bg-surface text-foreground flex flex-col justify-center items-center">
       <PageHero
@@ -35,7 +49,7 @@ export default async function AboutPage({
         if (section.kind === "extra") {
           return (
             <Fragment key={section.title}>
-              <section className="w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center bg-surface pt-[140px] pb-[140px] md:pt-[276px] md:pb-[276px]">
+              <section className={`w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center bg-surface pb-[140px] md:pb-[276px] ${pt(i)}`}>
                 <SectionHeading title={section.title} body={section.descriptions} />
               </section>
               <BoundaryImage src={section.image || aboutPage.boundaryImage1} alt={section.title} />
@@ -46,7 +60,7 @@ export default async function AboutPage({
         if (section.kind === "whyAmawa") {
           return (
             <Fragment key="whyAmawa">
-              <section className="w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center bg-surface pt-[140px] pb-[140px] md:pt-[276px] md:pb-[276px]">
+              <section className={`w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center bg-surface pb-[140px] md:pb-[276px] ${pt(i)}`}>
                 <SectionHeading
                   title={aboutPage.whyTitle}
                   body={
@@ -67,7 +81,10 @@ export default async function AboutPage({
 
         if (section.kind === "philosophy") {
           return (
-            <section key="philosophy" className="w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center bg-surface-alt pt-[140px] pb-[60px] md:pt-[276px] md:pb-[120px]">
+            <section
+              key="philosophy"
+              className={`w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center bg-surface-alt pb-[60px] md:pb-[120px] ${pt(i)}`}
+            >
               <SectionHeading
                 title={aboutPage.philosophyTitle}
                 body={[

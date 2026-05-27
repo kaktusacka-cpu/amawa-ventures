@@ -206,9 +206,9 @@ export const getHomePageContent = cache(
       const aboutHero = getRows(aboutRowsAll, "hero");
       const aboutWhoWeAre = getRows(aboutRowsAll, "who we are");
       const aboutWhyAmawa = getRows(aboutRowsAll, "why amawa");
-      const aboutPhilosophy = getRows(aboutRowsAll, "philosophy");
+      const aboutPhilosophy = getRows(aboutRowsAll, "our philosophy");
 
-      const ABOUT_RESERVED = new Set(["hero", "who we are", "why amawa", "philosophy"]);
+      const ABOUT_RESERVED = new Set(["hero", "who we are", "why amawa", "our philosophy"]);
       const aboutExtraNames = [...new Set(aboutRowsAll.map((r) => r.section))]
         .filter((s) => s && !ABOUT_RESERVED.has(s));
       const extraSections = aboutExtraNames
