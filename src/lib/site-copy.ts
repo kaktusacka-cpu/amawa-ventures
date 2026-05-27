@@ -443,7 +443,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       boundaryImage2: "/photos/Why-Amawa-Ventures.jpg",
       philosophyImage: "/infographic.png",
       extraSections: [],
-      aboutSections: [{ kind: "whyAmawa" }, { kind: "philosophy" }],
+      aboutSections: [],
     },
   },
   es: {
@@ -670,7 +670,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       boundaryImage2: "/photos/Why-Amawa-Ventures.jpg",
       philosophyImage: "/infographic.png",
       extraSections: [],
-      aboutSections: [{ kind: "whyAmawa" }, { kind: "philosophy" }],
+      aboutSections: [],
     },
   },
   sk: {
@@ -895,7 +895,7 @@ export const copyByLocale: Record<Locale, HomeCopy> = {
       boundaryImage2: "/photos/Why-Amawa-Ventures.jpg",
       philosophyImage: "/infographic.png",
       extraSections: [],
-      aboutSections: [{ kind: "whyAmawa" }, { kind: "philosophy" }],
+      aboutSections: [],
     },
   },
 };
