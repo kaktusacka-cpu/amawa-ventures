@@ -35,17 +35,10 @@ export default async function AboutPage({
       ? "pt-[140px] md:pt-[276px]"
       : "pt-[60px] md:pt-[120px]";
 
-  // Alternate extra-section backgrounds: 0→bg-surface, 1→bg-surface-alt, …
-  const extraBg = (() => {
-    const map = new Map<string, string>();
-    let idx = 0;
-    for (const s of aboutPage.aboutSections) {
-      if (s.kind === "extra") {
-        map.set(s.title, idx++ % 2 === 0 ? "bg-surface" : "bg-surface-alt");
-      }
-    }
-    return map;
-  })();
+  // Position-based backgrounds: first and last → bg-surface-alt, middle → bg-surface.
+  const last = aboutPage.aboutSections.length - 1;
+  const sectionBg = (i: number) =>
+    i === 0 || i === last ? "bg-surface-alt" : "bg-surface";
 
   return (
     <main className="bg-surface-alt text-foreground flex flex-col justify-center items-center">
@@ -63,7 +56,7 @@ export default async function AboutPage({
         if (section.kind === "extra") {
           return (
             <Fragment key={section.title}>
-              <section className={`w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center ${extraBg.get(section.title) ?? "bg-surface"} pb-[140px] md:pb-[276px] ${pt(i)}`}>
+              <section className={`w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center ${sectionBg(i)} pb-[140px] md:pb-[276px] ${pt(i)}`}>
                 <SectionHeading title={section.title} body={section.descriptions} />
               </section>
               {section.image && <BoundaryImage src={section.image} alt={section.title} />}
@@ -74,7 +67,7 @@ export default async function AboutPage({
         if (section.kind === "whyAmawa") {
           return (
             <Fragment key="whyAmawa">
-              <section className={`w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center bg-surface pb-[140px] md:pb-[276px] ${pt(i)}`}>
+              <section className={`w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center ${sectionBg(i)} pb-[140px] md:pb-[276px] ${pt(i)}`}>
                 <SectionHeading
                   title={aboutPage.whyTitle}
                   body={
@@ -97,7 +90,7 @@ export default async function AboutPage({
           return (
             <section
               key="philosophy"
-              className={`w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center bg-surface-alt pb-[60px] md:pb-[120px] ${pt(i)}`}
+              className={`w-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center ${sectionBg(i)} pb-[60px] md:pb-[120px] ${pt(i)}`}
             >
               <SectionHeading
                 title={aboutPage.philosophyTitle}
