@@ -41,8 +41,10 @@ export default async function CollaboratePage({
           <div className="mt-16 grid gap-6 text-left max-w-[667px] mx-auto w-full">
             <Reveal animation="fade-in-up" delay={160}>
               <ContactCard title={content.contact.callTitle} description={content.contact.callDescription} image={content.contact.callImage} imageAlt="Schedule a meeting">
-                <Button variant="default" size="pill">
-                  {content.contact.callCta}
+                <Button asChild variant="default" size="pill">
+                  <a href="https://cal.eu/amawaventures/30min" target="_blank" rel="noopener noreferrer">
+                    {content.contact.callCta}
+                  </a>
                 </Button>
               </ContactCard>
             </Reveal>

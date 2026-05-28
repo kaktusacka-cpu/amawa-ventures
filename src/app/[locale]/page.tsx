@@ -282,8 +282,10 @@ export default async function HomePage({
           <div className="mt-10 grid w-full gap-6 sm:mt-14 max-w-[667px]">
             <Reveal animation="fade-in-up" delay={100} className="h-full">
               <ContactCard title={content.contact.callTitle} description={content.contact.callDescription} image={content.contact.callImage} imageAlt="Schedule a meeting">
-                <Button variant="default" size="pill">
-                  {content.contact.callCta}
+                <Button asChild variant="default" size="pill">
+                  <a href="https://cal.eu/amawaventures/30min" target="_blank" rel="noopener noreferrer">
+                    {content.contact.callCta}
+                  </a>
                 </Button>
               </ContactCard>
             </Reveal>
