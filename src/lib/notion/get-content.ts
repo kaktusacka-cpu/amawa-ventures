@@ -323,18 +323,27 @@ export const getHomePageContent = cache(
           eyebrow: t(testimonials, "overline", locale) || fallback.testimonials.eyebrow,
           title: t(testimonials, "title", locale) || fallback.testimonials.title,
           items: (() => {
-            const built = [];
-            for (let i = 0; i < 10; i++) {
-              const quote = tn(testimonials, "quote", i, locale);
-              if (!quote) break;
-              built.push({
-                quote,
-                author: tn(testimonials, "author", i, locale),
-                role: tn(testimonials, "role", i, locale),
-                link: tn(testimonials, "link", i, locale) || undefined,
-              });
+            // Group rows by scanning in order-sorted sequence. A "quote" row
+            // starts a new testimonial; role/author/link are collected into the
+            // current group regardless of their within-group order in Notion.
+            const SKIP = new Set(["title", "overline"]);
+            type T = { quote: string; author: string; role: string; link?: string };
+            const groups: T[] = [];
+            let cur: Partial<T> | null = null;
+            for (const row of testimonials) {
+              if (SKIP.has(row.field)) continue;
+              const val = (locale === "es" ? row.es : locale === "sk" ? row.sk : row.en) || row.en || "";
+              if (row.field === "quote") {
+                if (cur?.quote) groups.push(cur as T);
+                cur = { quote: val, author: "", role: "" };
+              } else if (cur) {
+                if (row.field === "author") cur.author = val;
+                else if (row.field === "role") cur.role = val;
+                else if (row.field === "link") cur.link = row.en || row.value || undefined;
+              }
             }
-            return built.length > 0 ? built : fallback.testimonials.items;
+            if (cur?.quote) groups.push(cur as T);
+            return groups.length > 0 ? groups : fallback.testimonials.items;
           })(),
         },
         contact: {

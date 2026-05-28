@@ -37,11 +37,11 @@ export type NotionRow = {
 };
 
 function extractText(prop: { rich_text?: { plain_text: string }[] }): string {
-  return prop?.rich_text?.[0]?.plain_text ?? "";
+  return prop?.rich_text?.map((t) => t.plain_text).join("") ?? "";
 }
 
 function extractTitle(prop: { title?: { plain_text: string }[] }): string {
-  return prop?.title?.[0]?.plain_text ?? "";
+  return prop?.title?.map((t) => t.plain_text).join("") ?? "";
 }
 
 function extractNumber(prop: { number?: number | null }): number {
